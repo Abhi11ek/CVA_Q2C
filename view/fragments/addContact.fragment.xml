@@ -1,0 +1,67 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.addContact
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              #
+ *                      Pant       
+ *                      (X089025)   
+ *                      
+***********************************************************************************
+ */
+ -->
+ <core:FragmentDefinition xmlns="sap.m" xmlns:wt="com.amat.crm.opportunity.extensions" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>S2AGENARALDOCCBTNTXT}" resizable="true" contentWidth="650px">
+		<subHeader>
+			<Bar>
+				<contentLeft>
+					<SearchField placeholder="{i18n>FRAGCONSEARCHTXT}" search="searchContact"></SearchField>
+				</contentLeft>
+			</Bar>
+		</subHeader>
+		<wt:TableEXT id="idContactTable" class="classOpportunityTable" growing="true" growingThreshold="20" type="Active" change="onColumnPress"
+			items="{json>/ItemSet}">
+			<wt:columns>
+				<Column width="3em" minScreenWidth="Tablet" demandPopin="true">
+					<ObjectIdentifier title="{i18n>S2CARMSELECTTXT}"/>
+				</Column>
+				<Column width="6em" minScreenWidth="Tablet" demandPopin="true">
+					<ObjectIdentifier title="{i18n>FRAGCONTABCOL2}"/>
+				</Column>
+				<Column width="6em" minScreenWidth="Tablet" demandPopin="true">
+					<ObjectIdentifier title="{i18n>FRAGCONTABCOL3}"/>
+				</Column>
+				<Column width="5em" minScreenWidth="Tablet" demandPopin="true">
+					<ObjectIdentifier title="{i18n>FRAGCONTABCOL4}"/>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<ObjectIdentifier title="{i18n>FRAGCONTABCOL5}"/>
+				</Column>
+			</wt:columns>
+			<wt:items>
+				<ColumnListItem id="templateContactList">
+					<cells>
+						<CheckBox class="sapMCFCb"/>
+						<Text text="{json>NameFirst}" class="sapMCFTxt"/>
+						<Text text="{json>NameLast}" class="sapMCFTxt"/>
+						<Text text="{json>Xubname}" class="sapMCFTxt"/>
+						<Text text="{json>SmtpAddr}" class="sapMCFTxt"/>
+					</cells>
+				</ColumnListItem>
+			</wt:items>
+		</wt:TableEXT>
+		<buttons>
+			<Button text="{i18n>S2F4HELPOPPOKBTN}" press="onContactOkPress" type="Accept"/>
+			<Button text="{i18n>S2F4HELPOPPCNLBTN}" press="onContactCancelPress" type="Reject"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

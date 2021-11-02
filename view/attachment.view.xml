@@ -1,0 +1,307 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.attachment
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant                                                      *
+ *                     (X089025)                                                  * 
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 18/12/2018      Palanivelu      PCR021481         RIT#I0018827: Q2C Q1/Q2      *
+ *                 Nagendran                         enhancements                 *
+ * 25/01/2021      Abhishek        PCR033306         Q2C Display Enhancements     *
+ * 13/06/2021      Abhishek Pant   PCR035760         Tech Upgrade issues solution *
+ * 10/08/2021      Abhishek Pant   PCR036308         DiGFP Phase 2 Enhancements   *
+***********************************************************************************
+ */
+ -->
+ <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:u="sap.ui.unified"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:f="sap.ui.layout.form"
+	controllerName="com.amat.crm.opportunity.controller.attachment" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox>
+		<ScrollContainer class="classGInfoScrlCn" height="40rem" width="100%" horizontal="false" vertical="true">
+			<Panel expandable="true" expanded="false" expand="onExpGenBookDoc" headerText="{i18n>S2AGENARALDOCHEADERTEXT}" id="idS2GenBookDocPnl"
+				width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<VBox class="genaralTabChooseButton">
+					<Button id="idS2_Attach_GBDoc_ChooseBtn" text="{i18n>S2AGENARALDOCCBTNTXT}" press="onChoosePress" visible="{/attChsBtnVis}">                                   <!-- PCR033306++;visible added -->
+						<layoutData>
+							<FlexItemData growFactor="1"/>
+						</layoutData>
+					</Button>
+					<Table id="idS2GeneralDocTable" class="sapMattTab" items="{/ItemSet}">
+						<columns>
+							<Column width="12em">
+								<Text text="{i18n>S2ATABLECOLUMN1TXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+							</Column>
+							<Column width="19rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">                                                                      <!-- PCR035760++; width added -->
+								<Text text="{i18n>S2ATABLECOLUMN3TXT}"/>
+							</Column>
+							<Column width="16rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">                                                                      <!-- PCR035760++; width added -->
+								<Text text="{i18n>S2ATABLECOLUMN4TXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="left">                                                                                      <!-- PCR035760++; hAlign modified -->
+								<Text text="{i18n>S2ATABLECOLUMN5TXT}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{DocDesc}"/>
+									<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize" enabled="{EnableDisflag}" press="handleLinkPress"/>
+									<Input tooltip="{note}" value="{note}" type="Text" class="sapUiSmallMarginBottom" placeholder="{i18n>S2ANOTEPLACEHOLDER}"
+										liveChange="handleNoteLiveChange" editable="{editable}"/>
+									<DatePicker hAlign="Center" displayFormat="dd-MMM-yyyy" editable="false" dateValue="{ExpireDate}" change="handleChange"
+										class="classDatePickerPadding sapUiSmallMarginBottom"/>
+									<HBox>
+										<HBox hAlign="Center" visible="{bgVisible}" class="genaralButtonSpacing">
+											<Button icon="sap-icon://edit" press="handleEditPress">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button icon="sap-icon://delete" press="CheckDelete">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+										</HBox>
+									</HBox>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+			</Panel>
+			<Panel expandable="true" expanded="true" headerText="{i18n>S2ABOOKINGDOC}" id="idS2BookDocPnl" expand="onExpBookDoc" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idS2BookingDocTable" class="sapMattTab" items="{/ItemSet}">
+					<columns>
+						<Column width="12em">
+							<Text text="{i18n>S2ATABLECOLUMN1TXT}"/>
+						</Column>
+						<Column width="26rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN3TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN5TXT}"/>
+						</Column>
+						<!-- Start Of PCR036308++; DiGFP Phase 2 Enhancements -->
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="{oLUkValModel>/bLUkColumn}">
+							<Text text="Link/De-Link"/>
+						</Column>
+						<!-- End Of PCR036308++; DiGFP Phase 2 Enhancements -->
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+							    <Text text="{=${DocDesc} === 'SSP' ?'SSP,(When blank,check the  Install Info tab)' : ${DocDesc}}"/>                                        <!-- PCR021481++ -->
+								<!-- <Text text="{DocDesc}"/>                                                                                                                   PCR021481~~ -->
+								<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize" press="handleLinkPress" enabled="{EnableDisflag}" hAlign="Center"/>
+								<Input tooltip="{note}" value="{note}" type="Text" hAlign="Center" class="sapUiSmallMarginBottom" placeholder="{i18n>S2ANOTEPLACEHOLDER}"
+									liveChange="handleNoteLiveChange" editable="{editable}"/>
+								<HBox>
+									<HBox hAlign="Center" class="genaralButtonGroupAlign" visible="{bgVisible}">
+										<Button icon="sap-icon://edit" press="handleEditPress">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button icon="sap-icon://delete" press="CheckDelete">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button icon="sap-icon://add" press="handleAddPress" enabled="{Enableflag}" visible="{addupVisible}">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+									</HBox>
+									<VBox visible="{uBvisible}" class="browseButtonSpacing">
+										<u:FileUploader buttonOnly="true" sameFilenameAllowed="true" name="{i18n>S2ATTMYFLUPLODTEXT}" width="10rem" multiple="false"
+											useMultipart="false" tooltip="{i18n>S2AUPLOADTOOLTIP}" change="handleFileUploadComplete" uploadUrl="{i18n>UPLOADURL}" sendXHR="true"
+											uploadOnChange="false" uploadComplete="onComplete" visible="{addupVisible}"/>
+									</VBox>
+								</HBox>
+								<!-- Start Of PCR036308++; DiGFP Phase 2 Enhancements -->
+								<HBox hAlign="Center" class="genaralButtonGroupAlign" visible="{bgVisible}" width="66%">
+									<Button icon="sap-icon://chain-link" type="Accept" press="handleLLinkPress">
+										<layoutData>
+											<FlexItemData growFactor="1"/>
+										</layoutData>
+									</Button>
+									<Button icon="sap-icon://broken-link" type="Reject" press="handleLLinkPress">
+										<layoutData>
+											<FlexItemData growFactor="1"/>
+										</layoutData>
+									</Button>
+								</HBox>
+								<!-- End Of PCR036308++; DiGFP Phase 2 Enhancements -->
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<Button id="idS2OthersBtn" text="{i18n>S2AOTHERBTNTEXT}" app:mySuperExtraData="1" press="handleOtherPress" type="Emphasized"
+					icon="sap-icon://add-coursebook" visible="{/attChsBtnVis}"></Button>                                                                                           <!-- PCR033306++;visible added -->
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="{i18n>S2APBCORDERTXT}" id="idS2PostBookChgPnl" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idS2PostBookChgPnlTable" class="sapMattTab" items="{/ItemSet}">
+					<columns>
+						<Column width="12em">
+							<Text text="{i18n>S2ATABLECOLUMN1TXT}"/>
+						</Column>
+						<Column width="26rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN3TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN5TXT}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{DocDesc}"/>
+								<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize" enabled="{EnableDisflag}" press="handleLinkPress"/>
+								<Input tooltip="{note}" value="{note}" type="Text" class="sapUiSmallMarginBottom" placeholder="{i18n>S2ANOTEPLACEHOLDER}"
+									liveChange="handleNoteLiveChange" editable="{editable}"/>
+								<HBox>
+									<HBox hAlign="Center" visible="{bgVisible}" class="buttonGroupAlign">
+										<Button icon="sap-icon://edit" press="handleEditPress">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button icon="sap-icon://delete" press="CheckDelete">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button icon="sap-icon://add" press="handleAddPress" enabled="{Enableflag}" visible="{addupVisible}">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+									</HBox>
+									<VBox visible="{uBvisible}" class="browseButtonSpacing">
+										<u:FileUploader buttonOnly="true" sameFilenameAllowed="true" name="{i18n>S2ATTMYFLUPLODTEXT}" width="10rem" multiple="false"
+											useMultipart="false" tooltip="{i18n>S2AUPLOADTOOLTIP}" change="handleFileUploadComplete" uploadOnChange="false" uploadComplete="onComplete"
+											uploadUrl="{i18n>UPLOADURL}" sendXHR="true" visible="{addupVisible}"/>
+									</VBox>
+								</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<Button id="idS2PostBookChgOthersBtn" text="{i18n>S2AOTHERBTNTEXT}" app:mySuperExtraData="2" press="handleOtherPress" type="Emphasized"
+					icon="sap-icon://add-coursebook" visible="{/attChsBtnVis}"></Button>                                                                                           <!-- PCR033306++;visible added -->
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="{i18n>S2APBDOCTXT}" id="idS2PostBookDocPnl" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idS2PostBookDocPnlTable" class="sapMattTab" items="{/ItemSet}">
+					<columns>
+						<Column width="12em">
+							<Text text="{i18n>S2ATABLECOLUMN1TXT}"/>
+						</Column>
+						<Column width="26rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN3TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>S2ATABLECOLUMN5TXT}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{DocDesc}"/>
+								<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize" enabled="{EnableDisflag}" press="handleLinkPress"/>
+								<Input tooltip="{note}" value="{note}" type="Text" class="sapUiSmallMarginBottom" placeholder="{i18n>S2ANOTEPLACEHOLDER}"
+									liveChange="handleNoteLiveChange" editable="{editable}"/>
+								<HBox>
+									<HBox hAlign="Center" visible="{bgVisible}" class="buttonGroupAlign">
+										<Button icon="sap-icon://edit" press="handleEditPress">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button icon="sap-icon://delete" press="CheckDelete">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button icon="sap-icon://add" press="handleAddPress" enabled="{Enableflag}" visible="{addupVisible}">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+									</HBox>
+									<VBox visible="{uBvisible}" class="browseButtonSpacing">
+										<u:FileUploader buttonOnly="true" name="{i18n>S2ATTMYFLUPLODTEXT}" sameFilenameAllowed="true" width="10rem" multiple="false"
+											useMultipart="false" tooltip="Upload your file to the server" change="handleFileUploadComplete" uploadOnChange="false"
+											uploadComplete="onComplete" uploadUrl="{i18n>UPLOADURL}" sendXHR="true" visible="{addupVisible}"/>
+									</VBox>
+								</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<Button id="idS2PostBookOthersBtn" text="{i18n>S2AOTHERBTNTEXT}" app:mySuperExtraData="3" press="handleOtherPress" type="Emphasized"
+					icon="sap-icon://add-coursebook" visible="{/attChsBtnVis}"></Button>                                                                                           <!-- PCR033306++;visible added -->
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="{i18n>S2CARMMAINCOMMENT}" expand="OnExpandMainCom" id="idS2_Atch_MCommentPnl"
+				width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<f:SimpleForm class="classMComment" editable="true" layout="ResponsiveGridLayout">
+					<Label text="{i18n>S2CARMCOMLABELTXT}"/>
+					<TextArea class="sapMCommTBox" id="idS2_Atch_MainComtTxtArea" height="8rem" liveChange="OnMainCommLvchng" maxLength="255"
+						placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="100%" enabled="true"/>
+					<Button class="sapMainComSavBtnClass" id="idS2_Atch_MainComSaveBtn" text="{i18n>S1PERDLOG_SAVE}" type="Emphasized" icon="sap-icon://save"
+						enabled="false" press="onSaveMainCom"></Button>
+				</f:SimpleForm>
+				<Table id="idS2_Atch_MainCommTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{Comment}"/>
+								<Text text="{CreatedName}"/>
+								<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

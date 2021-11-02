@@ -1,0 +1,432 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.S1
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                          	                      *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 20/08/2018      Abhishek        PCR019492         ASC606 UI Changes            *
+ *                 Pant                                                           *
+ * 25/02/2019      Abhishek        PCR022669         Q2C Q2 UI Changes            *
+ *                 Pant                                                           *
+ * 17/06/2019      Abhishek        PCR023905         Migrate ESA/IDS db from Lotus*
+ *                 Pant                              Notes to SAP Fiori Q2C       *
+ *                                                   Application                  *
+ * 15/04/2020      Arun            PCR028711         Q2C Enhancements for Q2-20   *
+ *				   Jacob                                                          *
+ * 25/11/2019      Abhishek        PCR026243         DL:1803 Display Migration to *
+ *                 Pant                              Q2C                          *
+ * 25/01/2021      Abhishek Pant   PCR033306         Q2C Display Enhancements     *
+ * 13/06/2021      Abhishek Pant   PCR035760         Tech Upgrade issues solution *
+***********************************************************************************
+ */
+ --> 
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	xmlns:wt="com.amat.crm.opportunity.extensions" controllerName="com.amat.crm.opportunity.controller.S1"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>S1TITLE}" class="pageTitleClass page2BgImg" backgroundDesign="Transparent">                                                              <!-- PCR026243++; page2BgImg class Added -->
+		<content>
+			<Panel id="idS1_OPP_FILTER_PANEL" class="classFilterPanel" expandable="true" expanded="true" width="auto">
+				<headerToolbar>
+					<Toolbar>
+						<Title class="fontWt" text="{i18n>S1PANELTITLE}"/>
+						<ToolbarSpacer/>
+						<Button id="idS1_HDRRALLBTN" text="{i18n>S1READALLBTNTXT}" class="sapMRABtnClass" press="onPressAllRead" 
+							visible="false"/>																		                                            <!-- PCR022669++ --><!-- PCR028711++; modified visibility --><!-- PCR035760++;type="Error" removed -->
+						<Button id="idS1_HDRRESABTN" text="{i18n>S1ESAIDSHDRBTNTXT}" class="navBtnClass" type="{/FilterHDRESATyp}" press="onPressESAIDE"/>		<!-- PCR023905++ --><!-- PCR028711++; modified visibility -->
+						<Button id="idS1_HDRPSRBTN" text="{i18n>S1PSRSDARRABUTTON}" class="navBtnClass" type="{/FilterHDRPSRTyp}" press="onPressPSRSDA"/>
+						<Button id="idS1_HDRPDCBTN" text="{i18n>S1PDCSDARRABUTTON}" class="navBtnClass" type="{/FilterHDRPDCTyp}" press="onPressPDCSDA"/>
+						<Button id="idS1_HDRCBCBTN" text="{i18n>S2CBCTABTXT}" class="navBtnClass" type="{/FilterHDRCBCTyp}" press="onPressCBC"/>
+						<Link text="{i18n>S1FILTERHIDE}" press="handleLinkPress"/>
+						<Link id="idS1_filter" class="classBlankSpace" text="{i18n>S1FILTERCOUNT}" enabled="true" visible="false"/>								<!-- PCR028711++; modified visibility -->
+						<Button id="idS1_HDRRefreshBTN" icon="sap-icon://refresh" tooltip="{i18n>S1FLTRBTNRMVTT}" class="navBtnClass" press="onPressRefresh"/>  <!-- PCR028711++; clear filter(s) -->
+						<Button id="idS1_HDRGoBTN" text="{i18n>S1FILTERBUTTON}" class="navBtnClass" type="Emphasized" press="onPressGo"/>						<!-- PCR028711++; id added -->
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<f:SimpleForm id="idS1_Filter_SForm" class="sapMQ2CSbTxt" layout="ResponsiveGridLayout" columnsL="6" columnsM="6">                          <!-- PCR035760++; maxWidth="1024" removed -->
+						<f:content>
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S1OPPF4}"/>
+									<Input id="idS1_OPP_IP_CUST" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1OPPINPUTPLACEHOLDER}" enabled="true"
+										editable="true" width="86%" showValueHelp="true" valueHelpRequest="handleValueHelpOpps" liveChange="onOppChange"
+										value="{/q2cADCust}"/> 																		                            <!-- PCR028711++; modified value,value help -->
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S1DESCLBL}"/>
+									<Input id="idS1_OPP_IP_OPP" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1DESCINPUTPLACEHOLDER}" enabled="true"
+										width="93%" editable="true" showValueHelp="false" valueHelpRequest="handleValueHelpOpps" liveChange="onOppChange"/>     <!-- PCR028711++; modified value help,width -->
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<!-- <Label class="sapMQ2Clbl lblBold" text="{i18n>S1CUSTLBL}"/>                                                                 PCR026243~~-->
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S1DISAMATQUOTNOLBL}"/>                                                        <!-- PCR026243++ -->
+									<Input id="idS1_OPP_IP_QTENO" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1CUSTINPUTPLACEHOLDER}" enabled="true"
+										width="93%" editable="true" showValueHelp="false" valueHelpRequest="handleValueHelpOpp" liveChange="onOppChange"/>      <!-- PCR028711++; modified value help,width -->
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S1SALESTATUSLBL}"/>
+									<Input id="idS1_OPP_IP_ODRNO" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1SALESTATUSINPUTPLACEHOLDER}" enabled="true"
+										width="93%" editable="true" showValueHelp="false" valueHelpRequest="handleValueHelpOpp" liveChange="onOppChange"/>      <!-- PCR028711++; modified value help -->
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S1SALESLOTID}"/>
+									<Input id="idS1_OPP_IP_SLID" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1SALESLOTIDINPUTPLACEHOLDER}" enabled="true"
+										width="93%" editable="true" showValueHelp="false" valueHelpRequest="handleValueHelpOpp" liveChange="onOppChange"/>      <!-- PCR028711++; modified value help -->
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<Label id="idS1_OPP_LB_LOW" class="sapMQ2Clbl lblBold" text="{/LOW_LBSearchtxt}"/>
+									<HBox id="idS1_OPP_HB_LOW" visible="{/LOWHBSearchVis}">
+										<Input id="idS1_OPP_IP_LOW" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1LOWINPUTPLACEHOLDER}" enabled="true" width="86%"
+											editable="true" showValueHelp="true" valueHelpRequest="handleValueHelpOpps" liveChange="onOppChange"
+											value="{/q2cADLOdr}"/>																	                            <!-- PCR028711++; modified value,value help -->
+									</HBox>
+									<HBox id="idS1_OPP_HB_VCPRDDIS" visible="{/VCProdDesHBSearchVis}">
+										<Input id="idS1_OPP_IP_VCPRDDIS" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1VCPRDDESINPUTPLACEHOLDER}" enabled="true"
+											width="98%" editable="true" showValueHelp="false" valueHelpRequest="handleValueHelpOpp" liveChange="onOppChange"/>  <!-- PCR028711++; modified value help -->
+									</HBox>
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S1CUSTPONOID}"/>
+									<Input id="idS1_OPP_IP_CustPO" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1CUSTPONOINPUTPLACEHOLDER}" enabled="true"
+										width="97%" editable="true" showValueHelp="false" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">    <!-- PCR028711++; modified value help, width -->
+										<customData>
+											<core:CustomData key="multi" value="true"/>
+										</customData>
+									</Input>
+								</VBox>
+							</HBox>
+							<!-- ****************Start Of PCR019492: ASC606 UI Changes ************************-->
+							<!-- ****************Start Of PCR028711: Q2C Enhancements for Q2-20 ************************-->
+							<!-- <core:Title/>
+							<HBox>
+								<VBox>
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S1SDARRALVLLBL}"/>
+									<Input id="idS1_OPP_IP_RRALVL" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1SDARRALVLINPUTPLACEHOLDER}" enabled="true"
+										width="86%" editable="true" showValueHelp="true" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">
+										<customData>
+											<core:CustomData key="multi" value="true"/>
+										</customData>
+									</Input>
+								</VBox>
+							</HBox> -->
+							<!-- ****************End Of PCR028711: Q2C Enhancements for Q2-20 **************************-->
+							<core:Title/>
+							<HBox>
+								<VBox>
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>OppSearch_BUDialogTitle}"/>
+									<Input id="idS1_OPP_IP_BU" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1BUINPUTPLACEHOLDER}" enabled="true"
+										width="86%" editable="true" showValueHelp="true" valueHelpRequest="handleValueHelpOpps" liveChange="onOppChange"
+										value="{/q2cADBU}">																			                            <!-- PCR028711++; modified value,value help -->
+										<customData>
+											<core:CustomData key="multi" value="true"/>
+										</customData>
+									</Input>
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+							<!-- *****************Start Of PCR033306: Q2C Display Enhancements ***************************-->
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>S4DISDFTQUTNOTXT}"/>
+									<Input id="idS1_OPP_IP_DFTN" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1CUSTINPUTPLACEHOLDER}" enabled="true"
+										width="93%" editable="true" showValueHelp="false" valueHelpRequest="handleValueHelpOpp" liveChange="onOppChange" value="{/q2cDftNo}"/>
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox>
+								<VBox>
+							<!-- *****************End Of PCR033306: Q2C Display Enhancements *****************************-->
+									<Label class="sapMQ2Clbl lblBold" text="{i18n>OppSearch_BookQDialogTitle}"/>
+									<Input id="idS1_OPP_IP_BQTR" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1BOKQTRINPUTPLACEHOLDER}" enabled="true"
+										width="86%" editable="true" showValueHelp="true" valueHelpRequest="handleValueHelpOpps" liveChange="onOppChange"
+										value="{/q2cADBQotr}">																		                            <!-- PCR028711++; modified value,value help -->
+										<customData>
+											<core:CustomData key="multi" value="true"/>
+										</customData>
+									</Input>
+								</VBox>
+							</HBox>
+						  <!-- *****************End Of PCR019492: ASC606 UI Changes ***************************-->	
+							<core:Title/>
+							<HBox id="idS1_OPP_HB_STAT" visible="{/FilterStatHBSearchVis}">
+								<VBox>
+									<Label id="idS1_OPP_LB_PSRSTAT" class="sapMQ2Clbl lblBold" text="{/PSRStatSearchTxt}"/>
+									<HBox id="idS1_OPP_HB_PSRSTAT" visible="{/PSRStatHBSearchVis}">
+										<Input id="idS1_OPP_IP_PSRSTAT" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1PSRSTATINPUTPLACEHOLDER}" enabled="true"
+											width="86%" editable="true" showValueHelp="true" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">
+											<customData>
+												<core:CustomData key="multi" value="true"/>
+											</customData>
+										</Input>
+									</HBox>
+									<!-- ***********Start Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App************** -->
+									<HBox id="idS1_OPP_HB_ESASTAT" visible="{/ESAStatHBSearchVis}">
+										<Input id="idS1_OPP_IP_ESASTAT" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1ESAIDSSTATINPUTPLACEHOLDER}" enabled="true"
+											width="86%" editable="true" showValueHelp="true" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">
+											<customData>
+												<core:CustomData key="multi" value="true"/>
+											</customData>
+										</Input>
+									</HBox>
+									<!-- ***********End Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App************** -->
+									<HBox id="idS1_OPP_HB_PDCSTAT" visible="{/PDCStatHBSearchVis}">
+										<Input id="idS1_OPP_IP_PDCSTAT" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1PDCSTATINPUTPLACEHOLDER}" enabled="true"
+											width="86%" editable="true" showValueHelp="true" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">
+											<customData>
+												<core:CustomData key="multi" value="true"/>
+											</customData>
+										</Input>
+									</HBox>
+									<HBox id="idS1_OPP_HB_CBCSTAT" visible="{/CBCStatHBSearchVis}">
+										<Input id="idS1_OPP_IP_CBCSTAT" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1CBCSTATINPUTPLACEHOLDER}" enabled="true"
+											width="86%" editable="true" showValueHelp="true" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">
+											<customData>
+												<core:CustomData key="multi" value="true"/>
+											</customData>
+										</Input>
+									</HBox>
+								</VBox>
+							</HBox>
+							<core:Title/>
+							<HBox id="idS1_OPP_HB_TYP" visible="{/FilterTypHBSearchVis}">
+								<VBox>
+									<Label id="idS1_OPP_LB_PSRTYP" class="sapMQ2Clbl lblBold" text="{/PSRTypSearchTxt}"/>
+									<HBox id="idS1_OPP_HB_PSRTYP" visible="{/PSRTypHBSearchVis}">
+										<Input id="idS1_OPP_IP_PSRTYP" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1PSRTYPINPUTPLACEHOLDER}" enabled="true"
+											width="86%" editable="true" showValueHelp="true" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">
+											<customData>
+												<core:CustomData key="multi" value="true"/>
+											</customData>
+										</Input>
+									</HBox>
+									<HBox id="idS1_OPP_HB_CBCVER" visible="{/CBCTypHBSearchVis}">
+										<Input id="idS1_OPP_IP_CBCVER" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S1CBCTYPINPUTPLACEHOLDER}" enabled="true"
+											width="86%" editable="true" showValueHelp="true" valueHelpRequest="handlePSRValueHelpOpp" liveChange="onOppChange">
+											<customData>
+												<core:CustomData key="multi" value="true"/>
+											</customData>
+										</Input>
+									</HBox>
+								</VBox>
+							</HBox>							
+						</f:content>
+					</f:SimpleForm>
+				</content>
+			</Panel>
+			<wt:TableEXT id="idS1_SWOpportunityTable" class="sapMQ2Clbl classSWOpportunityTable sapMNoBodyClass" growing="true" growingThreshold="20"
+				change="onColumnPress" items="{path: '/results'}">                                                                                                        <!-- PCR035760++; sapMNoBodyClass class added --><!-- PCR035760++; type="Active" removed-->
+				<wt:headerToolbar>
+					<Toolbar>
+						<Title class="fontWt" text="{i18n>S1SEARCHRES}" level="H2"/>
+						<ToolbarSpacer/>
+						<SearchField id="idS1_GLBSearch" width="20%" liveChange="onLiveSearch" visible="{/TabGLBSearchVis}" search="onSearchOppTable"/>					  <!-- PCR028711++; included change event -->
+						<Button	id="idS1_OppDownload" icon="{i18n>S1DOWNDBTNICON}" press="onDataExport" class="navDisBtnClass" 
+						    visible="{/OppDownloadVis}"/>                                                                                                                 <!-- PCR022669++; PCR028711++; id,visibility included; PCR026243++; navDisBtnClass class Added -->
+						<Button id="idS1_BtnShowAll" text="{i18n>S1SHOWALLBUTTON}" class="navDisBtnClass" type="Accept" press="onPressShowAll"
+							visible="{/TabShowAllBtnVis}"/>                                                                                                               <!-- PCR026243++; navBtnClass replaced with navDisBtnClass -->
+						<!--<Button id="idS1_BtnPersFltr" icon="sap-icon://filter" class="navBtnClass" type="accept" press="onOpenFilter" visible="{/TabFilterBtnVis}"/>--><!-- PCR028711~~ -->
+						<Button id="idS1_BtnPersFltr" icon="sap-icon://filter" class="navBtnClass" type="Accept" press="onOpenFilter" visible="false"/>                    <!-- PCR028711++; modified visibility -->
+					</Toolbar>
+				</wt:headerToolbar>
+				<wt:columns>
+					<Column width="6em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLECUSTCOL}"/>
+					</Column>
+					<Column id="idS1_FABCOLUMN" width="5.75em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEFABNAMEBUCOL}"/>
+					</Column>
+					<Column width="3.70em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEOPPCOL}"/>
+					</Column>
+					<Column id="idS1_OPPLNECOLUMN" width="3.25em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEOPPlINENOCOL}"/>
+					</Column>
+					<Column width="5.5em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEQUTENOCOL}"/>
+					</Column>
+					<Column width="5.5em" minScreenWidth="Tablet" demandPopin="true" visible="true">
+						<ObjectIdentifier title="{i18n>S1TABLESALESORDERNOCOL}"/>
+					</Column>
+					<Column width="2em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEBUCOL}"/>
+					</Column>
+					<Column width="4em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEPRODUCTLINECOL}"/>
+					</Column>
+					<Column id="idS1_OPPPSRSTATCOLUMN" width="6em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1PDCSDASTATLB_TXT}"/>
+					</Column>
+					<Column id="idS1_OPPPDCSTATCOLUMN" width="8em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1PSRSTATLB_TXT}"/>
+					</Column>
+					<!-- ***********Start Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App************** -->
+					<Column id="idS1_OPPESASTATCOLUMN" width="8em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1ESAIDSSRCHTABCOLTIT}"/>
+					</Column>
+					<!-- ***********End Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App**************** -->
+					<Column id="idS1_OPPCBCSTATCOLUMN" width="6em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1CBCSTATLB_TXT}"/>
+					</Column>
+					<Column id="idS1_OPPPSRCURRSTATCOLUMN" width="6em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1INCURRSTATLB_TXT}"/>
+					</Column>
+					<Column id="idS1_OPPPDCCURRSTATCOLUMN" width="8em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1INCURRSTATLB_TXT}"/>
+					</Column>
+					<!-- ***********Start Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App************** -->
+					<Column id="idS1_OPPESACURRSTATCOLUMN" width="8em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1INCURRSTATLB_TXT}"/>
+					</Column>
+					<!-- ***********End Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App**************** -->
+					<Column id="idS1_OPPCBCCURRSTATCOLUMN" width="6em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1INCURRSTATLB_TXT}"/>
+					</Column>
+					<Column id="idS1_OPPPSRTYPCOLUMN" width="4em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1PSRTYPLB_TXT}"/>
+					</Column>
+					<Column id="idS1_OPPCBCVERCOLUMN" width="4em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1CBCTYPLB_TXT}"/>
+					</Column>
+					<Column width="5em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEPVCRODUCTIDCOL}"/>
+					</Column>
+					<Column width="4em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEITMCATCOL}"/>
+					</Column>
+					<Column width="4em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLESDARRALELCOL}"/>
+					</Column>
+					<Column id="idS1_OPPRGNCOLUMN" width="3em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEREGCOL}"/>
+					</Column>
+					<Column width="4em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEBOKQTRCOL}"/>
+					</Column>
+					<Column width="4em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1TABLEREVQTRCOL}"/>
+					</Column>
+					<Column id="idS1_OPPSTATCOLUMN" width="6em" minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S1TABLEOppStatusCOL}"/>
+					</Column>
+					<Column id="idS1_OPPREVQCOLUMN" width="4em" minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1TABLEREVQTRCOL}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" visible="false">
+						<ObjectIdentifier title="{i18n>S1TABLESLOTIDCOL}"/>                                                                <!-- PCR035760++; S1TABLESlotIdCOL replaced with S1TABLESLOTIDCOL-->
+					</Column>
+				</wt:columns>
+				<wt:items>
+					<ColumnListItem>
+						<cells></cells>
+					</ColumnListItem>
+				</wt:items>
+			</wt:TableEXT>
+			<ScrollContainer class="classGInfoScrlCn" height="68%" width="100%" horizontal="false" vertical="true">
+				<wt:TableEXT id="idS1_OpportunityTable" noDataText="{i18n>S2TABNODATATEXT}" growing="true" growingThreshold="20"
+					class="sapMQ2Clbl classOpportunityTable" change="onColumnPress" items="{path: '/results'}">                           <!-- PCR035760++; type="Active" removed-->
+					<wt:columns>
+						<Column width="7em"/>
+						<Column id="idS1_FABCOLUMN2" width="6.5em"/>
+						<Column width="4.5em"/>
+						<Column id="idS1_OPPLNECOLUMN2" width="4em"/>
+						<Column width="6.25em"/>
+						<Column width="5.5em"/>
+						<Column id="idS1_OPPPBUCOLUMN2" width="2.5em"/>                                                                    <!-- PCR019492++; modified Width -->
+						<Column id="idS1_OPPPPRODLINECOLUMN2" width="5em"/>                                                                <!-- PCR019492++; modified Width -->
+						<Column id="idS1_OPPPSRSTATCOLUMN2" width="7em" visible="false"/>
+						<Column id="idS1_OPPPDCSTATCOLUMN2" width="9.5em" visible="false"/>
+						<Column id="idS1_OPPESASTATCOLUMN2" width="9.5em" visible="false"/>                                               <!-- PCR023905++ -->
+						<Column id="idS1_OPPCBCSTATCOLUMN2" width="7em" visible="false"/>
+						<Column id="idS1_OPPPSRCURRSTATCOLUMN2" width="6.5em" visible="false"/>
+						<Column id="idS1_OPPPDCCURRSTATCOLUMN2" width="9.5em" visible="false"/>
+						<Column id="idS1_OPPESACURRSTATCOLUMN2" width="9.5em" visible="false"/>                                           <!-- PCR023905++ -->
+						<Column id="idS1_OPPCBCCURRSTATCOLUMN2" width="6.5em" visible="false"/>
+						<Column id="idS1_OPPPSRTYPCOLUMN2" width="5em" visible="false"/>
+						<Column id="idS1_OPPCBCVERCOLUMN2" width="5em" visible="false"/>
+						<Column id="idS1_OPPPPRODCTCOLUMN2" width="5.5em"/>                                                               <!-- PCR019492++; modified Width -->
+						<Column id="idS1_OPPITMCATCOLUMN2" width="4.75em"/>                                                               <!-- PCR019492++; modified Width -->
+						<Column id="idS1_OPPPSDALBLCOLUMN2" width="3em"/>                                                                 <!-- PCR019492++; modified Width -->
+						<Column id="idS1_OPPRGNCOLUMN2" width="4em"/>
+						<Column id="idS1_OPPPBOOKQCOLUMN2" width="5em"/>                                                                  <!-- PCR019492++; modified Width -->
+						<Column width="4em" visible="false"/>
+						<Column id="idS1_OPPSTATCOLUMN2" width="4em"/>
+						<Column id="idS1_OPPREVQCOLUMN2" width="4em" visible="false"/>
+						<Column width="6em" visible="false"/>
+					</wt:columns>
+					<wt:items>
+						<ColumnListItem id="idS1_templateOppList" type="Navigation" press="onOppressed">
+							<cells>
+								<Text text="{Custname}"/>																		          <!-- PCR028711++; modified CustName to Custname -->
+								<Text text="{FabName}"/>
+								<Text text="{OppId}"/>
+								<Text text="{ItemNo}"/>
+								<Text text="{AmatQuoteId}"/>
+								<Text text="{SoNumber}"/>
+								<Text text="{Pbg}"/>
+								<Text text="{ProductLine}"/>
+								<Text text="{PsrStatDesc}"/>
+								<Text text="{PdcStatDesc}"/>
+								<Text text="{EsaStatDesc}"/>
+								<Text text="{CbcStatDesc}"/>
+								<Link class="sapMOppSrchLnk" text="{path:'PsrStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+									tooltip="{path:'PsrStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}" press="handleStatusLinkPress"/>
+								<Link class="sapMOppSrchLnk" text="{path:'PsrStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+									tooltip="{path:'PsrStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}" press="handleStatusLinkPress"/>
+								<Link class="sapMOppSrchLnk" text="{path:'EsaStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"                 
+									tooltip="{path:'EsaStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}" press="handleStatusLinkPress"/>       <!-- PCR023905++ -->
+								<Link class="sapMOppSrchLnk" text="{path:'CbcStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+									tooltip="{path:'CbcStatDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}" press="handleStatusLinkPress"/>
+								<Text text="{PsrType}"/>
+								<Text text="{CbcVerType}"/>
+								<Text text="{VcPrdid}"/>
+								<Text text="{ItmDesc}"/>
+								<Text text="{SdaLevel}"/>
+								<Text text="{Region}" />
+								<Text text="{BookQutVal}"/>
+								<Text text="{RevQtr}"/>
+								<Text text="{OppStatus}"/>
+								<Text text="{RevQuote}"/>
+								<Text text="{SlotNo}"/>
+							</cells>
+						</ColumnListItem>
+					</wt:items>
+				</wt:TableEXT>
+			</ScrollContainer>
+		</content>
+		<footer>
+			<Toolbar></Toolbar>
+		</footer>
+	</Page>
+</core:View>

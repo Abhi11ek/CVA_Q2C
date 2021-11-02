@@ -1,0 +1,49 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.Confirmation
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)   
+ *                      
+***********************************************************************************
+ */
+ -->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog resizable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<core:Icon class="classApproveConficon" src="{i18n>S2PSRSDADIAQUSICON}" color="#1C4C98"></core:Icon>
+					<Title text="{i18n>S2CONFFRGTIT}"/>
+				</contentMiddle>
+			</Bar>
+		</customHeader>
+		<content>
+			<f:SimpleForm class="classARComment" editable="true" layout="ResponsiveGridLayout">
+				<f:content>
+					<Label text="{i18n>S2PSRPDCRETESTCOMMTXT}"/>
+					<TextArea value="" id="idARComtTxtArea" placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" liveChange="OnApRctCommLvchng"
+						width="90%" enabled="true"/>
+					<HBox visible="false" class="sapMLTLMargin">
+						<CheckBox class="classRadioGrp sapMCbk sapUicompactMarginBottom" text="{i18n>S2CONFFRGCBOXTEXT}" select="onSelectSSpec"/>
+					</HBox>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<buttons>
+			<Button text="{i18n>S2CONFFRGOKBTN}" press="onWFPress" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}"/>
+			<Button text="{i18n>S2CONFFRGCNLBTN}" press="onCancelWFPress" type="{i18n>S2FOOTER_RJT}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

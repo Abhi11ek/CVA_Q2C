@@ -1,0 +1,50 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.generalDocSelection
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)   
+ *                      
+***********************************************************************************
+ */
+ -->
+ <core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified"
+	xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>S2CARMSELECTTXT}">
+		<l:Grid defaultSpan="L12 M12 S12" width="auto">
+			<l:content>
+				<f:SimpleForm minWidth="1024" maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3"
+					emptySpanL="4" emptySpanM="4" columnsL="2" columnsM="2">
+					<f:content>
+						<Label text="{i18n>FRAGGDOCSELSUBTYPE}"/>
+						<Select forceSelection="true" items="{json>/docType}" change="onFragmentSelection">
+							<core:Item key="{json>DocSubtype}" text="{json>DocDesc}"/>
+						</Select>
+						<Label text="{i18n>FRAGGDOCSELCOM}"/>
+						<Input liveChange="handleFragLiveChange" placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}"/>
+						<Label text="{i18n>S2ATABLECOLUMN4TXT}"/>
+						<DatePicker id="idS2_geninfo_date" valueState="{i18n>S2DELNAGVIZTEXT}" change="handleFragmentDateChange" displayFormat="dd-MMM-yyyy"
+							class="sapUiSmallMarginBottom" enabled="true"/>
+						<u:FileUploader buttonOnly="true" name="{i18n>S2ATTMYFLUPLODTEXT}" width="10rem" multiple="false" useMultipart="false"
+							tooltip="{i18n>S2AUPLOADTOOLTIP}" change="onFragmentUpload" uploadOnChange="false" uploadComplete="onComplete"
+							uploadUrl="/sap/opu/odata/sap/ZGWVG_CRM_Q2C_SRV/AttachmentSet" sendXHR="true" enabled="false"/>
+					</f:content>
+				</f:SimpleForm>
+			</l:content>
+		</l:Grid>
+		<buttons>
+			<Button text="{i18n>FRAGGDOCSELCLOSEBTN}" press="closeDialog" type="Reject"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

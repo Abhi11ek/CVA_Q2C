@@ -1,0 +1,75 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.F4helpOppLink
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant                                                      *    
+ *                     (X089025)                                                  *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 26/09/2019      Abhishek        PCR025717         Q2C Q4 2019 Enhancements     *
+ *                 Pant                                                           *
+ * 15/11/2019      Abhishek        PCR026469         INC05215579: Carbon Copy Opp *
+ *                 Pant                              Search Issue                 *
+***********************************************************************************
+ */
+ -->
+ <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>S1F4HELPSELOPPTIT}" resizable="true">
+		<subHeader>
+			<Bar visible="false">
+				<contentLeft>
+					<SearchField placeholder="{i18n>S2CONFFRGSRCHFLDPLCHLDER}" search="searchOpportunity" liveChange="searchOpportunity"></SearchField>
+				</contentLeft>
+			</Bar>
+		</subHeader>
+		<!-- ***********Start Of PCR025717 Q2C Q4 2019 Enhancements************** -->
+		<Label text="{i18n>S2CARMCOMLABELTXT}" class="asteriskCC classMandatFld sapMSelRRATxt sapUiEsaSmallMargin" required="true" visible="false"/>
+		<TextArea class="sapUiEsaSmallMargin" id="idDlinkTxtArea" height="5rem" liveChange="OnDlinkCommLvchng" maxLength="255"
+				  placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="95%" enabled="true" visible="false"/>
+		<!-- ***********End Of PCR025717 Q2C Q4 2019 Enhancements**************** -->
+		<!--<Table items="{/results}">                                                                                      PCR026469~~ -->
+		<Table items="{/results}" growing="true" growingThreshold="100">                                               <!-- PCR026469++ -->
+			<columns>
+				<Column width="8em" minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="false">
+					<Text text="{i18n>S2F4HELPATABLECOLUMN5TXT}"/>
+				</Column>
+				<Column width="8em" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+					<Text text="{i18n>S2CBCOPP}"/>
+				</Column>
+				<!-- *****************Start Of PCR025717 Q4-2019 Q2C Enhancement************************************ -->
+				<Column minScreenWidth="Tablet" demandPopin="true" visible="false">
+					<Text text="{i18n>S2GENINFOOPPDESFLDTXT}"/>
+				</Column>
+				<!-- *****************End Of PCR025717 Q4-2019 Q2C Enhancement************************************ -->
+				<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+					<Text text="{i18n>S2F4HELPITMNOCOLUMNTIT}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<CheckBox class="classRadioGrp sapMCbk sapUicompactMarginBottom" selected="{Selected}" select="onSelectCB"/>
+						<Text text="{OppId}"/>
+						<Text text="{OppDesc}"/>                                                                                       <!-- PCR025717++ -->
+						<Text text="{ItemNo}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<buttons>
+			<Button text="{i18n>S2F4HELPOPPOKBTN}" press="onRelPerSpecRewOkPress" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}"/>
+			<Button text="{i18n>S2F4HELPOPPCNLBTN}" press="closeDialog" type="{i18n>S2FOOTER_RJT}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

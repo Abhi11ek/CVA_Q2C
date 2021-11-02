@@ -1,0 +1,1203 @@
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name opportunity.css.style.css
+  	*
+ * -------------------------------------------------------------------------------*
+ * Modifications.                                                                 *
+ * -------------                                                                  *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ------ ---------- ------------ ----------  ------------------------------------*
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                          	                      * 
+ *  Date           Author          PCR No.           Description of change        *
+ * ------ ---------- ------------ ----------  ------------------------------------*
+ * 20/08/2018      Abhishek        PCR019492         ASC606 UI Changes            *
+ *                 Pant                                                           *
+ * 18/12/2018      Abhishek        PCR021481         Q2C Q1/Q2 enhancements       *
+ *                 Pant                                                           *
+ * 25/02/2019      Abhishek        PCR022669         Q2C Q2 UI Changes            *
+ *                 Pant                                                           *
+ * 17/06/2019      Abhishek        PCR023905         Migrate ESA/IDS db from Lotus*
+ *                 Pant                              Notes to SAP Fiori Q2C       *
+ *                                                   Application                  *
+ * 26/09/2019      Abhishek        PCR025717         Q2C Q4 2019 Enhancements     *
+ *                 Pant                                                           *
+ * 13/02/2020      Arun            PCR026551         Pre-Shipment development     *
+ *                 Jacob                                                          *
+ * 25/11/2019      Abhishek        PCR026243         DL:1803 Display Migration to *
+ *                 Pant                              Q2C                          *
+ * 13/01/2019      Abhishek        PCR033317         CBC MEA questionnaire        *
+ *                 Pant                              alignment as part of RAR     *
+ * 25/01/2021      Abhishek Pant   PCR033306         Q2C Display Enhancements     *
+ * 13/06/2021      X089025         PCR035760         Tech Upgrade issues solution * 
+ * 17/04/2021      Arun Jacob      PCR034716         Q2C ESA,PSR Enhancements     *
+************************************************************************************/
+ /************************Start Of PCR019492: ASC606 UI Changes**************/
+ .customColumn0 .sapMText{
+     padding-left: 21px !important;
+ }
+ .customColumn0Rev .sapMText{
+     padding-left: 0px !important;
+ } 
+ .customColumn1 .sapMText{
+     padding-left: 20% !important;
+ } 
+ .customColumn1Rev .sapMText{
+     padding-left: 0% !important;
+ } 
+ .customColumn2 .sapMText{
+     padding-left: 10% !important;
+ }
+ .customColumn2Rev .sapMText{
+     padding-left: 0% !important;
+ }
+ .customColumn3 .sapMText{
+     padding-left: 10% !important;
+ }
+ .customColumn3Rev .sapMText{
+     padding-left: 0% !important;
+ }
+ .customColumn4 .sapMText{
+     padding-left: 21% !important;
+ }
+ .customColumn4Rev .sapMText{
+     padding-left: 0% !important;
+ }
+ .customColumn5 .sapMText{
+     padding-left: 13% !important;
+ }
+ .customColumn5Rev .sapMText{
+     padding-left: 0% !important;
+ }
+ .customColumn6 .sapMText{
+     padding-left: 22% !important;
+ }
+ .customColumn6Rev .sapMText{
+     padding-left: 0% !important;
+ }
+ .customColumn7 .sapMText{
+     padding-left: 40% !important;
+ }
+ .customColumn7Rev .sapMText{
+     padding-left: 0% !important;
+ }  
+ .customColumn8 .sapMText{
+     padding-left: 56% !important;
+ } 
+ .customColumn9 .sapMText{
+     padding-left: 56% !important;
+ }
+ .customColumn10 .sapMLnk{
+     padding-left: 10% !important;
+ }
+ .customColumn10Rev .sapMLnk{
+     padding-left: 0% !important;
+ }
+ .classCARMRadioGrp{
+     padding-left: 8% !important;
+ }
+ /************************Start Of PCR022669: Q2C Q2 UI Changes**************/
+ .sapMRABtnClass .sapMBtnInner{
+     background-color: red !important;
+     color: white !important;
+     text-shadow: none;
+     font-weight: normal !important;
+ }
+ .sapMRPBtnClass .sapMBtnInner{
+     background-color: green !important;
+     color: white !important;
+     text-shadow: none;
+     font-weight: bold !important;
+ }
+ /************************End Of PCR022669: Q2C Q2 UI Changes**************/
+ .sapMIPWdH{
+     width: 25.5em !important;
+ }
+ .sapMRRATab .sapMText{
+      padding-left: 17% !important;
+ }
+ .sapMTMgin{
+     margin-top: .5rem !important;
+ }
+ .sapMOldText {
+     font-weight: bold !important;
+     padding-left: 1em !important;
+}
+ .sapMSelRRATxt{
+     color: red !important;
+	 font-weight: bold !important;
+	 margin-left: 16px !important;
+	 margin-top: 1px !important;
+ }	
+ .sapMPSRMandWd{
+     width: 39% !important;
+ }
+ .sapMRRATab .sapMInputBaseWidthPadding{
+     padding-top: 6px !important;
+ }
+ .sapMRRATab .sapUiMediumMarginBottom {
+    margin-bottom: 1rem !important;
+}
+.sapUiTabPad .sapMText{
+	padding-left: 20% !important;
+}
+.sapUiTabRPad .sapMText {
+    padding-left: 39% !important;
+}
+.sapMTMarT{
+    width: 100% !important;
+    margin-top: .6rem !important;
+    font-weight: bold !important;
+}
+.sapMWidth{
+	width: 38rem !important;
+}
+.sapMWidth .sapMText {
+    font-size: 0.899rem !important;
+}
+ /************************End Of PCR019492: ASC606 UI Changes**************/
+ /************************Start Of PCR021481: Q2C Q1/Q2 enhancements**************/
+ .sapMTxtCarmNMppDat{
+    font-weight: bold !important;
+    color: red !important;
+    padding-left: 18% !important;
+ }
+ .sapMRBCarmNABtn{
+     padding-left: 30% !important;
+ }
+ /************************End Of PCR021481: Q2C Q1/Q2 enhancements**************/ 
+ .sapMCFTxt{
+    margin-top: .8rem !important;
+ }
+ .sapMCFCb{
+    box-sizing: border-box;
+    height: 2.5rem !important;
+    line-height: 3rem;
+    vertical-align: middle !important;
+    text-align: left;
+    padding: 0px 0 0 0rem;
+ }
+ .sapUiCBCTab .sapMInputBase, .sapMInputBaseInner{
+      white-space: normal !important;
+ }
+.sapUiCBCTab .sapUiTableCell {
+    padding-left: 1% !important;
+ }
+.sapMattTab .sapMInputBaseWidthPadding{
+    padding: 0.775rem !important;
+ }
+ .classMCcForm{
+    margin-left: 0% !important;
+    margin-bottom: 1% !important;
+ }
+ .classMCcForm .sapUiRespGridMedia-Std-Desktop.sapUiRespGridHSpace0 > .sapUiRespGridSpanL2{
+    width: 17.666667% !important;
+ }
+ .sapMDPpadiing{
+     padding: 0% !important;
+     padding-left: 4% !important;
+ }
+ .sapMtextPad{
+       padding: 2% !important;
+ }
+ .classGenTable .sapMListTblCell{
+      vertical-align: middle !important;
+ }
+ .asteriskCC:before {
+    content: " *";
+    color: red;
+    font-size: 1.0rem;
+ } 
+ .sapMCheckBox .sapMCb{
+	box-sizing: border-box !important;
+    height: 1.0001rem !important;
+    line-height: 3rem !important;
+    vertical-align: top !important;
+    padding: 0 0 0rem !important;
+    margin-top: -1.5% !important;                                                                                                     /* PCR035760++; Changed From 6 to 1.5% */
+}
+.sapMStatusBar .sapMBar{
+	color: #f7f7f7 !important;
+	background-color: #3b949d !important;
+	text-shadow: 0 0 0rem #fff;                                                                                                       /* PCR035760++; */
+}
+ /************************Start Of PCR022669: Q2C Q2 UI Changes**************/
+/*.sapMStatusBar .sapMBarLeft, .sapMStatusBar .sapMBarRight(*/
+.sapMStatusBar .sapMBarLeft{	
+	height: 100% !important;
+    position: absolute !important;
+    /*margin-left: -91% !important;*/
+    margin-left: 0% !important;
+    width: 12rem !important;                                                                                                          /* PCR035760++; Changed From 10rem to 12rem */
+/************************End Of PCR022669: Q2C Q2 UI Changes**************/
+}
+.sapMQ2CSbTxt .sapUiFormResGridCont {
+    height: 10px !important;
+}
+.sapMOppSrchLnk {
+    font-size: 0.675rem;
+} 
+.sapUicompactMarginBottom{
+	margin-bottom: 1rem !important;
+    margin-top: -1rem !important;	
+}
+.sapUiSizeCompact .sapUiTableRowHdrScr, .sapUiSizeCompact .sapUiTableColRowHdr {
+    width: 0px !important;
+    display: none !important;                                                                                                         /*PCR035760++;*/
+}
+.sapMCCText {
+    font-weight: bold !important;
+}
+.sapUiTableCCnt {
+    /*margin-left: -31px !important;                                                                                                    PCR035760~~*/
+    margin-left: 1px !important;                                                                                                      /*PCR035760++;*/
+}
+html.sap-desktop ::-webkit-scrollbar-thumb {
+    background-color: #9aa1a2 !important;
+}
+.sapMainComSavBtnClass{
+	    width: 30% !important;
+    margin-top: 19% !important;
+    margin-left: 5% !important;
+}
+.sapMCommTBox .sapMTextAreaInner{
+	height: 8rem !important;                                                                                                          /*PCR035760++; changed from 7rem to 8rem*/
+}
+.SapMQuesText {
+    width: 92% !important;
+}
+.sapUiSizeCompact .sapUiTableGroupIcon::before, .sapUiSizeCozy .sapUiTableGroupIcon::before, .sapUiSizeCompact .sapUiTableTreeIcon::before, .sapUiSizeCozy .sapUiTableTreeIcon::before {    
+    
+}
+.sapUiSizeCompact .sapUiTableTreeIcon, .sapUiSizeCozy .sapUiTableTreeIcon {
+    width: 19px !important;
+}
+.sapMCbk{
+	height: 0rem !important;
+}
+.sapMLTLMargin{
+	margin-top: 1% !important;
+}
+.sapMTB-Transparent-CTX > .sapMTitleTB.sapMTitleStyleAuto {
+    font-size: 1.0rem !important;
+}
+.sapMTB-Transparent-CTX .sapMLabel {
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 0 1px 0 #ffffff;
+    color: #bc3333 !important;
+    font-size: .8rem !important;
+}
+.classPerBU .sapMBtnIcon {
+   color: white !important;
+   background-color: green !important;
+}
+.classDefaultBU .sapMBtnIcon {
+	   color: black !important;
+       background-color: transparent !important;
+}
+.classOppWdline{
+	margin-top: 9% !important;
+}
+.classSWOpportunityTable .sapMListTbl .sapMObjectIdentifierTitle .sapMLnk, .classSWOpportunityTable .sapMListTbl .sapMObjectIdentifierTitle .sapMText{
+	font-size: 0.699rem !important;
+}
+.sapMQ2Clbl .sapMLabel{
+	font-size: 0.699rem !important;
+	text-overflow: inherit;
+}
+.sapMQ2Clbl .sapMBtnInner{
+    font-size: 0.729rem !important;
+}
+.sapMQ2Clbl .sapMListTbl .sapMText, .sapMQ2Clbl .sapMListTbl .sapMLabel{
+	
+    font-size: 0.699rem !important;
+}
+.sapMQ2CSbTxt  .sapMLabel{
+	font-size: 0.729rem !important;
+}
+.sapMQ2CRSRSF .sapUiRGLContainerCont{
+	    margin-left: -5% !important;
+}	
+.sapMQ2CRSRSF .sapUiFormTitleH5{
+	    height: 0rem !important;
+}	
+.sapMQ2CRSRSF .sapUiFormResGridCont > .sapUiFormElementLbl > .sapMLabel{
+	margin-top: 3% !important;
+}
+.classPSRScrlCn{
+	margin-top: 0% !important;
+}
+.classRMPSRScrlCn{
+	margin-top: 0% !important;
+}
+.classPSRSDA .sapMITBContent {
+    background-color: #ddeff1;
+}
+.hazBtnClass{
+	width: 1.3rem !important;
+}
+.hazTabHdrClass .sapUiSizeCompact .sapMTB.sapMListHdrTBar{
+	 height: 2rem !important;
+}
+.classFilterPanel .sapUiFormM .sapUiFormContainerTitle > .sapUiFormTitle {
+    height: 0rem !important;
+}
+.lblBold
+{
+	    font-weight: bold !important;
+}
+.classGenInfoDtailForm .sapUiFormM .sapUiFormContainerTitle>.sapUiFormTitle{
+     height: 3rem;
+     font-weight: bold;
+     color: #007cc0;
+    line-height: 3rem;
+}
+.classSWOpportunityTable .sapMListTblCell.sapMListTblCellNoData{
+	font-size: 0rem !important;
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+    line-height: 0px !important;
+    border-bottom: 0px solid #f7f7f7 !important;
+}
+.classSWOpportunityTable .sapMLIBShowSeparator > td {
+    border-top: 0px solid #f7f7f7 !important;
+}
+.classOpportunityTable .sapMListTblNavCol > .sapMLIBImgNav {
+    display: none;
+}
+.classOpportunityTable .sapMGrowingListDescription{
+	    padding: 0px !important;
+}
+.classOpportunityTable .sapMGrowingListTriggerText > .sapMSLITitle{
+	margin: 0.13rem 0 !important;
+}
+.classPSRInfoDtailForm .sapUiFormM .sapUiFormContainerTitle>.sapUiFormTitle{
+     height: 0rem;
+     font-weight: bold;
+     color: #007cc0;
+    line-height: 3rem;
+}
+.classFilterDtailForm .sapUiFormM .sapUiFormContainerTitle>.sapUiFormTitle{
+     height: 3rem;
+     font-weight: bold;
+     color: #007cc0;
+     background-color: #e6f2f9;
+     line-height: 3rem;
+}
+.classPSRInfo .sapMCrsl.sapUiContentPadding>.sapMCrslInner>.sapMCrslItem>.sapMScrollCont>.sapMScrollContScroll{
+	    padding: 0rem !important;
+}
+.classDefault .sapMPanelContent{
+	padding: 0rem !important;
+}
+.fontWt {
+	font-weight: bold !important;
+}
+.classBWHB{
+	margin-top: 2.5% !important;
+}
+.Hide .sapMCbBg{
+	    width: 0px !important;
+	    border: 0px !important;
+	    visibility: hidden !important;
+}
+.classS2{
+	margin: 1% !important;
+}
+.sapMOH {
+    padding: 0rem !important; 
+    padding-top: 1rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    padding-bottom: 1rem !important;
+}
+.ROMListclass   .sapMTB-Transparent-CTX.sapMTB {
+     padding-left: 0rem !important; 
+}
+.classNotInitiatedBaloon .sapMITBSelected .sapMITBFilterNeutral{
+	background: White !important;
+    color: #333333 !important;
+    border-color: #333333 !important;
+}
+.classInitiatedBaloon .sapMITBSelected .sapMITBFilterNeutral{
+	background: #ffff00 !important;
+    color: #333333 !important;
+    border-color: #333333 !important;
+}
+
+.classNotRequiredBaloon .sapMITBSelected .sapMITBFilterNeutral{
+	background: #008000 !important;
+    color: #ffffff !important;
+    border-color: #009de0 !important;
+}
+.classdefaulttBaloon .sapMITBSelected .sapMITBFilterNeutral{
+	background: #007cc0 !important;
+    color: White !important;
+    border-color: #007cc0 !important;
+}
+.sapMIBar-CTX .sapMTitle{
+	font-weight: bold !important;
+	font-size: 0.799rem !important;
+}
+.classScrollCont {
+    border: 1px solid #80cef0;
+}
+.sapMListNoDataText{
+	font-size: 0.699rem !important;
+}
+.sapUiSizeCompact .sapMListTblCell.sapMListTblCellNoData{
+	font-size: 0.699rem !important;
+}
+.noBorder .sapMInputBaseInner
+{
+	border : none !important;
+}
+.listheaderclass {
+    font-weight: bold !important;
+    color: #43c1f5 !important;
+    font-size: 0.799rem !important;
+}
+.sapUiForm .sapMText {
+    overflow: hidden;
+    font-size: 0.699rem !important;
+}
+.sapUiSizeCompact .sapUiFormContainerTitle > .sapUiFormTitle {
+    font-size: 0.799rem !important;
+}
+.sapMITBFilter .sapMITBText {
+    font-size: 0.699rem;
+}
+.blankBox {
+    width: 2% !important;
+}
+.sapUiFormResGrid>div {
+    padding: 0rem 0.0rem !important;
+}
+.classDefault .sapMPanelWrappingDiv .sapMPanelWrappingDivExpanded .sapMPanelExpandableIcon{
+	height: 0rem !important;
+	color: white !important;	
+}
+.HeaderForm .sapUiFormResGrid>div {
+    padding: 0rem 0rem !important;
+}
+.HeaderForm .sapUiRespGridMedia-Std-Phone.sapUiRespGridHSpace0>.sapUiRespGridSpanS7{
+	width: 43.33333333% !important;
+}
+.HeaderForm .sapUiRespGridMedia-Std-Phone.sapUiRespGridHSpace0>.sapUiRespGridSpanS5{
+	width: 53.666667% !important;
+}
+.classDefault .sapMPanelWrappingDiv{
+	height: 0rem !important;
+	width: 0rem !important;
+}
+.classDefault .sapMPanelExpandableIcon{
+	width: 0rem !important;
+    line-height: 0rem !important;
+    font-size: 0rem !important;
+}
+.classPSRDecision .sapMFlexItem{
+	width: 100% !important;
+}
+.classPSRDecision .classPSRDecisionItem{
+	width: 99% !important;
+}
+.classStatusBar .sapMPageHeader::before{
+	border: none !important;
+}
+.classMandatBox .classMandatTextBox{
+    margin-top: 2.5% !important;
+    margin-left: 7% !important;
+}
+.classMandatBox .classMandatReqTextBox{
+    margin-top: 0.7% !important;                                                                                                        /*PCR035760++; change from 1 to 0.7%*/
+    margin-left: 3% !important;
+    width: 5% !important;
+}
+.classMandatBox .classMandatCBCTextBox{
+    margin-top: 0.7% !important;                                                                                                        /*PCR019492++; PCR035760++; change from 1 to 0.7%*/
+    margin-left: 3% !important;
+    margin-right: -91% !important;                                                                                                      /*PCR019492++*/
+}
+.classBlankSpace{
+	margin-left: 0.70rem !important;
+}
+.classMandatBox .sapUiMediumMarginBottom{
+	margin-bottom: 0rem !important;
+}
+.classBotMar .sapUiMediumMarginBottom{
+	margin-bottom: 0rem !important;
+}
+.classTxtArea{
+	height: 192px !important;
+	width: 80% !important;
+}
+.classTxtArea .sapMInputBaseInner{
+	height: 100% !important;
+}
+.classOkBtn{
+	    margin-left: 80% !important;
+	    width: 10% !important;
+}
+.classUp .sapMInputBaseInner{
+	border-color: white !important;
+}
+.classMandatBox .classMandatFld{
+	color: red !important;
+	font-weight: bold !important;
+}
+.classMandatAftrAns .classMandatFld{
+	color: black !important;
+	font-weight: bold !important;
+}
+.classTab .sapMListTblHeader{
+	   display: none !important;
+}
+.classMComment{
+	    margin-left: -5% !important;
+	    margin-bottom: 1% !important;
+}
+.classPSRStatusTextBox{
+	height: 30px !important;
+	margin-top: 2% !important;
+	margin-left: 7% !important;
+}
+.classARComment{
+	margin-left: 1rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+.classApproveConficon{
+    width: 2rem !important;
+    margin-top: 4px !important;
+}
+.classPSRStatusTextBox .sapMFlexItem{
+	width: 64px !important;
+}
+.sapMQ2CPnl .sapMPanelHdr {
+    font-size: 1.0rem !important;
+}
+.HeaderFormMandat{
+	border-bottom: 2px solid #cccccc !important;
+}
+.classStatusBarSkip .sapMBar{
+	background-color: #ddeef1 !important;
+	color: #666666 !important;
+	text-shadow: 0 0rem 0 rgba(255,255,255,0.5) !important;
+}
+.classStatusBarSkip .sapMBtnIcon{
+	color: #f7f7f7 !important;
+    text-shadow: 0 0px 0 #ffffff !important;
+}	
+.classStatusBarSkip .sapMBtnInner{
+	color: #f7f7f7 !important;
+    text-shadow: 0 0px 0 #ffffff !important;
+}
+.classStatusBarSkip .sapMITBSelected .sapMITBFilterNeutral{
+    background: #008000;
+}
+.classStatusBarInitiate .sapMBar{
+	background-color: #ddeef1 !important;
+	color: #f7f7f7  !important;
+	text-shadow: 0 0rem 0 rgba(255,255,255,0.5) !important;
+	background-color: #3b949d !important;
+}
+.sapUiTableHdr{
+	background-color: #3b949d !important;
+    color: white !important;
+}
+
+/************Start Of PCR021481++: 4190 : Q2C Q1/Q2 enhancements **************/
+.classQuesItems{
+    background-color: White !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    color: #333333 !important;
+    width: 92% !important;
+}
+.classQuesTitle{
+	background-color: White !important;
+	font-weight: bold !important;
+    font-style: italic !important;
+    color: blue !important;
+    width: 92% !important;
+}
+/************End Of PCR021481++: 4190 : Q2C Q1/Q2 enhancements **************/
+html.sap-desktop .sapMBtn:focus>.sapMFocusable {
+    outline: 0px dotted #000000 !important;
+    outline-offset: 0px !important;
+}
+.classStatusBarInitiate .sapMBtnIcon{
+	color: #666666  !important;
+    text-shadow: 0 0px 0 #666666 !important;
+    background-color: #ddeef1 !important;
+}	
+.classStatusBarInitiate .sapMBtnInner{
+	color: #666666  !important;
+    text-shadow: 0 0px 0 #666666  !important;
+    background-color: #ddeef1 !important;
+}	
+.carmDecisionBox{
+	margin-left: 7% !important;
+}
+.carmTableDatePadding{
+    /*padding-left: 50% !important;                                                                                                   PCR021481--  */
+}
+/*s2 view attachments */
+.buttonSpacing {
+	padding-left: 1rem !important;
+}
+.genaralButtonSpacing > div{
+	/*padding-left: 5rem !important;                                                                                                  PCR035760--  */
+	padding-left: 0rem !important;                                                                                                  /*PCR035760++  */
+}
+
+.genaralButtonSpacing > div  + div{
+	padding-left: 1rem !important;
+}
+.browseButtonSpacing{
+	    padding-left: 4rem !important;
+}
+.genaralTabChooseButton{
+align-items: flex-end !important;	
+}
+.genaralTabChooseButton div:nth-child(2) {
+            width: 100% !important; 
+     }
+.linkFontSize{
+	font-size: 0.699rem !important;
+}
+.buttonGroupAlign {
+	padding-left: 4rem !important;
+}
+.buttonGroupAlign > div{
+	padding-left: 1rem !important;
+}
+.genaralButtonGroupAlign{
+	padding-left: 4rem !important;
+}
+.genaralButtonGroupAlign > div{
+	padding-left: 1rem !important;
+}
+.classCarmMandatBox .classCarmMandatTextBox{
+	margin-left: 7% !important;
+}
+.classCarmMandatBox .classCarmMandatFld{
+	color: red !important;
+	font-weight: bold !important;
+}
+.classCaRMcompletedBaloon .sapMITBSelected .sapMITBFilterNeutral{
+	background: #09900d !important;
+    color: #ffffff !important;
+    border-color: #009de0 !important;
+}
+.classCaRMredBaloon.sapMITBSelected .sapMITBFilterNeutral{
+	background: #ff0505 !important;
+    color: #ffffff !important;
+    border-color: #009de0 !important;
+}
+.classDatePickerPadding{
+	padding-left: 4rem !important;
+}
+.classPaddingTopGenaralFragment{
+	padding-top: 2rem;
+}
+/************************Start Of PCR022669: Q2C Q2 UI Changes**************/
+.sapMPtrBtn .sapMBtnIcon{
+     color: #cc1919 !important;
+ }
+ .sapMPtrBtn .sapMBtnInner{
+     color: #cc1919 !important;
+ }
+ /************************End Of PCR022669: Q2C Q2 UI Changes**************/
+/*end of s2 view attachment */
+/*s3 view */
+.browseButtonSpacingS3{
+	padding-left: 5rem !important;
+}
+.buttonGroupPad{
+	    padding-left: 5rem
+}
+/*end of s3 view */
+/***********Start Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App**************/
+.classStatusBar .sapMIBar-CTX .sapMLabel {
+	color: #ffeb00 !important;
+    font-weight: bold !important;
+    padding-left: 2rem !important;
+}
+.classStatusBar .sapMBar .sapMText {
+	color: white !important;
+    font-weight: bold !important;
+}
+.classStatusBarInitiate .sapMEsaTitTxt .sapMBtnInner {
+	color: black !important;
+	font-weight: bold !important;
+    background-color: #fffcb5 !important;    
+}
+.sapMEsaTitTxt {
+    padding-top: 0.0rem !important;
+   }
+.sapMMargin{
+	margin-left: 3% !important;
+}
+.sapUiEsaSmallMargin {
+    margin-left: .9rem !important;
+}
+.sapMEsaEditModeMargin {
+	margin-top: .8rem !important;
+}
+.sapMEsaTab .sapMListTblCell{
+    display: none !important;
+}
+.sapEsaHB .sapMEsaIP{
+	padding-top: 4.5rem !important;
+	padding-left: 19.1rem !important;
+}
+.sapMAgrHB .sapMTA{
+	padding-left: 4rem !important;
+}
+.sapMPrIP{
+	padding-top: 2.5rem !important;
+    padding-left: 4rem !important;
+}
+.sapMAgrHB .sapMPaIP{
+    padding-left: 3.3rem !important;
+}
+.sapMAgrHB .sapMSOIP{
+    /*padding-left: 19.6rem !important;                                                                                                    PCR035760-- */
+    padding-left: 20rem !important;                                                                                                     /* PCR035760++ */
+}
+.sapMAgrHB .sapMEAIP{
+    padding-left: 9rem !important;
+}
+.sapMEsaLbl{
+	padding-top: .5rem !important;
+}
+.sapMEsaVB{
+	padding-left: 1rem !important;
+}
+.sapMAgrHB .sapMASAIP{
+	padding-left: 4.7rem !important;
+}
+.sapMSEMargin{
+	margin-left: 4rem !important;
+}
+.SapMShpTabTitClass{
+	background-color: honeydew !important;
+	height: 1.8rem !important;
+}
+.SapMShpTabTitClass .sapMTitle{
+	font-style: italic !important;
+    font-size: 0.875rem !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+.sapMshppad{
+	padding-left: 11.1rem !important;
+}
+.sapUiEsaPrceClass{
+	margin-left: 15rem !important;
+}
+.sapMprceIP{
+	margin-left: 5.6rem !important;
+}
+.sapMOutShipCostClass{
+	color: #333333 !important;
+}
+.sapMShipCostClass .sapMLabel{
+	color: #333333 !important;
+}
+.sapMSuppLblNclass{
+	color: #b2afaf !important;
+}
+.sapMSuppLblYclass{
+	color: #666666 !important;
+}
+.ChkListBarclass{
+	background-color: #3b949d  !important;
+}
+.PayTrmBarclass .sapMIBar.sapMHeader-CTX{
+	background-color: #3b949d  !important;
+}
+.PayTrmBarclass .sapMTitle{
+	color: white !important;
+	font-weight: bold !important;
+}
+.ChkListBarclass .sapMTitle{
+	color: white !important;
+	font-weight: bold !important;
+}
+.sapMChkLstIPClass{
+    height: 2rem !important;
+    padding: 0rem !important;
+    margin-top: 2% !important;
+}
+.sapMChkLstIPClass .sapMTextAreaInner {
+    padding: 0rem !important;
+    line-height: 1.2 !important;
+}
+ .sapUiTpMargn{
+     margin-top: 2% !important;
+ }
+ .sapUIEditMar{
+     margin-top: 8% !important;
+ }
+ .sapUIEsa{
+     background-color: #f8194c !important;
+     margin: 0rem !important; 
+ }
+ .sapMEsaTitTxt{
+     /*padding-top: 0.7125rem !important;*/
+    font-weight: bold !important;
+    color: red !important;
+ }
+ .sapMEsaTitLbl{
+    font-weight: bold !important;
+ }
+ .classEsaSDatePickerPad{
+    padding-left: 11rem !important;
+ }
+ .classEsaEDatePickerPad{
+    padding-left: 10.7rem !important;
+ }
+ .classEsaASDatePickerPad{
+    padding-left: 12.9rem !important;
+ }
+.classESDPad{
+	padding-left: 11.4rem !important;
+    padding-top: .5rem !important;
+}
+.classESTDPad{
+	padding-left: 11.2rem !important;
+    padding-top: .5rem !important;
+}
+.sapMEqipRtnIPclass{
+	padding-top: 4rem !important;
+}
+.sapMPropTrmIPclass{
+	padding-left: 11rem !important;
+	width: 145% !important;
+}
+.sapMShiptrmDesIPclass{
+	padding-left: 13rem !important;
+	width: 141.6% !important;
+}
+.sapMShipComIPclass{
+	padding-left: 12.9rem !important;                                                                                                  /* PCR035760++; 13.1 to 12.9rem changed*/
+	width: 143% !important;                                                                                                            /* PCR035760++; 142 to 143% changed*/
+}
+.sapMSShiptrmLocIPclass{
+	padding-left: 8.5rem !important;
+	margin-left: 5.6rem !important;
+	width: 118.4% !important;
+}
+.sapMShiptrmJustIPclass{
+	padding-left: 12.8rem !important;                                                                                                 /* PCR035760++; 12.8 to 12.5rem changed*/
+	width: 143.5% !important;                                                                                                         /* PCR035760++; 142 to 143.5% changed*/
+}
+.sapMBotSalPrce{
+	/*padding-left: 5.8rem !important;                                                                                                   PCR035760-- */
+	width: 20.3rem !important;                                                                                                        /* PCR035760++ */
+    margin-left: 11.4rem !important;                                                                                                  /* PCR035760++ */
+}
+.sapMTarSalPrce{
+	/* padding-left: 6.2rem !important;                                                                                                  PCR025717--*/
+	width: 20.3rem !important;                                                                                                        /* PCR025717++; PCR035760++; 21 to 20.3rem changed*/
+	margin-left: 5.8rem !important;                                                                                                   /* PCR035760++ */
+}
+.sapMGTMar{
+	/* padding-left: 4.2rem !important;                                                                                                  PCR025717--
+	    padding-left: 2.2rem !important;                                                                                                 PCR025717++; PCR035760~~*/
+	    width: 20.4rem !important;                                                                                                    /* PCR025717++; PCR035760++; 23.3 to 20.4rem changed*/
+        margin-left: 8.2rem !important;                                                                                               /* PCR035760++; */
+}
+.sapMGBmar{
+	/*padding-left: 3.8rem !important;                                                                                                   PCR035760~~ */
+	padding-left: 4rem !important;                                                                                                    /* PCR035760++; */
+    width: 24.5rem !important;                                                                                                        /* PCR035760++; */
+}
+.sapMJust{
+	padding-left: 8.6rem !important;                                                                                                  /* PCR035760++; 8.5 to 8.6rem changed*/
+    width: 29.2rem !important;                                                                                                        /* PCR035760++; */
+}
+.sapMBSPComm{
+	/* padding-left: 0.1rem !important;                                                                                                  PCR025717--*/
+	margin-left: -5.25rem !important;                                                                                                 /* PCR025717++; PCR035760++; 5.4 to 5.25rem changed*/
+    width: 20.27rem !important;                                                                                                       /* PCR025717++; PCR035760++; 20.8 to 20.2rem changed*/
+}
+.sapMEsaShpTab .sapMLabel{
+    color: #333333 !important;
+    font-style: italic !important;
+    font-size: 0.9rem !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+.sapMChinTitClass{
+	padding-left: 12rem !important;
+}
+.sapMEqpRtnOthIPClass{
+	width: 29rem !important;
+    padding-left: 15rem !important;
+    transform: translate(-23%, -100%) !important;
+}
+.sapMMonWid{
+	width: 3rem !important;
+}
+.sapMNYTBarClass{
+	background-color: #457aae!important;
+    height: 2.1rem !important;
+}
+.sapMNYTBarClass .sapMTitle{
+	font-style: italic !important;
+    font-size: 0.875rem !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    text-shadow: 0 0.0625rem 0 #457aae !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+.sapMLMar{
+	padding-left: 2rem !important;
+}
+.sapChinConRDClass .sapMLabel{
+	color: white !important;
+}
+.sapMUnderClass{
+	text-decoration: underline !important;
+}
+.sapMSSRCPad{
+	padding-left: 1.5rem !important;
+}
+.sapMROLCPad{
+	padding-left: 1.2rem !important;
+}
+.sapMASTxtCls{
+	padding-top: .5rem !important;;
+    padding-left: 5rem !important;;
+}
+.disablekb .sapMInputBaseInner{
+ pointer-events: none;
+ color: transparent;
+ text-shadow: 0 0 0 gray;
+}
+.sapUiCForm  .sapMEsaTxt{
+	color: #666666 !important;
+    font-size: 0.875rem !important;
+}
+.sapMPayTrm{
+	padding-left: 5.1rem !important;
+}
+.sapMPaytrmCodeEWidth{
+	width: 116.7% !important;
+}
+.sapMPaytrmCodeDWidth{
+	width: 122.7% !important;
+}
+/************Start Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App**************/
+/*********************** Start Of PCR025717 Q2C Q4 2019 Enhancements **********************************/
+.sapMEsaPrcTxt{
+	word-break: break-word;
+    width: 38.5% !important;
+    color: #666666 !important;
+}
+.sapMAgrHB .sapMText {
+    font-size: 0.875rem !important;
+}
+.sapMPrcEvaIp{
+    width: 20.2rem !important;                                                                                                           /* PCR035760++; 21 to 20.2rem changed*/
+    margin-left: -10.1rem !important;                                                                                                    /* PCR035760++; 10.4 to 10.1rem changed*/
+}
+.sapMPrcVpsIp{
+	width: 20.2rem !important;                                                                                                           /* PCR035760++; 21 to 20.2rem changed*/
+    margin-left: -24.8rem !important;                                                                                                    /* PCR035760++; 25.4 to 24.8rem changed*/
+}
+.sapMPrcExpSPIp{
+	width: 20.6rem !important;                                                                                                           /* PCR035760++; 21.1 to 20.6rem changed*/
+    margin-left: 3.3rem !important;                                                                                                      /* PCR035760++; 3 to 3.3rem changed*/
+}
+.sapMMaxWidth{
+	width: 100% !important;
+}
+.sapMPrcHvmSPTxtWd{
+	word-break: break-word;
+    width: 62.5% !important;
+    color: #666666 !important;
+}
+.sapMHvmRdMar{
+	margin-left: -7.5rem !important;                                                                                                     /* PCR035760++; 8 to 7.5rem changed*/
+}
+/*********************** End Of PCR025717 Q2C Q4 2019 Enhancements ***********************************/
+/*********************** Start Of PCR026551 Q2C Pre-Ship Checklist Enhancements **********************/
+.classMandatBox .classMandatPSPTextBox{
+    margin-top: 1% !important;                
+    margin-left: 3% !important;
+	margin-right: -70% !important;
+}
+.classPspQnTitle{                    
+    margin-left: -0.1% !important;
+	color: red;
+})
+/*********************** End Of PCR026551 Q2C Pre-Ship Checklist Enhancements ************************/
+/************************Start Of PCR026243: DL:1803 Display Migration to Q2C**************/
+ .sapUiMleft{
+    margin-left: 2em !important;
+ }
+ .page2BgImg .sapUiCBCTab .sapUiTableColHdrCnt{
+	 border-bottom: 2px solid #E87722 !important;
+ }
+ .page2BgImg .sapUiCBCTab .sapUiTableCol, .page2BgImg .sapUiCBCTab .sapUiTableColRowHdr{
+	background-color: #4599C3 !important;
+ }
+ /*.sapUiCBCTab .sapUiTableColCell .sapMLabel{                                                                                                PCR033317-- */
+ .page2BgImg .sapUiCBCTab .sapUiTableColCell .sapMLabel{                                                                                    /*PCR033317++ */
+	color: #ffffff !important;
+ }
+ .page2BgImg .sapMQ2CTab .sapMListTblHeader .sapMListTblHeaderCell,
+ .page2BgImg .sapMattTab .sapMListTblHeader .sapMListTblHeaderCell,
+ .page2BgImg .sapMQ2Clbl .sapMListTblHeader .sapMListTblHeaderCell
+  {
+    background-color: #4599C3 !important;
+    border-bottom: 4px solid #E87722 !important;
+}
+.page2BgImg .sapMQ2CTab .sapMListTblHeader .sapMListTblHeaderCell .sapMText,
+.page2BgImg .sapMattTab .sapMListTblHeader .sapMListTblHeaderCell .sapMText,
+.page2BgImg .sapMQ2Clbl .sapMListTblHeader .sapMListTblHeaderCell .sapMText{
+    color: white !important;
+}
+.page2BgImg {
+  /*background-image: url('../util/img/appliedmaterials.jpg');
+  background-size: 100% 100%;                                                                                                                    PCR033306-- */
+}
+.sapMS4TabContent .sapMITBContent{
+	background: transparent !important;
+}
+.page2BgImg .sapMPanelHdr, .page2BgImg .sapMTitle
+{
+	/*color: #E87722 !important;                                                                                                                 PCR033306-- */
+    font-weight: 700 !important;
+}
+.page2BgImg .sapUiFormResGrid.sapUiFormBackgrTranslucent > div {
+	background-color: white !important;
+}
+.page2BgImg .sapMITBFilter .sapMITBText{
+	text-shadow: 0 0px 0 !important;
+	color: #333333 !important;
+    font-weight: 700 !important;
+}
+.page2BgImg .classFilterPanel .sapMBtnInner{
+	font-weight: bold !important;
+}
+.page2BgImg .navDisBtnClass .sapMBtnIcon, .page2BgImg .navDisBtnClass .sapMBtnInner{
+	/*color: #E87722 !important;                                                                                                                 PCR033306-- */
+	font-weight: bold !important;
+}
+.sapMEsaHdrClass .sapUiRespGridMedia-Std-Desktop.sapUiRespGridHSpace0 > .sapUiRespGridSpanL3{
+	width: 47% !important;
+}
+.sapMEsaHdrClass .sapUiRespGridMedia-Std-LargeDesktop.sapUiRespGridHSpace0 > .sapUiRespGridSpanXL3{
+	width: 47% !important;
+}
+.sapMDisshppad{
+	padding-left: 11.8rem !important;
+}
+.sapMCBCLitTxt .sapMMsgBoxText{
+	font-weight: bold !important;
+    color: red !important;
+}
+.sapMDisCCText{
+	font-weight: bold !important;
+    background-color: #ffffff !important;
+}
+.sapMPanel .sapMDisCCText {
+    font-size: 1.5rem !important;
+}
+.sapMQ2CCommClass .sapMPanelBGTranslucent{
+	    margin-left: -7% !important;
+}
+/************************End Of PCR026243: DL:1803 Display Migration to Q2C**************/
+/************************start Of PCR033306: Q2C Display Enhancements********************/
+.sapMEsaOthIP{
+	padding-top: 5em !important;
+    padding-left: 4rem !important;
+}
+.skipdft .sapMITBSepLine{
+	border: 0px solid #bfbfbf;
+}
+.disdft .sapMITBSepLine{
+	border: 1px solid #bfbfbf;
+}
+/************************End Of PCR033306: Q2C Display Enhancements*********************/
+/************************start Of PCR034716++: Q2C ESA,PSR Enhancements************/
+.classEasEquipSmartEval{
+	padding-top: 2.5rem !important;
+}
+.classEasEquipPartialRelease{
+	padding-top: 5rem !important;
+	padding-left: 4rem !important;
+}
+.classEasEquipOthersRelease{
+	padding-top: 7.5rem !important;
+}
+.sapMeasSEval23RDDesIPclass{
+	padding-left: 5rem !important;
+}
+.sapMEsaSupLbl{
+	padding-top: .2rem !important;
+}
+.sapMEsaSupLbl2{
+	padding-top: .3rem !important;
+}
+/************************End Of PCR034716++: Q2C ESA,PSR Enhancements**************/
+/************ Start Of PCR035760 Tech Upgrade issues solution ************/
+.sapMNoBodyClass .sapMListItems {
+    display: none;
+}
+.sapMNoBodyClass .sapMListTbl .sapMTableTBody {
+    display: none !important;
+}
+.sapMITBContent {
+    padding: 0rem 0rem !important;
+    border: none !important;
+}
+.sapMPanelWrappingDiv,
+.sapMPanelWrappingDivTb {
+    background: #eff4f9 !important;
+}
+.sapMattTab .sapMInputBase {
+    padding: 0.375rem !important;
+}
+.sapMattTab .sapMInputBaseInner {
+    text-align: center !important;
+}
+.classOpportunityTable .sapMCb {
+    margin-top: 1.2rem !important;
+}
+.classStatusBarInitiate .sapMBar .sapMText,
+ .sapMStatusBar .sapMBarLeft .sapMText {
+    color: white !important;
+    font-weight: bold !important;
+}
+.sapMMLIclass .sapMStatusBar .sapMPageHeader::before{
+	border-top: 0rem solid transparent !important;
+}
+.classDatePickerPadding .sapMInputBaseContentWrapper {
+    border: none !important;
+}
+.sapMEsaSF .sapUiRespGridMedia-Std-LargeDesktop.sapUiRespGridHSpace0>.sapUiRespGridSpanXL5{
+	width: 0% !important;
+}
+.sapMEsaTab .sapMListModeNone {
+    display: none !important;
+}
+.sapMCb, .sapMgmTpClass {
+    margin-top: -0.5rem !important;
+}
+.sapUiTableRowSelectors:not(.sapUiTableRowHighlights) .sapUiTableCtrlScr, .sapUiCBCTab .sapUiTableRowSelectors:not(.sapUiTableRowHighlights) .sapUiTableCtrlScrFixed {
+    margin-left: 0rem !important;
+}
+.sapMgmTpClass {
+    margin-top: -0.3rem !important;
+}
+/************ End Of PCR035760 Tech Upgrade issues solution **************/

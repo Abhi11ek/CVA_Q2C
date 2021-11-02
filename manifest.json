@@ -1,0 +1,209 @@
+{
+    "fileDis": "This File holds manifest.json",
+    "@class": "",
+    "@public": "",
+    "@author": "Abhishek Pant",
+    "@since": "27 July 2017",
+    "@extends": "",
+    "@name": "com.amat.crm.opportunity.manifest.json",
+    "Modifications": {
+        "Change1": {
+             "Ver_No": "V00",
+             "Date": "20/02/2018",
+             "Author": "Abhishek_Pant",
+             "PCR_No": "PCR017480",
+             "Description_of_change": "Initial_version"
+            },
+            "Change2": {
+             "Date": "17/06/2019",
+             "Author": "Abhishek_Pant",
+             "PCR_No": "PCR023905",
+             "Description_of_change": "Migrate_ESA/IDS_db_from_Lotus_Notes_to_SAP_Fiori_Q2C_Application"
+            }
+    },
+	"_version": "1.5.0",
+	"sap.app": {
+		"id": "com.amat.crm.opportunity",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"dataSources": {
+			"DispService": {
+				"uri": "/sap/opu/odata/SAP/ZCVG_CRM_Q2C_DIGFP_SRV/",
+				"type": "OData",
+				"json": "true",
+				"loadMetadataAsync": "true"
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_belize",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.amat.crm.opportunity.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+		"config" : {	
+            "fullWidth" : true	
+        },
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {},				
+				"sap.uxap": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.amat.crm.opportunity.i18n.i18n"
+				}
+			  },
+			  "DispModel": {
+				"dataSource": "DispService"
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.amat.crm.opportunity.view",
+				"controlId": "app",
+				"controlAggregation": "pages"
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "Dashboard",
+					"target": ["Dashboard"]
+				},{
+					"name": "dispOpprDetails",
+					"pattern": "dispOpprDetails/:Guid:/:ItemGuid:/:Type:",
+					"greedy": false,
+					"Start_Of": "PCR026110++",
+					"target": ["OpprDetails"],
+					"End_Of": "PCR026110++"
+				},{
+				    "Start_Of": "PCR023905++",
+					"name": "dispOpprESADetails",
+					"pattern": "dispOpprDetails/:Guid:/:ItemGuid:/:VerNo:/:Type:",
+					"greedy": false,
+					"target": ["dispOpprDetails"],
+					"End_Of": "PCR023905++"
+				},{
+				    "Start_Of": "PCR026243++",
+					"name": "dispayOppDetail",
+					"pattern": "dispayOppDetail/:Guid:/:ItemGuid:/:VerNo:/:ProcType:/:Type:",
+					"greedy": false,
+					"target": ["dispayOppDetail"],
+					"End_Of": "PCR026243++"
+				},{
+				    "Start_Of": "PCR026243++",
+					"name": "displayDetilOppr",
+					"pattern": "displayDetilOppr",
+					"greedy": false,					
+					"target": ["displayDetilOppr"],
+					"End_Of": "PCR026243++"
+				},{
+					"name": "OpprDetails",
+					"pattern": "details/{tab}/:Guid:/:ItemGuid:/:Type:",
+					"greedy": false,
+					"target": ["OpprDetails"]
+				},{
+					"name": "dispOppr",
+					"pattern": "dispOppr",
+					"greedy": false,
+					"target": ["dispOppr"]
+				}],
+			    "targets": {
+				   "Dashboard": {
+					        "viewType": "XML",
+					        "transition": "slide",
+					        "viewName": "S1",
+					        "viewId": "S1"
+				  },
+				  "dispOpprESADetails": {
+				           "Start_Of": "PCR023905++",
+					       "viewType": "XML",
+					       "transition": "slide",
+					       "viewName": "S2",
+					       "viewId": "S2",
+					       "End_Of": "PCR023905++"
+				  },
+				  "dispOpprDetails": {
+					       "viewType": "XML",
+					       "transition": "slide",
+					       "viewName": "S2",
+					       "viewId": "S2"
+				  },
+				  "displayDetilOppr": {
+				           "Start_Of": "PCR026243++",
+					       "viewType": "XML",
+					       "transition": "slide",
+					       "viewName": "S4",
+					       "viewId": "S4",
+					       "End_Of": "PCR026243++"
+				  },
+				  "dispayOppDetail": {
+				           "Start_Of": "PCR026243++",
+					       "viewType": "XML",
+					       "transition": "slide",
+					       "viewName": "S4",
+					       "viewId": "S4",
+					       "End_Of": "PCR026243++"
+				  },
+				  "OpprDetails": {
+					       "viewType": "XML",
+					       "transition": "slide",
+					       "viewName": "S2",
+					       "viewId": "S2"
+				  },
+				  "dispOppr": {
+					       "viewType": "XML",
+					       "transition": "slide",
+					       "viewName": "S3",
+					       "viewId": "S3"
+				 }
+			}
+		}
+	}
+}

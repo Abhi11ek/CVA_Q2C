@@ -1,0 +1,360 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.lookUpList
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                                                 *
+***********************************************************************************
+ */
+ -->
+ <core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:wt="com.amat.crm.opportunity.extensions" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>FRAGLOUPLIST}">
+		<IconTabBar id="Icntab" enableTabReordering="true" select="onRBMPress" expandable="false" width="100%" height="100%"
+			class="sapUiResponsiveContentPadding">
+			<items>
+				<IconTabFilter id="idS2_TPS" text="{i18n>FRAGLLTPS}" key="Info" icon="sap-icon://business-card" iconColor="Neutral">
+					<content>
+						<wt:TableEXT id="idS2_TPS_Table" growingThreshold="20" type="Active" items="{/ItemSet}">
+							<wt:columns>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLPRODUCTLINE}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMC}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAME}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMJ}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMK}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMNA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMSEA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMT}"/>
+								</Column>
+							</wt:columns>
+							<wt:items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Kpu}"/>
+										<Text text="{Amc}"/>
+										<Text text="{Ame}"/>
+										<Text text="{Amj}"/>
+										<Text text="{Amk}"/>
+										<Text text="{Amna}"/>
+										<Text text="{Amsea}"/>
+										<Text text="{Amt}"/>
+									</cells>
+								</ColumnListItem>
+							</wt:items>
+						</wt:TableEXT>
+					</content>
+				</IconTabFilter>
+				<IconTabFilter id="idS2_GSM" text="{i18n>S2PDCCONINFOGSM}" key="Info" icon="sap-icon://business-card" iconColor="Neutral">
+					<content>
+						<wt:TableEXT id="idS2_GSM_Table" growingThreshold="20" type="Active" items="{/ItemSet}">
+							<wt:columns>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLPRODUCTLINE}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMC}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAME}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMJ}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMK}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMNA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMSEA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMT}"/>
+								</Column>
+							</wt:columns>
+							<wt:items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Kpu}"/>
+										<Text text="{Amc}"/>
+										<Text text="{Ame}"/>
+										<Text text="{Amj}"/>
+										<Text text="{Amk}"/>
+										<Text text="{Amna}"/>
+										<Text text="{Amsea}"/>
+										<Text text="{Amt}"/>
+									</cells>
+								</ColumnListItem>
+							</wt:items>
+						</wt:TableEXT>
+					</content>
+				</IconTabFilter>
+				<IconTabSeparator icon=""/>
+				<IconTabFilter id="idS2_RBM" text="{i18n>S2PDCCONINFORBM}" key="RBM" icon="sap-icon://business-card" iconColor="Neutral">
+					<content>
+						<wt:TableEXT id="idS2_RBM_Table" growingThreshold="20" type="Active" items="{/ItemSet}">
+							<wt:columns>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLGLOBALACC}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMC}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAME}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMJ}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMK}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMNA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMSEA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMT}"/>
+								</Column>
+							</wt:columns>
+							<wt:items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Kpu}"/>
+										<Text text="{Amc}"/>
+										<Text text="{Ame}"/>
+										<Text text="{Amj}"/>
+										<Text text="{Amk}"/>
+										<Text text="{Amna}"/>
+										<Text text="{Amsea}"/>
+										<Text text="{Amt}"/>
+									</cells>
+								</ColumnListItem>
+							</wt:items>
+						</wt:TableEXT>
+					</content>
+				</IconTabFilter>
+				<IconTabFilter id="idS2_IcnF_BM" text="{i18n>FRAGLLBMHEAD}" key="Info" icon="sap-icon://business-card" iconColor="Neutral">
+					<content>
+						<wt:TableEXT id="idS2_BMhead_Table" growing="true" growingThreshold="20" type="Active" change="onColumnPress" items="{/ItemSet}">
+							<wt:columns>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLPRODUCTLINE}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMC}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAME}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMJ}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMK}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMNA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMSEA}}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMT}}"/>
+								</Column>
+							</wt:columns>
+							<wt:items>
+								<ColumnListItem id="">
+									<cells>
+										<Text text="{Kpu}"/>
+										<Text text="{Amc}"/>
+										<Text text="{Ame}"/>
+										<Text text="{Amj}"/>
+										<Text text="{Amk}"/>
+										<Text text="{Amna}"/>
+										<Text text="{Amsea}"/>
+										<Text text="{Amt}"/>
+									</cells>
+								</ColumnListItem>
+							</wt:items>
+						</wt:TableEXT>
+					</content>
+				</IconTabFilter>
+				<IconTabSeparator icon=""/>
+				<IconTabFilter id="idS2_IcnF_KPU" text="{i18n>FRAGLLPLHEAD}" key="Info" icon="sap-icon://business-card" iconColor="Neutral">
+					<content>
+						<wt:TableEXT id="idS2_PLhead_Table" growing="true" growingThreshold="20" type="Active" change="onColumnPress" items="{/ItemSet}">
+							<wt:columns>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLPRODUCTLINE}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMC}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAME}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMJ}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMK}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMNA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMSEA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMT}"/>
+								</Column>
+							</wt:columns>
+							<wt:items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Kpu}"/>
+										<Text text="{Amc}"/>
+										<Text text="{Ame}"/>
+										<Text text="{Amj}"/>
+										<Text text="{Amk}"/>
+										<Text text="{Amna}"/>
+										<Text text="{Amsea}"/>
+										<Text text="{Amt}"/>
+									</cells>
+								</ColumnListItem>
+							</wt:items>
+						</wt:TableEXT>
+					</content>
+				</IconTabFilter>
+				<IconTabSeparator icon=""/>
+				<IconTabFilter id="idS2_IcnF_Controller" text="{i18n>FRAGLLCONTR}" key="Info" icon="sap-icon://business-card" iconColor="Neutral">
+					<content>
+						<wt:TableEXT id="idS2_CON_Table" class="classOpportunityTable" growing="true" growingThreshold="20" type="Active" change="onColumnPress"
+							items="{/ItemSet}">
+							<wt:columns>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLPRODUCTLINE}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title=" {i18n>FRAGLLAMC} "/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAME}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMJ}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMK}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMNA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMSEA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMT}"/>
+								</Column>
+							</wt:columns>
+							<wt:items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Kpu}"/>
+										<Text text="{Amc}"/>
+										<Text text="{Ame}"/>
+										<Text text="{Amj}"/>
+										<Text text="{Amk}"/>
+										<Text text="{Amna}"/>
+										<Text text="{Amsea}"/>
+										<Text text="{Amt}"/>
+									</cells>
+								</ColumnListItem>
+							</wt:items>
+						</wt:TableEXT>
+					</content>
+				</IconTabFilter>
+				<IconTabSeparator icon=""/>
+				<IconTabFilter id="idS2_IcnF_Completion" text="{i18n>FRAGLLCOMNOTI}" key="Info" icon="sap-icon://business-card" iconColor="Neutral">
+					<content>
+						<wt:TableEXT class="classOpportunityTable" growing="true" id="idS2_COM_Table" growingThreshold="20" type="Active" change="onColumnPress"
+							items="{/ItemSet}">
+							<wt:columns>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLPRODUCTLINE}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMC}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAME}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMJ}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMK}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMNA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMSEA}"/>
+								</Column>
+								<Column width="9em" minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>FRAGLLAMT}"/>
+								</Column>
+							</wt:columns>
+							<wt:items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Kpu}"/>
+										<Text text="{Amc}"/>
+										<Text text="{Ame}"/>
+										<Text text="{Amj}"/>
+										<Text text="{Amk}"/>
+										<Text text="{Amna}"/>
+										<Text text="{Amsea}"/>
+										<Text text="{Amt}"/>
+									</cells>
+								</ColumnListItem>
+							</wt:items>
+						</wt:TableEXT>
+					</content>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+		<buttons>
+			<Button text="{i18n>FRAGGDOCSELCLOSEBTN}" press="onOkPress" type="{i18n>S2FOOTER_RJT}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

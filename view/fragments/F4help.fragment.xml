@@ -1,0 +1,31 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.F4help
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                                                 *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 12/05/2020      Arun            PCR028711         Q2C Enhancements for Q2-20   *
+ *                 Jacob                                                          *
+ ***********************************************************************************
+ */
+ -->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>S1DESCLBL}" class="sapUiPopupWithPadding" items="{/results}" search="_handleValueHelpSearchOpp"
+		confirm="_handleValueHelpCloseOpp" cancel="_handleValueHelpCloseOpp" liveChange="_handleValueHelpSearchOpp">                     <!-- PCR028711++; binding changed -->
+		<!--<StandardListItem title="{OppId}"/> -->                                                                                      <!-- PCR028711~~ -->
+		<StandardListItem title="{keyVal}" description="{keyDes}"/>                                                                      <!-- PCR028711++; modified title, description parameters -->
+	</SelectDialog>
+</core:FragmentDefinition>

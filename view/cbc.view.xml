@@ -1,0 +1,508 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.cbc
+  *
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant                                                      *      
+ *                      (X089025)                          	                      *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************        
+ * 19/07/2018      Abhishek        PCR018375         PSR/CBC Workflow Rejection   *
+ *                 Pant                              (restart) Capability         * 
+ * 20/08/2018      Abhishek        PCR019492         ASC606 UI Changes            *
+ *                 Pant                                                           *
+ * 18/12/2018      Abhishek        PCR021481         Q2C Q1/Q2 enhancements       *
+ *                 Pant                                                           *
+ * 25/02/2019      Abhishek        PCR022669         Q2C Q2 UI Changes            *
+ *                 Pant                                                           *
+ * 13/01/2019      Abhishek        PCR033317         CBC MEA questionnaire        *
+ *                 Pant                              alignment as part of RAR     *
+ * 13/06/2021      Abhishek Pant   PCR035760         Tech Upgrade issues solution *
+***********************************************************************************
+ */
+ -->
+ <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:f="sap.ui.layout.form"
+	xmlns:ut="sap.ui.table" controllerName="com.amat.crm.opportunity.controller.cbc" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox>
+		<HBox id="idCBCDecisionBox" class="classPSRDecision" visible="false">
+			<f:SimpleForm id="SimpleFormDisplay500" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl HeaderFormMandat" labelSpanXL="9"
+				labelSpanL="9" labelSpanM="9" labelSpanS="9" adjustLabelSpan="false" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+				<f:content>
+					<HBox class="classMandatBox">
+						<HBox class="classMandatCBCTextBox">
+							<Label class="asteriskCC classMandatFld" text="{i18n>S2CBCTABDETERQUESTETTEXT}" required="true"/>
+						</HBox>
+						<RadioButtonGroup title="{i18n>S2CBCSELSTAND}" id="idCBCRdBtnGrp" columns="4" select="onPressInitiateStdCBC" valueState="Error"
+							class="classRadioGrp sapUiMediumMarginBottom" tooltip="{i18n>S2PSRSDAMAINTAINANS}">                                            <!-- PCR019492++; added Tooltip -->
+							<buttons>
+								<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+								<RadioButton title="{i18n>S2CBCSELSTAND}" text="{i18n>S2CBCSELSTAND}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>               <!-- PCR019492++; added Tooltip -->
+								<RadioButton title="{i18n>S2CBCSELSTAND}" text="{i18n>S2CBCSELLITE}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>                <!-- PCR019492++; added Tooltip -->
+								<RadioButton title="{i18n>S2CBCSELSTAND}" text="{i18n>S2CBCSELNAPP}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>                <!-- PCR019492++; added Tooltip -->
+							</buttons>
+						</RadioButtonGroup>
+					</HBox>
+				</f:content>
+			</f:SimpleForm>
+		</HBox>
+		<Page class="classStatusBar classStatusBarInitiate" id="idCBCStatusBar">
+			<headerContent>
+				<Bar>
+					<contentLeft>
+						<Text text="{i18n>S2CBCHEADERTXT}"></Text>
+					</contentLeft>
+					<contentMiddle>
+						<Text id="idCBCStatusText" text="{i18n>S2GINFOSFFTIT}"></Text>
+					</contentMiddle>
+					<contentRight>
+					    <Button text="{i18n>S2CBCPRINTBTNTXT}" class="sapMPtrBtn" icon="sap-icon://pdf-reader" type="Emphasized" press="onPressPrintCBC"/>               <!-- PCR022669++ -->  
+						<Button id="idCBCEditBtn" text="{i18n>S2CARMBTNEDIT}" icon="sap-icon://edit" press="onEditCBC"></Button>
+						<Button id="idCBCSaveBtn" text="{i18n>S2PSRSDASAVEBTNTEXT}" icon="sap-icon://save" enabled="false" press="onSaveCBC"></Button>
+						<Button id="idCBCSFAppBtn" text="{i18n>S2CBCNOTIBMO}" icon="sap-icon://workflow-tasks" enabled="false" press="onSubmitCBC"></Button>
+					</contentRight>
+				</Bar>
+			</headerContent>
+		</Page>
+		<ScrollContainer class="classPSRScrlCn" height="38rem" width="100%" horizontal="false" vertical="true">
+			<Panel expandable="true" expanded="true" id="idCBCGenDataPnl" width="auto" class="classDefault sapMQ2CPnl sapUiSizeCompact">
+				<Carousel class="classPSRInfo sapUiContentPadding">
+					<pages>
+						<VBox class="sapUiSmallMargin">
+							<f:SimpleForm id="SimpleFormDisplay582_Trial" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl classPSRInfoDtailForm"
+								labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+								emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{i18n>S2GINFOSFFTIT}"/>
+									<Label text="{i18n>S2CBCOPP}"/>
+									<Text text="{/OppId}"/>
+									<Label text="{i18n>S2CBCOPPLN}"/>
+									<Text text="{/ItemNo}"/>
+									<Label text="AMAT Quote"/>
+									<Text text="{/AmatQuoteId}"/>
+									<Label text="{i18n>S2CBCAMATQLNO}"/>
+									<Text text="{/QuoteItemNo}"/>
+									<core:Title text="{i18n>S2CBCPROINFO}"/>
+									<Label text="{i18n>S2CBCCUST}"/>
+									<Text text="{/CustName}"/>
+									<Label text="{i18n>S2CBCFAB}"/>
+									<Text text="{/FabName}"/>
+									<Label text="{i18n>S2CBCBU}"/>
+									<Text text="{/Bu}"/>
+									<Label text="{i18n>S2CBCDIV}"/>
+									<Text text="{/Division}"/>
+									<Label text="{i18n>S2CBCPROLINE}"/>
+									<Text text="{/Kpu}"/>
+									<core:Title text="{i18n>S2GINFOSFTTIT}"/>
+									<Label text="{i18n>S2CBCPONO}"/>
+									<Text text="{/PoNumber}"/>
+									<Label text="{i18n>S2CBCBOOKDATE}"/>
+									<Text text="{path:'/FcstBookDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+					</pages>
+				</Carousel>
+			</Panel>
+			<VBox id="idCBCDecisionContent">
+				<Panel expandable="true" expanded="false" headerText="{i18n>S2CBCWFAPPROVERS}" id="idCBCContactInfoPnl" width="auto"
+					class="sapMQ2CPnl sapUiSizeCompact">
+					<VBox>
+						<HBox>
+							<ScrollContainer class="classScrollCont" height="241px" width="189px" horizontal="false" vertical="true" focusable="false">
+								<List id="idS2_CBC_ConInfo_RomList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+									mode="Delete" delete="onDelete" items="{ path: '/results' }">
+									<headerToolbar>
+										<Toolbar>
+											<Text id="header19" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOROMTIT}"/>
+											<ToolbarSpacer/>
+											<Button id="idS2_CBC_ConInfo_RomAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+												press="onPressAddContact"/>
+										</Toolbar>
+									</headerToolbar>
+									<items>
+										<CustomListItem id="idS2_CBC_ConInfo_RomListTemplate">
+											<HBox>
+												<Text class="formTxtClass" text="{ContName}"/>
+											</HBox>
+										</CustomListItem>
+									</items>
+								</List>
+							</ScrollContainer>
+							<VBox class="blankBox"></VBox>
+							<ScrollContainer class="classScrollCont" height="241px" width="189px" horizontal="false" vertical="true" focusable="false">
+								<List id="idS2_CBC_ConInfo_PomList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+									mode="Delete" delete="onDelete" items="{ path: '/results' }">
+									<headerToolbar>
+										<Toolbar>
+											<Text id="header20" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOPOMTIT}"/>
+											<ToolbarSpacer/>
+											<Button id="idS2_CBC_ConInfo_PomAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+												press="onPressAddContact"/>
+										</Toolbar>
+									</headerToolbar>
+									<items>
+										<CustomListItem id="idS2_CBC_ConInfo_PomListTemplate">
+											<HBox>
+												<Text class="formTxtClass" text="{ContName}"/>
+											</HBox>
+										</CustomListItem>
+									</items>
+								</List>
+							</ScrollContainer>
+							<VBox class="blankBox"></VBox>
+							<ScrollContainer class="classScrollCont" height="241px" width="189px" horizontal="false" vertical="true" focusable="false">
+								<List id="idS2_CBC_ConInfo_AuthSaleAprList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true"
+									growingThreshold="5" mode="Delete" delete="onDelete" items="{ path: '/results' }">
+									<headerToolbar>
+										<Toolbar>
+											<Text id="header21" class="listheaderclass sapUiSmallMargin" text="{i18n>S2CBCAUTHSALE}"/>
+											<ToolbarSpacer/>
+											<Button id="idS2_CBC_ConInfo_AuthSaleAprAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+												press="onPressAddContact"/>
+										</Toolbar>
+									</headerToolbar>
+									<items>
+										<CustomListItem id="idS2_CBC_ConInfo_AuthSaleAprListTemplate">
+											<HBox>
+												<Text class="formTxtClass" text="{ContName}"/>
+											</HBox>
+										</CustomListItem>
+									</items>
+								</List>
+							</ScrollContainer>
+							<VBox class="blankBox"></VBox>
+							<ScrollContainer class="classScrollCont" height="241px" width="189px" horizontal="false" vertical="true" focusable="false">
+								<List id="idS2_CBC_ConInfo_BMOList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+									mode="Delete" delete="onDelete" items="{ path: '/results' }">
+									<headerToolbar>
+										<Toolbar>
+											<Text id="header22" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOBMOTIT}"/>
+											<ToolbarSpacer/>
+											<Button id="idS2_CBC_ConInfo_BMOAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+												press="onPressAddContact"/>
+										</Toolbar>
+									</headerToolbar>
+									<items>
+										<CustomListItem id="idS2_CBC_ConInfo_BMOListTemplate">
+											<HBox>
+												<Text class="formTxtClass" text="{ContName}"/>
+											</HBox>
+										</CustomListItem>
+									</items>
+								</List>
+							</ScrollContainer>
+							<VBox class="blankBox"></VBox>
+						</HBox>
+					</VBox>
+				</Panel>
+				<Panel expandable="true" expanded="false" id="idCBCCbnCpyPnl" width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+					<headerToolbar>
+						<Toolbar height="3rem">
+							<Title class="SapMTLTFnt" text="{i18n>S2CBCMULTIPLE}"/>
+							<ToolbarSpacer class="sapMCCTolSpace"/>
+							<Label class="sapMCCText" id="idS2_CBC_LB_CbnCpyText"/>
+						</Toolbar>
+					</headerToolbar>
+					<VBox class="sapUiSmallMargin">
+						<f:SimpleForm class="classMCcForm" editable="true" layout="ResponsiveGridLayout">
+							<Label text="{i18n>S2CBCCARBONCOPYTEXT}"/>
+							<HBox id="idS2_CBC_IP_CbnCpyBox">
+								<Input id="idS2_CBC_IP_CbnCpy" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S2CBCSELOPPLINK}" enabled="true" width="100%"
+									editable="true" showValueHelp="true" valueHelpRequest="handleValueHelpCBCCbnCpyRew" liveChange="onCBCCbnCpyChange"/>
+							</HBox>
+							<HBox id="idS2_CBC_LB_CbnCpyBox">
+								<Label class="classOppWdline" text="{FileName}"/>
+							</HBox>
+							<HBox id="idS2_CBC_BT_CbnCpyBox">
+								<Button text="{i18n>S2CBCUNLINK}" class="navBtnClass" type="Emphasized" icon="sap-icon://broken-link" press="onPressCBCUnLinkDoc"/>
+							</HBox>
+						</f:SimpleForm>
+						<Table id="idCBCCbnCpyTable" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+							<columns>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>S2CBCOPP}"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<ObjectIdentifier title="{i18n>S2PSRSDALINENO}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem id="idCBCCbnCpyTemplate">
+									<cells>
+										<Text text="{OppId}"/>
+										<Text text="{ItemNo}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</VBox>
+				</Panel>
+				<Panel expandable="true" expanded="false" headerText="{i18n>S2CBCQUSIRETABTIT}" expand="OnExpandCBCQus" id="idCBCQuesPnl" width="auto"
+					class="sapMQ2CPnl sapUiSizeCompact">
+					<HBox id="idS2_CBC_QuesCont">
+						<ut:TreeTable id="IdS2_CBC_QuesTable" rows="{path:'/catalog/clothing', parameters: {arrayNames:['categories']}}" selectionMode="MultiToggle"
+							height="100%" visibleRowCountMode="sap.ui.table.VisibleRowCountMode.Fixed" visibleRowCount="53" enableSelectAll="false"
+							class="sapUiCBCTab" items="{/ItemSet/root}">
+							<ut:toolbar>
+								<Toolbar>
+									<Title id="IdS2_CBC_QuesTableHeader" text="{i18n>S2CBCTOOLBARSTDTITLE}"/>
+									<ToolbarSpacer/>
+								</Toolbar>
+							</ut:toolbar>
+							<ut:columns>
+								<ut:Column width="40rem">                                                                                                                                       <!-- PCR035760++; 40rem to 38rem change -->
+									<Label text="{i18n>S2CBCTASKDISC}"/>
+									<ut:template class="SapMQuesText">
+										<Text class="SapMQuesText" text="{path:'Node_Type',formatter:'com.amat.crm.opportunity.util.formatter.QusHderCssType'}" tooltip="{Node_Type}"/>         <!-- PCR021481++ modified with formatter-->
+									</ut:template>
+								</ut:Column>
+								<ut:Column width="9rem">
+									<Label text="{i18n>S2CBCOMSALEANS}"/>                                                                                              <!-- PCR033317++; text changed -->
+									<ut:template class="{QuesClass}">
+										<HBox>
+											<RadioButtonGroup id="idCBCSaleQusRdBtnGrp" visible="{SalVisible}" enabled="{SalEditable}" columns="5" select="onPressCBCQues"
+												selectedIndex="{SelectionIndex}" valueState="{ValueState}" class="classRadioGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}">  <!-- PCR019492++; added Tooltip -->
+												<buttons>
+													<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+													<RadioButton text="{OkText}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>                                                 <!-- PCR019492++; added Tooltip -->
+													<RadioButton text="{NAText}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>                                                 <!-- PCR019492++; added Tooltip -->
+												</buttons>
+											</RadioButtonGroup>
+										</HBox>
+									</ut:template>
+								</ut:Column>
+								<ut:Column width="9rem">
+									<Label text="{i18n>S2CBCBMONANS}"/>                                                                                                <!-- PCR033317++; text changed -->
+									<ut:template class="{QuesClass}">
+										<HBox>
+											<RadioButtonGroup id="idCBCBMOQusRdBtnGrp" columns="5" visible="{BmoVisible}" enabled="{BmoEditable}" select="onPressCBCQues"
+												selectedIndex="{SelectionIndex}" valueState="{ValueState}" class="classRadioGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}"> <!-- PCR019492++; added Tooltip -->
+												<buttons>
+													<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+													<RadioButton text="{i18n>S2CONFFRGOKBTN}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>                                   <!-- PCR019492++; added Tooltip -->
+													<RadioButton text="{i18n>S2CBCNA}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>                                          <!-- PCR019492++; added Tooltip -->
+												</buttons>
+											</RadioButtonGroup>
+										</HBox>
+									</ut:template>
+								</ut:Column>
+								<ut:Column>
+									<Label text="{i18n>FRAGGDOCSELCOM}"/>
+									<ut:template class="{QuesClass}">
+										<TextArea value="{ComValue}" tooltip="{ComValue}" id="idCBCQuesComtTxtArea" valueState="{ComValueState}" visible="{ComVisible}" liveChange="onCBCTxtAreaLivChg"
+											maxLength="255" placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="2" width="100%" enabled="{ComEnabled}"/>
+									</ut:template>
+								</ut:Column>
+							</ut:columns>
+						</ut:TreeTable>
+					</HBox>
+				</Panel>
+				<!-- *** Justification: Start Of PCR018375++ - 3509 - PSR/CBC Workflow Rejection(restart) Capability *** -->
+				<Panel expandable="true" expanded="false" expand="onExpMEADoc" headerText="{i18n>S2CBCMEADOCPNLTIT}" id="idCBCMEADocPnl"
+				  width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				  <VBox class="genaralTabChooseButton">
+					<Button id="idCBC_MEADoc_ChooseBtn" text="{i18n>S2AGENARALDOCCBTNTXT}" press="onCBCChoosePress">
+						<layoutData>
+							<FlexItemData growFactor="1"/>
+						</layoutData>
+					</Button>
+					<Table id="idCBC_MEADoc_Table" class="sapMattTab" items="{/ItemSet}">
+						<columns>
+							<Column width="12em">
+								<Text text="{i18n>S2ATABLECOLUMN1TXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN3TXT}"/>
+							</Column>
+							<Column width="8rem" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN4TXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN5TXT}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{DocDesc}"/>
+									<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize" enabled="{EnableDisflag}" press="handleLinkPress"/>
+									<Input tooltip="{note}" value="{note}" type="Text" class="sapUiSmallMarginBottom" placeholder="{i18n>S2ANOTEPLACEHOLDER}"
+										liveChange="handleNoteLiveChange" editable="{editable}"/>
+									<DatePicker hAlign="Center" displayFormat="dd-MMM-yyyy" editable="false" dateValue="{ExpireDate}" change="handleChange"
+										class="classDatePickerPadding sapUiSmallMarginBottom"/>
+									<HBox>
+										<HBox hAlign="Center" visible="{bgVisible}" class="genaralButtonSpacing">
+											<Button icon="sap-icon://edit" press="handleEditPress" enabled="{enableEditflag}">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button icon="sap-icon://delete" press="CheckDelete" enabled="{enableDelflag}">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+										</HBox>
+									</HBox>
+								</cells>
+							</ColumnListItem>
+						 </items>
+					  </Table>
+				  </VBox>
+			    </Panel>
+				<!-- *** Justification: End Of PCR018375++ - 3509 - PSR/CBC Workflow Rejection(restart) Capability *** -->
+				<Panel expandable="true" expanded="false" headerText="{i18n>S2CBCAPPROVERS}" id="idCBCAprPnl" width="auto"
+					class="sapMQ2CPnl sapUiSizeCompact">
+					<Table id="idCBCApprovers" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+						<!-- <headerToolbar>
+							<Toolbar></Toolbar>
+						</headerToolbar>                                                                                                                                   PCR035760~~ -->
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CBCAPPROVER}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CBCASSTO}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CARMTABLECOLUMN3}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CBCAPPBY}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CBCAPPON}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOSFTTIT}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem id="idCBCApproversTemplate">
+								<cells>
+									<Text text="{AprvDesc}"/>
+									<Text text="{NameAssigned}"/>
+									<Text text="{Comments}"/>
+									<Text text="{NameApprover}"/>
+									<Text text="{path:'ActDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+									<ObjectStatus text="{Status}" state="{path:'Status',formatter:'com.amat.crm.opportunity.util.formatter.state'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<!-- *** Justification: Start Of PCR018375++ - 3509 - PSR/CBC Workflow Rejection(restart) Capability *** -->
+				<Panel expandable="true" expanded="false" headerText="{i18n>S2TABTECRATEPANELTEXT}" expand="OnExpandCBCResetLog" id="idCBCResetListPnl"
+					width="auto" class="sapMQ2CPnl sapUiSizeCompact" visible="false">
+					<Table id="idCBCResetListTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CARMTABLECOLUMN1}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2TABTECRATETEXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2TABTECRATEDATTEXT}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{CommType}"/>
+									<Text text="{Comment}"/>
+									<Text text="{CreatedName}"/>
+									<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<!-- *** Justification: End Of PCR018375++ - 3509 - PSR/CBC Workflow Rejection(restart) Capability *** -->
+				<Panel expandable="true" expanded="false" headerText="{i18n>S2CARMMAINCOMMENT}" expand="OnExpandMainCom" id="idCBCMCommentPnl" width="auto"
+					class="sapMQ2CPnl sapUiSizeCompact">
+					<f:SimpleForm class="classMComment" editable="true" layout="ResponsiveGridLayout">
+						<Label text="{i18n>S2CARMCOMLABELTXT}"/>
+						<TextArea class="sapMCommTBox" id="idCBCMainComtTxtArea" height="8rem" liveChange="OnMainCommLvchng" maxLength="255"
+							placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="100%" enabled="true"/>
+						<Button class="sapMainComSavBtnClass" id="idS2CBCMainComSaveBtn" text="{i18n>S1PERDLOG_SAVE}" type="Emphasized" icon="sap-icon://save"
+							enabled="false" press="onSaveMainCom"></Button>
+					</f:SimpleForm>
+					<Table id="idCBCMainCommTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{Comment}"/>
+									<Text text="{CreatedName}"/>
+									<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<!-- ************************Start Of PCR022669: Q2C Q2 UI Changes************** -->
+				<Panel expandable="true" expanded="false" headerText="{i18n>S2CHANGEHISTORY}" expand="" id="id_Cbc_Chng_Hist"
+					width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+					<Table id="idCBCCmtHist" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTSTS}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTREQ}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTREQBY}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTAPPDT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTAPPBY}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{Status}"/>
+									<Text text="{path:'ReqDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+									<Text text="{ReqName}"/>
+									<Text text="{path:'AprvDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+									<Text text="{AprvName}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<!-- ************************End Of PCR022669: Q2C Q2 UI Changes************** -->
+			</VBox>
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

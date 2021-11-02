@@ -1,0 +1,85 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant 
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.OppSearchFilter
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant                                                      *
+ *                      (X089025)                                                 *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 05/02/2019      Abhishek        PCR022138         Enable new created SPG re-org*
+ *                 Pant                              divisions DC & DD            *
+***********************************************************************************
+ */
+ -->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout">
+	<Dialog title="{i18n>S2OPPSRCHCATFRGTIT}" resizable="true" class="sapUiPopupWithPadding">
+		<content>
+			<VBox class="sapUiSmallMargin">
+				<f:SimpleForm id="idFilterDialogForm" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="idFilterDialogBUForm" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="idFilterDialogBUForm1" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="idFilterDialogBUForm2" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="idFilterDialogBUForm3" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<!-- Start Of PCR022138++: DL4571 : enable new created SPG re-org divisions DC & DD -->
+				<f:SimpleForm id="idFilterDialogBUForm4" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<!-- End Of PCR022138++: DL4571 : enable new created SPG re-org divisions DC & DD -->
+				<f:SimpleForm id="idFilterDialogBQForm" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="idFilterDialogFormregion" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="idFilterDialogFormregion1" editable="false" layout="ResponsiveGridLayout" class="classFilterDtailForm" labelSpanXL="4"
+					labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+					<f:content></f:content>
+				</f:SimpleForm>
+			</VBox>
+		</content>
+		<beginButton>
+			<Button text="{i18n>S1PERDLOG_SAVE}" press="handleSaveFilter" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>S1PERDLOG_CANCLE}" press="handleCancel" type="{i18n>S2FOOTER_RJT}"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

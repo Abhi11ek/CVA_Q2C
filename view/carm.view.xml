@@ -1,0 +1,207 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.carm
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                                                 *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 20/08/2018      Abhishek        PCR019492         ASC606 UI Changes            *
+ *                 Pant                                                           *
+ * 18/12/2018      Abhishek        PCR021481         Q2C Q1/Q2 enhancements       *
+ *                 Pant                                                           *
+ * 26/09/2019      Abhishek        PCR025717         Q2C Q4 2019 Enhancements     *
+ *                 Pant                                                           *
+***********************************************************************************
+ */
+ -->
+ <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:table="sap.ui.table"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified"
+	xmlns="sap.m" controllerName="com.amat.crm.opportunity.controller.carm" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox>
+		<!-- PCR021481~~: 4190: Q2C Q1/Q2 enhancements
+		<HBox id="idS2CarmDecisionBox" class="classPSRDecision" visible="false">
+			<f:SimpleForm id="SimpleFormDisplayCarmInitiate" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl HeaderFormMandat"
+				labelSpanXL="9" labelSpanL="9" labelSpanM="9" labelSpanS="9" adjustLabelSpan="false" columnsXL="1" columnsL="1" columnsM="1"
+				singleContainerFullSize="false">
+				<f:content>
+					<HBox class="classMandatBox">
+						<HBox class="classMandatCBCTextBox">
+							<Label class="asteriskCC classMandatFld" text="{i18n>S2CARMCONFORMTXT}" required="true"/>
+						</HBox>
+						<RadioButtonGroup id="idS2PCrmRdBtnGrp" columns="4" select="onCarmSelect" valueState="Error" class="classCARMRadioGrp sapUiMediumMarginBottom">  PCR019492++
+							<buttons>
+								<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+								<RadioButton text="{i18n>S2CARMINITIATETXT}"/>
+								<RadioButton text="{i18n>S2CARMBOTREQUIREDTXT}"/>
+							</buttons>
+						</RadioButtonGroup>
+					</HBox>
+				</f:content>
+			</f:SimpleForm>
+		</HBox> -->
+		<Page class="classStatusBar classStatusBarInitiate" id="idS2CarmStatusBar" visible="{appView>/BarVis}">
+			<headerContent>
+				<Bar>
+					<contentLeft>
+						<Text text="{i18n>S2CARMFULLTXT}"></Text>
+					</contentLeft>
+					<contentMiddle>
+						<Text id="idS2CarmStatusText" text="{appView>/StatusText}"></Text> 
+					</contentMiddle>
+					<contentRight>
+						<Button id="idS2CarmCancelBtn" text="{i18n>S2CARMBTNCANCEL}" icon="sap-icon://sys-cancel" visible="{appView>/CancelBtnVis}" press="onCancelCarm"></Button>
+						<Button id="idS2CarmEditBtn" text="{i18n>S2CARMBTNEDIT}" icon="sap-icon://edit" press="onEditCarm" visible="false" ></Button>                 <!-- PCR021481++; modified by visible property -->
+						<Button id="idS2CarmSaveBtn" text="{i18n>S2CARMBTNSAVE}" icon="sap-icon://save" enabled="false" press="onSaveCarm" visible="false" ></Button> <!-- PCR021481++; modified by visible property -->
+					</contentRight>
+				</Bar>
+			</headerContent>
+		</Page>
+		<ScrollContainer height="38rem" width="100%" horizontal="false" vertical="true">
+			<VBox id="idS2CarmDecisionContent" visible="{appView>/CarmDecisionContentVis}">
+				<f:SimpleForm id="SimpleFormDisplayCarm" width="100%" editable="true" layout="ResponsiveGridLayout" visible="{appView>/DisplayVis}">
+					<Label text="{i18n>S2CARMTABMETNGHELDDTLBTXT}"/>
+					<Text id="idS2CarmMPPNDate" text="{appView>/MPPNDateTxt}" visible="{appView>/MPPNDateVis}" class="sapMTxtCarmNMppDat"></Text>                      <!-- PCR021481++ -->
+					<DatePicker id="idS2CarmDate" hAlign="Center" width="100%" change="onCarmDateChange" displayFormat="dd-MMM-yyyy" editable="true"
+						class="carmTableDatePadding" enabled="{appView>/DatPicEnabled}"/>
+				    <RadioButton id="idS2CarmNRBtn" text="{i18n>S2CARMBOTREQUIREDTXT}" valueState="{appView>/NRBtnVluStat}" class="sapMRBCarmNABtn"
+				        select="onCarmSelect" visible="{appView>/NRBtnSelectVis}" selected="{appView>/NRBtnSelect}"/>                                                  <!-- PCR021481++ -->
+				</f:SimpleForm>
+				<!-- <Panel expandable="true" expanded="false" headerText="{i18n>S2GINFOPANLHEADERTXT}" id="idS2CarmAttachPanel" width="auto"                               PCR025717~~ -->
+				<Panel expandable="true" expanded="{appView>/AttachPnlExp}" headerText="{i18n>S2GINFOPANLHEADERTXT}" id="idS2CarmAttachPanel" width="auto"
+					class="sapMQ2CPnl sapUiSizeCompact" visible="{appView>/AttachPnlVis}">                                                                             <!-- PCR025717++; expanded property value changed -->
+					<Table id="idS2CarmAttTable" class="sapMattTab" noDataText="{i18n>S2TABNODATATEXT}" items="{/ItemSet}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>S2CARMTABLECOLUMN1}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" width="26rem" demandPopin="true">
+								<Text text="{i18n>S2CARMTABLECOLUMN2}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>S2CARMTABLECOLUMN3}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2CARMTABLECOLUMN4}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem id="idS2CarmTemplate">
+								<cells>
+									<Text text="{DocDesc}"/>
+									<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize" press="handleLinkPress" hAlign="Center"/>
+									<Input tooltip="{note}" value="{note}" type="Text" hAlign="Center" class="sapUiSmallMarginBottom" placeholder="{i18n>S2ANOTEPLACEHOLDER}"
+										liveChange="handleNoteLiveChange" enabled="false"/>
+									<HBox>
+										<HBox hAlign="Center" class="genaralButtonGroupAlign" visible="{bgVisible}">
+											<Button icon="sap-icon://edit" press="handleEditPress" enabled="{editable}">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button icon="sap-icon://delete" press="CheckDelete" enabled="{editable}">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button icon="sap-icon://add" press="handleAddPress" enabled="{editable}" visible="{addBtnVisible}">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+										</HBox>
+										<VBox visible="{uBvisible}" class="browseButtonSpacing">
+											<u:FileUploader sameFilenameAllowed="true" buttonOnly="true" multiple="false" enabled="{editable}" useMultipart="false" name="myFileUpload"
+												width="10rem" tooltip="{i18n>S2CARMUPLOADTOOLTIP}" change="handleFileUploadComplete" uploadComplete="onCarmFileUploadComplete"
+												uploadUrl="{i18n>UPLOADURL}" sendXHR="true"/>
+										</VBox>
+									</HBox>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<Button id="idS2CarmOthersBtn" text="{i18n>S2AOTHERBTNTEXT}" app:mySuperExtraData="4" press="handleOtherPress" type="Emphasized"
+						icon="sap-icon://add-coursebook" visible="{appView>/OtherBtnEbl}"></Button>
+				</Panel>
+				<Panel expandable="true" expanded="{appView>/MainCommExp}" headerText="{i18n>S2CARMMAINCOMMENT}" expand="OnExpandMainCom" id="idS2_Carm_MCommentPnl"
+					width="auto" class="sapMQ2CPnl sapUiSizeCompact" visible="true">
+					<f:SimpleForm class="classMComment" editable="true" layout="ResponsiveGridLayout">
+						<Label text="{i18n>S2CARMCOMLABELTXT}"/>
+						<TextArea class="sapMCommTBox" id="idS2_Carm_MainComtTxtArea" height="8rem" liveChange="OnMainCommLvchng" maxLength="255"
+							placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="100%" enabled="true"/>
+						<Button class="sapMainComSavBtnClass" id="idS2_Carm_MainComSaveBtn" text="{i18n>S2CARMBTNSAVE}" type="Emphasized" icon="sap-icon://save"
+							enabled="false" press="onSaveMainCom"></Button>
+					</f:SimpleForm>
+					<Table id="idS2_Carm_MainCommTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{Comment}"/>
+									<Text text="{CreatedName}"/>
+									<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<!-- ************************Start Of PCR021481++: 4190: Q2C Q1/Q2 enhancements************** -->
+				<Panel expandable="true" expanded="{appView>/ChngHisExp}" headerText="{i18n>S2CHANGEHISTORY}" expand="" id="id_Carm_Chng_Hist"
+					width="auto" class="sapMQ2CPnl sapUiSizeCompact" visible="{appView>/ChngHisVis}">
+					<Table id="idCarmCmtHist" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTSTS}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTREQ}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTREQBY}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTAPPDT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTAPPBY}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{Status}"/>
+									<Text text="{path:'ReqDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+									<Text text="{ReqName}"/>
+									<Text text="{path:'AprvDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+									<Text text="{AprvName}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<!-- ************************End Of PCR021481++ : 4190: Q2C Q1/Q2 enhancements************** -->
+			</VBox>
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

@@ -1,0 +1,109 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 17 June 2019
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.CheckList
+  *
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 17/06/2019      Abhishek        PCR023905         Migrate ESA/IDS db from Lotus*
+ *                 Pant                              Notes to SAP Fiori Q2C       *
+ *                                                   Application                  *
+ * 25/06/2020      Arun            PCR028711         Q2C Enhancements for Q2-20   *
+ *                 Jacob                                                          *
+ * 06/04/2021     Arun Jacob      PCR034716          Q2C ESA,PSR Enhancements     *
+***********************************************************************************
+ */
+ -->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Dialog resizable="true">
+		<customHeader>
+			<Bar class="ChkListBarclass">
+				<contentLeft></contentLeft>
+				<contentMiddle>
+					<Title class="ChkListBarclassInitiate" text="{i18n>S2ESAIDSCHKLSTDIATITLE}"/>
+				</contentMiddle>
+				<!-- *****************Start Of PCR034716++: Q2C ESA,PSR Enhancements ***************************-->				
+				<contentRight>
+					<Button id="idChkListPrintFuncBtn" text="{i18n>S2CBCPRINTBTNTXT}" class="classStatusBar classStatusBarInitiate sapMPtrBtn" icon="{i18n>S2PDFPRINTBTNICON}" type="Emphasized"
+					    	press="onPressPrintESAChekList"></Button>
+				</contentRight>
+				<!-- *****************End Of PCR034716++: Q2C ESA,PSR Enhancements *****************************-->
+			</Bar>
+		</customHeader>
+		<content>
+			<Table noDataText="{i18n>S2TABNODATATEXT}" visible="true" class="sapMQ2Clbl classSWOpportunityTable sapMCheckBox" items="{/ItemSet}">
+				<columns>
+					<Column minScreenWidth="Tablet" demandPopin="true" width=".5em">
+						<ObjectIdentifier title="{i18n>S2ESATDSPAYTRMSNCOLTIT}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" width="12em">
+						<ObjectIdentifier title="{i18n>S2ESATDSCHKLSTCHKLTCOLTIT}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" width="12em">
+						<ObjectIdentifier title="{i18n>FRAGGDOCSELCOM}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" width=".5em">
+						<ObjectIdentifier title="{i18n>S2F4HELPATABLECOLUMN5TXT}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text text="{CustQid}"/>
+							<Text text="{Qdesc}"/>
+							<TextArea class="sapMChkLstIPClass" value="{Comments}" tooltip="{Comments}" valueState="{ComValueState}" visible="{ComVisible}"
+								liveChange="onEsaTxtAreaLivChg" maxLength="255" placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="2" width="100%"
+								enabled="{ChkLstEnabled}"/>
+							<CheckBox selected="{AnsCheck}" select="onSelectedChkLstCkb" enabled="{ChkLstEnabled}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!-- *****************Start Of PCR034716++: Q2C ESA,PSR Enhancements ***************************-->
+			<Panel expandable="true" expanded="true" headerText="{i18n>FRAGGDOCSELCOM}" id="idEsaChkLstCommentPnl" width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<f:SimpleForm class="classMComment" editable="true" layout="ResponsiveGridLayout">
+					<Label text="{i18n>S2CARMCOMLABELTXT}"/>
+					<TextArea class="sapMCommTBox" id="idEsaChkLstComtTxtArea" height="8rem" liveChange="onEsaChkLstCommLvchng" maxLength="255"
+						placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="100%" enabled="{/EsaChkLstComtTxtenabled}"/>
+					<Button class="sapMainComSavBtnClass" id="idS2EsaChkLstComSaveBtn" text="{i18n>S1PERDLOG_SAVE}" type="Emphasized" icon="{i18n>S2PSRSDASAVEICON}"
+						enabled="{/EsaChkLstComSavBtnenabled}" press="onSaveChkLstCom"></Button>																						  
+				</f:SimpleForm>
+				<Table id="idEsaChkLstCommTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/ItemSet}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{Comment}"/>
+								<Text text="{CreatedName}"/>
+								<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<!-- *****************End Of PCR034716++: Q2C ESA,PSR Enhancements *****************************-->
+		</content>
+		<buttons>
+			<Button text="{i18n>S2PSRSDACBCSFASUBTYPEMSG}" press="onEsaChkLstSubmit" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}" visible="{ChkLstEnabled}"
+				id="idESAChkListSubmitBtn"/>																										<!-- PCR028711++; modified id -->
+			<Button text="{i18n>S2F4HELPOPPCNLBTN}" press="onCancelWFPress" type="{i18n>S2FOOTER_RJT}" visible="{ChkLstEnabled}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,47 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.ViewSetting
+  *
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)   
+ *
+***********************************************************************************
+ */
+ -->
+ <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<P13nDialog ok="handleOK" cancel="handleCancel" showReset="true" reset="handleReset" initialVisiblePanelType="dimeasure">
+		<panels>
+			<P13nSortPanel title="Sort" visible="false" type="sort" containerQuery="true" items="{ path: '/ColumnCollection' }"
+				sortItems="{ path: '/SortItems' }">
+				<P13nItem columnKey="{path}" text="{text}"/>
+				<sortItems>
+					<P13nSortItem columnKey="{columnKey}" operation="{operation}"/>
+				</sortItems>
+			</P13nSortPanel>
+			<P13nFilterPanel title="Filter" visible="true" type="filter" containerQuery="true" items="{ path: '/ColumnCollection' }"
+				filterItems="{ path: '/FilterItems' }">
+				<P13nItem columnKey="{path}" text="{text}"/>
+				<filterItems>
+					<P13nFilterItem columnKey="{columnKey}" operation="{operation}" value1="{value1}"/>
+				</filterItems>
+			</P13nFilterPanel>
+			<P13nColumnsPanel title="Column" visible="true" addColumnsItem="onAddColumnsItem" changeColumnsItems="onChangeColumnsItem" type="columns"
+				items="{ path: '/ColumnCollection' }">
+				<items>
+					<P13nItem columnKey="{path}" text="{text}" visible="{visible}"/>
+				</items>
+			</P13nColumnsPanel>
+		</panels>
+	</P13nDialog>
+</core:FragmentDefinition>

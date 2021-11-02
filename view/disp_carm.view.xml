@@ -1,0 +1,205 @@
+<!-- ******************************************************************************
+ ** This class return display Display CARM View.                                  *
+ **********************************************************************************
+ * @class                                                                         *
+ * @public                                                                        *
+ * @author Abhishek Pant                                                          *
+ * @since 25 November 2019                                                        *
+ * @extends                                                                       *
+ * @name com.amat.crm.opportunity.view.disp_carm                                  *
+ * * ******************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 25/11/2019      Abhishek        PCR026243         DL:1803 Display Migration to *
+ *                 Pant                              Q2C                          *
+***********************************************************************************-->
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:table="sap.ui.table"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns="sap.m"
+	controllerName="com.amat.crm.opportunity.controller.disp_carm"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox>
+		<Page class="classStatusBar classStatusBarInitiate" id="idS4CarmStatusBar"
+			visible="{/BarVis}">
+			<headerContent>
+				<Bar>
+					<contentLeft>
+						<Text text="{i18n>S2CARMFULLTXT}"></Text>
+					</contentLeft>
+					<contentMiddle>
+						<Text id="idS4CarmStatusText" text="{/StatusText}"></Text>
+					</contentMiddle>
+					<contentRight>
+						<Button id="idS4CarmCancelBtn" text="{i18n>S2CARMNACANINITBTNTXT}"
+							icon="{i18n>S2CANCELBTNICON}" visible="{/CancelBtnVis}" press="onCancelCarm" />
+						<Button id="idS4CarmSaveBtn" text="{i18n>S2CARMBTNSAVE}"
+							icon="{i18n>S2PSRSDASAVEICON}" enabled="true" press="onSaveCarm"
+							visible="{/SaveVis}" />
+					</contentRight>
+				</Bar>
+			</headerContent>
+		</Page>
+		<ScrollContainer height="38rem" width="100%"
+			horizontal="false" vertical="true">
+			<VBox id="idS4CarmDecisionContent" visible="{/CarmDecisionContentVis}">
+				<f:SimpleForm id="idS4SimpleFormDisplayCarm" width="100%"
+					editable="true" layout="ResponsiveGridLayout" visible="{/DisplayVis}">
+					<Label text="{i18n>S2CARMTABMETNGHELDDTLBTXT}" />
+					<Text id="idS4CarmMPPNDate" text="{/MPPNDateTxt}" visible="{/MPPNDateVis}"
+						class="sapMTxtCarmNMppDat"></Text>
+					<DatePicker id="idS4CarmDate" width="100%" change="onCarmDateChange"
+						displayFormat="dd-MMM-yyyy" editable="true" class="carmTableDatePadding"
+						enabled="{/DatPicEnabled}" dateValue="{/DatPicVal}" valueState="{/DatPicVluStat}" />
+					<RadioButton id="idS4CarmNRBtn" text="{i18n>S2CARMBOTREQUIREDTXT}"
+						valueState="{/NRBtnVluStat}" class="sapMRBCarmNABtn" select="onCarmSelect"
+						visible="{/NRBtnSelectVis}" enabled="{/NRBtnEbl}" selected="{/NRBtnSelect}" />
+				</f:SimpleForm>
+				<Panel expandable="true" expanded="{/AttachPnlExp}"
+					headerText="{i18n>S2GINFOPANLHEADERTXT}" id="idS4CarmAttachPanel"
+					width="auto" class="sapMQ2CPnl sapUiSizeCompact" visible="{/AttachPnlVis}">
+					<Table id="idS4CarmAttTable" class="sapMattTab" noDataText="{i18n>S2TABNODATATEXT}"
+						items="{/ItemSet}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>S2CARMTABLECOLUMN1}" />
+							</Column>
+							<Column minScreenWidth="Tablet" width="26rem" demandPopin="true">
+								<Text text="{i18n>S2CARMTABLECOLUMN2}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>S2CARMTABLECOLUMN3}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2CARMTABLECOLUMN4}" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem id="idS4CarmTemplate">
+								<cells>
+									<Text text="{DocDesc}" />
+									<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize"
+										press="handleLinkPress" />
+									<Input tooltip="{note}" value="{note}" type="Text"
+										class="sapUiSmallMarginBottom" placeholder="{i18n>S2ANOTEPLACEHOLDER}"
+										liveChange="handleNoteLiveChange" enabled="{noteEbl}" />
+									<HBox>
+										<HBox class="genaralButtonGroupAlign" visible="{bgVisible}">
+											<Button icon="{i18n>S2PSRSDAEDITICON}" press="handleEditPress"
+												enabled="{editable}">
+												<layoutData>
+													<FlexItemData growFactor="1" />
+												</layoutData>
+											</Button>
+											<Button icon="{i18n>S2PSRSDADELETEICON}" press="CheckDelete"
+												enabled="{editable}">
+												<layoutData>
+													<FlexItemData growFactor="1" />
+												</layoutData>
+											</Button>
+											<Button icon="{i18n>S4DISADDCONBTNICON}" press="handleAddPress"
+												enabled="{editable}" visible="{addBtnVisible}">
+												<layoutData>
+													<FlexItemData growFactor="1" />
+												</layoutData>
+											</Button>
+										</HBox>
+										<VBox visible="{uBvisible}" class="browseButtonSpacing">
+											<u:FileUploader sameFilenameAllowed="true"
+												buttonOnly="true" multiple="false" enabled="{editable}"
+												useMultipart="false" name="myFileUpload" width="10rem"
+												tooltip="{i18n>S2CARMUPLOADTOOLTIP}" change="handleFileUploadComplete"
+												uploadComplete="onCarmFileUploadComplete" uploadUrl="{i18n>UPLOADURL}"
+												sendXHR="true" />
+										</VBox>
+									</HBox>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<Button id="idS4CarmOthersBtn" text="{i18n>S2AOTHERBTNTEXT}"
+						app:mySuperExtraData="4" press="handleOtherPress" type="Emphasized"
+						icon="{i18n>S2ATTOTHBTNICON}" visible="{/OtherBtnEbl}"></Button>
+				</Panel>
+				<Panel expandable="true" expanded="{/MainCommExp}" headerText="{i18n>S2CARMMAINCOMMENT}"
+					expand="OnExpandMainCom" id="idS4_Carm_MCommentPnl" width="auto"
+					class="sapMQ2CPnl sapUiSizeCompact" visible="true">
+					<f:SimpleForm class="classMComment" editable="true"
+						layout="ResponsiveGridLayout">
+						<Label text="{i18n>S2CARMCOMLABELTXT}" />
+						<TextArea class="sapMCommTBox" id="idS4_Carm_MainComtTxtArea"
+							height="8rem" liveChange="OnMainCommLvchng" maxLength="255"
+							placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5"
+							width="100%" enabled="true" value="{/MComTAVal}" />
+						<Button class="sapMainComSavBtnClass" id="idS4_Carm_MainComSaveBtn"
+							text="{i18n>S2CARMBTNSAVE}" type="Emphasized" icon="{i18n>S2PSRSDASAVEICON}"
+							enabled="{/MComSavBtnEbl}" press="onSaveMainCom"></Button>
+					</f:SimpleForm>
+					<Table id="idS4_Carm_MainCommTab" noDataText="{i18n>S2TABNODATATEXT}"
+						class="sapMQ2Clbl classSWOpportunityTable" items="{/NAV_COMMENTS/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{Comment}" />
+									<Text text="{CreatedName}" />
+									<Text
+										text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<Panel expandable="true" expanded="{/ChngHisExp}" headerText="{i18n>S2CHANGEHISTORY}"
+					expand="true" id="idS4_Carm_Chng_Hist" width="auto"
+					class="sapMQ2CPnl sapUiSizeCompact" visible="{/ChngHisVis}">
+					<Table id="idS4CarmCmtHist" noDataText="{i18n>S2TABNODATATEXT}"
+						class="sapMQ2Clbl classSWOpportunityTable" items="{/oCarmChngHis/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTSTS}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTREQ}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTREQBY}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTAPPDT}" />
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CMTAPPBY}" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{Status}" />
+									<Text
+										text="{path:'ReqDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}" />
+									<Text text="{ReqName}" />
+									<Text
+										text="{path:'AprvDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}" />
+									<Text text="{AprvName}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+			</VBox>
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

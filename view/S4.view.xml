@@ -1,0 +1,96 @@
+<!--*******************************************************************************
+  * This class contains all S4 view controls.                                     *
+  * @class                                                                        *
+  * @public                                                                       *
+  * @author Abhishek Pant                                                         *
+  * @since 21 November 2019                                                       *
+  * @extends                                                                      *
+  * @name com.amat.crm.opportunity.view.S4                                        *
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 21/11/2019      Abhishek        PCR026243         DL:1803 Display Migration to *
+ *                 Pant                              Q2C                          *
+ * 25/01/2021      Abhishek        PCR033306         Q2C Display Enhancements     *
+ * 13/06/2021      Abhishek Pant   PCR035760         Tech Upgrade issues solution *
+***********************************************************************************-->
+ <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	controllerName="com.amat.crm.opportunity.controller.S4" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{/S4TITLE}" class="pageTitleClass page2BgImg" showNavButton="true" navButtonPress="onNavBack" backgroundDesign="Transparent">
+		<content>
+			<VBox class="classS2">
+				<IconTabBar id="idS4_Icntab" select="ondisSelectedTab" expandable="false" expanded="{device>/isNoPhone}" stretchContentHeight="true"
+					class="classPSRSDA sapUiResponsiveContentPadding sapMS4TabContent" selectedKey="{/S4IcntabselKey}">
+					<items>
+						<IconTabFilter id="idS4_IcnF_Ginfo" text="{i18n>S2GINFOICONTABFTEXT}" key="{i18n>S2ICONTABDEFAULTKEY}" icon="sap-icon://hint" iconColor="Default">          <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.disp_general"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter id="idS4_IcnF_Attach" text="{i18n>S2ATCHNTICONTABFTEXT}" key="{i18n>S2ICONTABATTCHKEY}" icon="{i18n>S4DISATTCHICON}" iconColor="Default">    <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								 <mvc:XMLView viewName="com.amat.crm.opportunity.view.attachment"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter class="classPSRSDA" id="idS4_IcnF_PSR_RRA" text="{i18n>S2PSRSDAICONTABFTEXTASC606}" key="{i18n>S2ICONTABPSRSDAKEY}"
+							icon="{i18n>S4DISRRAICON}" iconColor="{/PsrIconColor}">
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.disp_psrra"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator visible="{/S4CBCTabVis}"/>                                                                                                                <!-- PCR033306++;Visible added -->
+						<IconTabFilter id="idS4_IcnF_CBC" text="{i18n>S2CBCTABTXT}" key="{i18n>S2ICONTABCBCTXT}" icon="{i18n>S4DISCBCICON}" iconColor="{/CbcIconColor}"
+						        visible="{/S4CBCTabVis}">                                                                                                                           <!-- PCR033306++;Visible added -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.disp_cbc"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator visible="{/S4CARMTabVis}"/>                                                                                                               <!-- PCR033306++;Visible added -->
+						<IconTabFilter id="idS4_IcnF_CARM" text="{i18n>S2CARMICNTABTXT}" key="{i18n>S2ICONTABCARMKEY}" icon="{i18n>S4DISCARMICON}" iconColor="{/CarmIconColor}"
+						        visible="{/S4CARMTabVis}">                                                                                                                          <!-- PCR033306++;Visible added -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.disp_carm"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter id="idS4_IcnF_MLI" text="{i18n>S2TABMLITIT}" key="{i18n>S2ICONTABMLITEXT}" icon="{i18n>S4DISMLIICON}" iconColor="Default">                   <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.mli"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator visible="{/S4ESATabVis}"/>                                                                                                                <!-- PCR033306++;Visible added -->
+						<IconTabFilter id="idS4_IcnF_ESA" text="{i18n>S1ESAIDSHDRBTNTXT}" key="{i18n>S1ESAIDSPROSTYPTXT}" icon="{i18n>S4DISESAICON}" iconColor="{/EsaIconColor}"
+						         visible="{/S4ESATabVis}">                                                                                                                          <!-- PCR033306++;Visible added -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.disp_esa"></mvc:XMLView>
+							</content>
+						</IconTabFilter>						
+					</items>
+				</IconTabBar>
+			</VBox>
+		</content>
+		<footer>
+			<Toolbar>
+				<Button id="idS4_Ftr_btnAprMesgePOver" icon="sap-icon://message-popup" text="{/messagesLength}" type="Emphasized"
+					press="handleMessagePopoverPress" visible="{/S4MsgPopOvrVis}"/>
+				<ToolbarSpacer/>
+				<Button id="idS4_Ftr_btnApprove" text="{i18n>S2FOOTER_APR}" press="onApprovePSRSDA" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}" visible="{/S4ApprVis}"/>
+				<Button id="idS4_Ftr_btnReject" text="{i18n>S2FOOTER_RJT}" press="onApprovePSRSDA" type="{i18n>S2FOOTER_RJT}" visible="{/S4RjctVis}"/>
+				<Button id="idS4_Ftr_btnReset" text="{i18n>S2FOOTER_RESET}" icon="{i18n>S4DISRESETBTNICON}" press="onResetProcess" type="{i18n>S2FOOTER_RJT}"
+					visible="{/S4ResetVis}"/>
+                <Button id="idS4_Ftr_btnCBCReset" text="{i18n>S2FOOTER_CBCRESET}" icon="{i18n>S4DISRESETBTNICON}" press="onCBCResetProcess" type="{i18n>S2FOOTER_RJT}"
+                    visible="{/S4CbcResetVis}"/>
+                <Button id="idS4_Ftr_btnESACancel" text="{i18n>S2FOOTER_ESACANCEL}" icon="{i18n>S4DISRESETBTNICON}" press="onESACancelProcess" type="{i18n>S2FOOTER_RJT}"
+                    visible="{/S4EsaCancelVis}"/>
+                <Button id="idS4_Ftr_btnESAReset" text="{i18n>S2FOOTER_ESARESET}" icon="{i18n>S4DISRESETBTNICON}" press="onESAResetProcess" type="{i18n>S2FOOTER_RJT}"
+                    visible="{/S4EsaResetVis}"/>
+                <Button id="idS4_Ftr_btnRemind" text="{i18n>S4DISNOTFYBTNTXT}" icon="{i18n>S4DISNOTIFYBTNICON}" press="onRemindMailProcess" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}"
+                    visible="{/S4RmidMailVis}"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</core:View>

@@ -1,0 +1,57 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.generalDoc
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)   
+ *                      
+***********************************************************************************
+ */
+ -->
+ <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>S2AGENARALDOCCBTNTXT}" resizable="true">
+		<Table items="{json>/ItemSet}" class="classGenTable">
+			<columns>
+				<Column width="12em">
+					<Text text="{i18n>FRAGGDOCTABLECOL1}"/>
+				</Column>
+				<Column width="12em" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+					<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+					<Text text="{i18n>S2ATABLECOLUMN4TXT}"/>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+					<Text text="{i18n>S2CARMSELECTTXT}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<Text text="{json>DocDesc}" class="sapMtextPad"/>
+						<Link text="{json>filename}" tooltip="{json>OriginalFname}" press="handleLinkPress"/>
+						<DatePicker placeholder="{json>ExpireDate}" displayFormat="dd-MMM-yyyy" editable="{json>editable}" dateValue="{json>ExpireDate}" change="handleChange" 
+						class="sapMDPpadiing"/> 
+						<CheckBox class="classRadioGrp sapMCbk sapUicompactMarginBottom" select="onGenDocCheck" enabled="true"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<buttons>
+			<Button text="{i18n>S2CARMBTNCANCEL}" press="onCancelFragment" type="Reject"/>
+			<Button text="{i18n>FRAGGDOCSUBMITBTN}" press="onSubmitFragment" type="Accept"/>
+			<Button text="{i18n>FRAGGDOCNEWBTN}" press="onUploadFromPress" type="Accept"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

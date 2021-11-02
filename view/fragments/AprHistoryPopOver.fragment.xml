@@ -1,0 +1,53 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.fragments.AprHistoryPopOver
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              #
+ *                      Pant       
+ *                      (X089025)   
+ *                      
+***********************************************************************************
+ */
+ -->
+ <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ResponsivePopover title="{i18n>PENDINGAPPLIST}" class="sapUiPopupWithPadding" placement="Top" contentHeight="20%" contentWidth="30%"
+		showCloseButton="true" resizable="true">
+		<content>
+			<Table noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+				<columns>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S2CBCAPPROVER}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S2CBCASSTO}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<ObjectIdentifier title="{i18n>S2GINFOSFTTIT}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text text="{AprvDesc}"/>
+							<Text text="{NameAssigned}"/>
+							<ObjectStatus text="{Status}" state="{path:'Status',formatter:'com.amat.crm.opportunity.util.formatter.state'}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<beginButton>
+			<Button text="{i18n>FRAGGDOCSELCLOSEBTN}" press="handleCancel"/>
+		</beginButton>
+	</ResponsivePopover>
+</core:FragmentDefinition>

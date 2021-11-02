@@ -1,0 +1,248 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 22 February 2018
+  * @extends 
+  * @name com.amat.crm.opportunity.view.S1
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    22/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant                                                      *
+ *                      (X089025)                                                 *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 18/12/2018      Palanivelu      PCR021481         RIT#I0018827: Q2C Q1/Q2      *
+ *                 Nagendran                         enhancements                 *
+ * 13/06/2021      Abhishek Pant   PCR035760         Tech Upgrade issues solution *
+***********************************************************************************
+ */
+ -->
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:f="sap.ui.layout.form"
+	controllerName="com.amat.crm.opportunity.controller.mli" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox class="sapMMLIclass">                                                                                                                                                    <!-- PCR035760++; Class added -->
+ 		<Page class="sapMStatusBar" id="idMliStatusBar"> 
+ 			<headerContent> 
+				<Bar>
+					<contentLeft>
+							<Text text="{i18n>S2MLISTATBARTIT}"></Text>
+					</contentLeft>
+				</Bar>
+ 			</headerContent> 
+ 		</Page> 
+		<Panel expandable="true" expanded="true" id="idPSRGenDataPnl"
+			width="auto" class="classDefault sapMQ2CPnl sapUiSizeCompact"
+			visible="true">
+			<VBox class="sapUiSmallMargin">
+				<!-- Start Of PCR021481++: RIT#I0018827 : Q2C Q1/Q2 enhancements -->
+				<!-- <f:SimpleForm id="SimpleFormInstallInfo" editable="false" layout="ResponsiveGridLayout" 
+					class="sapMQ2Clbl classPSRInfoDtailForm" labelSpanXL="4" labelSpanL="4" labelSpanM="4" 
+					labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" 
+					emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"> 
+					<f:content> <core:Title/> <Label text="{i18n>S2MLIINFOINSSTARTDATPLC}"/> 
+					<Text text="{path:'/InstStartDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/> 
+					<Label text="{i18n>S2MLIINFOFORSIGNOFFDAT}"/> <Text text="{path:'/ForeSignoffDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/> 
+					<Label text="{i18n>S2MLIINFOBSSPSTAT}"/> <Text text="{/BeSspStatus}"/> <Label 
+					text="{i18n>S2MLIINFORSSPSTAT}"/> <Text text="{/RsSspStatus}"/> <Label text="{i18n>S2MLIINFOCARSTAT}"/> 
+					<Text text="{/CarSt}"/> <Label text="{i18n>S2MLIINFOCARCLSDAT}"/> <Text text="{path:'/CarClsdDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/> 
+					<Label text="{i18n>S2MLIINFOT0COMTSTAT}"/> <Text text="{/T0CompSt}"/> <Label 
+					text="{i18n>S2MLIINFOT2COMTSTAT}"/> <Text text="{/T2CompSt}"/> <core:Title/> 
+					<Label text="{i18n>S2MLIINFOFSTCHRGDATPLC}"/> <Text text="{path:'/FirstLaborDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/> 
+					<Label text="{i18n>S2MLIINFOINSTCOMPDATPLC}"/> <Text text="{path:'/InstCompDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/> 
+					<Label text="{i18n>S2MLIINFORSSPDUEDAT}"/> <Text text="{path:'/RsSspDueDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/> 
+					<Label text="{i18n>S2MLIINFOCARDUEDAT}"/> <Text text="{path:'/CarDueDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/> 
+					<Label text="{i18n>S2MLIINFODAYININST}"/> <Text text="{/DaysInInstall}"/> 
+					<Label text="{i18n>S2MLIINFOT1COMPTSTAT}"/> <Text text="{/T1CompSt}"/> <Label 
+					text="{i18n>S2MLIINFOT3COMPTSTAT}"/> <Text text="{/T3CompSt}"/> </f:content> 
+					</f:SimpleForm> -->
+				<Text renderWhitespace="true" wrapping="true"
+					text="RB   Completed on {path:'/RbStatus',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}">
+				</Text>
+				<FlexBox>
+					<Label></Label>
+				</FlexBox>
+				<Text renderWhitespace="true" wrapping="true"
+					text="AA   Completed on {path:'/AaStatus',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}">
+				</Text>
+			</VBox>
+			<Table id="idProductsTable" backgroundDesign="sap.m.BackgroundDesign.Transparent"
+				inset="false">
+				<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+					<Toolbar>
+						<Label text="{i18n>S2MLIPRODTABHDRTIT}" />
+					</Toolbar>
+				</infoToolbar>
+				<columns>
+					<Column>
+						<Text text="visible" visible="false" />
+					</Column>
+					<Column>
+						<ObjectIdentifier title="{i18n>S2MLIPRODTABCEL1TIT}" />
+					</Column>
+					<Column>
+						<ObjectIdentifier title="{i18n>S2MLIPRODTABCEL2TIT}" />
+					</Column>
+					<Column>
+						<ObjectIdentifier title="{i18n>S2MLIPRODTABCEL3TIT}" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL1TXT}" />
+							<Input
+								value="{path:'/DockDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/DockDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/DockDtAct',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL2TXT}" />
+							<Input
+								value="{path:'/PlacDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/PlacDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/PlacDtAct',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL3TXT}" />
+							<Input
+								value="{path:'/T0CompDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T0CompDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T0ActDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL4TXT}" />
+							<Input
+								value="{path:'/SspsDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/SspsDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/SspsDtAct',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL5TXT}" />
+							<Input
+								value="{path:'/T1CompDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T1CompDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T1ActDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL6TXT}" />
+							<Input
+								value="{path:'/T2CompDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T2CompDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T2ActDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL7TXT}" />
+							<Input
+								value="{path:'/T3CompDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T3CompDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/T3ActDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<Text />
+							<Text />
+							<Text />
+							<Text />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL8TIT}" />
+							<Text />
+							<Text />
+							<Input
+								value="{path:'/Firlabchargedate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{i18n>S2MLIPRODTABCEL9TXT}" />
+							<Input
+								value="{path:'/CarClsdDtPlan',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/CarClsdDtFore',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+							<Input
+								value="{path:'/ClosedDateEnt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"
+								enabled="false" />
+						</cells>
+					</ColumnListItem>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{i18n>S2MLIPRODTABCEL10TIT}" />
+							<Text />
+							<Text />
+
+							<Input value="{/DaysInInstall}" valueState="Information"
+								editable="false" enabled="true" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<FlexBox>
+				<Label></Label>
+			</FlexBox>
+			<VBox class="sapUiSmallMargin">
+				<Link text="{i18n>S2MLIPRODTABBELIWNLNK}" emphasized="true"
+					target="_blank" href="{/IwnUrl}" />
+				<Link />
+			</VBox>
+		</Panel>
+		<!-- End Of PCR021481++: RIT#I0018827 : Q2C Q1/Q2 enhancements -->
+	</VBox>
+</mvc:View>

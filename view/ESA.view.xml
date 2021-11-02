@@ -1,0 +1,1345 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 17 June 2019
+  * @extends 
+  * @name com.amat.crm.opportunity.view.ESA
+  *
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 17/06/2019      Abhishek        PCR023905         Migrate ESA/IDS db from Lotus*
+ *                 Pant                              Notes to SAP Fiori Q2C       *
+ *                                                   Application                  *
+ * 26/09/2019      Abhishek        PCR025717         Q2C Q4 2019 Enhancements     *
+ *                 Pant                                                           *
+ * 20/04/2020      Arun            PCR028711         Q2C Enhancements for Q2-20   *
+ *                 Jacob                                                          *
+ * 13/06/2021      Abhishek Pant   PCR035760         Tech Upgrade issues solution *
+ * 06/04/2021      Arun Jacob      PCR034716         Q2C ESA,PSR Enhancements     *
+***********************************************************************************
+ */
+ -->
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	controllerName="com.amat.crm.opportunity.controller.ESA" xmlns:u="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox>
+		<HBox id="idEsaDecisionBox" class="classPSRDecision" visible="{/EsaDisBoxVis}">
+			<f:SimpleForm id="SimpleEsaFormDisplay" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl HeaderFormMandat" labelSpanXL="9"
+				labelSpanL="9" labelSpanM="9" labelSpanS="9" adjustLabelSpan="false" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+				<f:content>
+					<HBox class="classMandatBox">
+						<HBox class="classMandatCBCTextBox">
+							<Label class="asteriskCC classMandatFld sapMgmTpClass" text="{i18n>S2ESAIDSREQTXT}" required="true"/>                                                               <!-- PCR035760++; sapMgmTpClass Added -->
+						</HBox>
+						<RadioButtonGroup id="idEsaRdBtnGrp" columns="4" select="onPressInitiateStdEsa" valueState="Error"
+							enabled="{/EsaRDDisEnable}" class="classRadioGrp sapUiMediumMarginBottom sapMMargin" tooltip="{i18n>S2PSRSDAMAINTAINANS}"
+							selectedIndex="{/EsaDecnBoxSelIndex}">
+							<buttons>
+								<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+								<RadioButton text="{i18n>S2CARMINITIATETXT}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>
+								<RadioButton text="{i18n>S2CBCSELNAPP}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>
+							</buttons>
+						</RadioButtonGroup>
+					</HBox>
+				</f:content>
+			</f:SimpleForm>
+		</HBox>
+		<Page class="classStatusBar classStatusBarInitiate" id="idEsaStatusBar" visible="{/EsaStatBarVis}">
+			<headerContent>
+				<Bar>
+					<contentLeft class="sapMLCont">
+						<Text text="{i18n>S2ESAIDSSTATLFTBARTIT}"></Text>
+						<Label class="sapMEsaTitLbl" text="{i18n>S2ESAIDSSTATLFTBARLBLTXT}"/>
+						<Button id="id_Esa_VerText" class="sapMEsaTitTxt" text="{/Esa_VerText}" visible="{/VerNoTxtVis}"></Button>
+						<Select id="id_Esa_VerComBx" items="{path: '/EsaVerCollection'}" enabled="true" change="onEsaVerSelectionChange" visible="true"
+							selectedKey="{/SelectedVerNo}">
+							<core:Item key="{ProductId}" text="{Name}"/>
+						</Select>
+						<Text class="sapMLMar" id="idExtendText" text="{i18n>S2ESATDSEXDNTBNTXT}" visible="{/ExtTxtVis}"></Text>
+					</contentLeft>
+					<contentMiddle class="sapMMCont">
+						<Text id="idStatusText" text="{/EsaStat}"></Text>
+					</contentMiddle>
+					<contentRight>
+					    <Button id="idEsaPrintFuncBtn" text="{i18n>S2CBCPRINTBTNTXT}" class="sapMPtrBtn" icon="{i18n>S2PDFPRINTBTNICON}" type="Emphasized" 
+					    	press="onPressPrintESA" visible="{/ReqPrintBtnVis}"></Button> 																							            <!-- PCR028711++; print ESA Form -->
+						<Button id="idEsaCheckListBtn" text="{/ChckListBtnTxt}" visible="{/ChckListBtnVis}" enabled="{/ChckListBtnEnbl}" press="onChkListPress"
+							icon="{/ChckListBtnIcon}"></Button>
+						<Button id="idEsaReqExtBtn" text="{/ReqExtBtnTxt}" press="onReqExtPress" visible="{/ReqExtBtnVis}" enabled="{/ReqExtBtnEnbl}"
+							icon="{/ReqExtBtnIcon}"></Button>
+						<Button id="idEsaEditBtn" text="{/EditBtnTxt}" visible="{/EditBtnVis}" enabled="{/EditBtnEnbl}" icon="{/EditBtnIcon}" press="onEditESAIDS"></Button>
+						<Button id="idEsaSaveBtn" text="{i18n>S2PSRSDASAVEBTNTEXT}" visible="{/SaveBtnVis}" enabled="{/SaveBtnEnbl}" icon="{i18n>S2PSRSDASAVEICON}"
+							press="onSaveEsa"></Button>
+						<Button id="idEsaSFAppBtn" text="{/SFAppBtnTxt}" visible="{/SFAppBtnVis}" enabled="{/SFAppBtnEnbl}" icon="{/SFAppBtnIcon}"
+							press="onSubmitEsa"></Button>
+					</contentRight>
+				</Bar>
+			</headerContent>
+		</Page>
+		<ScrollContainer class="classPSRScrlCn" height="38rem" width="100%" horizontal="false" vertical="true" visible="{/EsaSclrContrVis}">
+			<Panel expandable="true" expanded="true" id="idESAGenDataPnl" width="auto" class="classDefault sapMQ2CPnl sapUiSizeCompact"
+				visible="{/EsaGenInfoDtaVis}">
+				<VBox class="sapUiSmallMargin">
+					<f:SimpleForm id="SimpleForm_Esa" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl sapMEsaSF classPSRInfoDtailForm" labelSpanXL="3"
+						labelSpanL="3" labelSpanM="3" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+						columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false">                                                                                               <!-- PCR035760++; sapMEsaSF classes added-->
+						<f:content>
+							<core:Title text="{i18n>S2GINFOSFFTIT}"/>
+							<Label text="{i18n>S1TABLECUSTCOL}"/>
+							<Text text="{/EsaInfoCusTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFOBUNMELBLTXT}"/>
+							<Text text="{/EsaInfoBUNameTxt}"/>
+							<Label text="{i18n>S1TABLEREGCOL}"/>
+							<Text text="{/EsaInfoRgnTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFOAPPLBLTXT}"/>
+							<Text text="{/EsaInfoAppTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFOCURRLBLTXT}"/>
+							<Text text="{/EsaInfoCurrTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFONODELBLTXT}"/>
+							<Text text="{/EsaInfoNodeTxt}"/>
+							<Label id="IdS2EsaTAMBALbl" text="{i18n>S2ESAIDSINFOTAMBALBLTXT}"/>
+							<Text text="{/EsaInfoTAMBATxt}" visible="{/EsaInfoTAMBATxtVis}"/>
+							<Input id="idS2ESATAMBAIP" type="Text" placeholder="{i18n>S2ESAIDSINFOTAMBPLCHDRIPTXT}" enabled="true" width="100%"
+								tooltip="{/EsaInfoTAMBATxt}" editable="true" showValueHelp="flase" value="{/EsaInfoTAMBATxt}" liveChange="onHandleEsaInpLivChange"
+								visible="{/EsaInfoTAMBAIPVis}"/>
+							<core:Title text="{i18n>S2CBCPROINFO}"/>
+							<Label text="{i18n>S2CBCOPP}"/>
+							<Text text="{/EsaInfoOppNoTxt}"/>
+							<Label text="{i18n>S1TABLEFABNAMEBUCOL}"/>
+							<Text text="{/EsaInfoFabNameTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFOFABLOCLBLTXT}"/>
+							<Text text="{/EsaInfoFabLocTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFOCOMPRLBLTXT}"/>
+							<Text text="{/EsaInfoComterTxt}"/>
+							<!-- <Label text="{i18n>S2ESAIDSINFOBUREVASSQTRLBLTXT}"/>
+							<Text text="{/EsaInfoBURevAssessQtrTxt}"/> -->
+							<Label text="{i18n>S2ESAIDSINFODVCETYPLBLTXT}"/>
+							<Text text="{/EsaInfoDTypTxt}"/>
+							<Label id="IdS2EsaMasAgrLbl" text="{i18n>S2ESAIDSINFOMSTRAGREMNTLBLTXT}"/>
+							<Text id="IdS2EsaMasAgrTxt" text="{/EsaInfoMstrAgrTxt}" visible="{/EsaInfoMstrAgrTxtVis}"/>
+							<HBox>
+								<RadioButtonGroup id="idS2ESA_MasAgrRbg" width="120%" columns="3" selectedIndex="{/EsaInfoMstrAgrIndex}" visible="{/EsaInfoMstrAgrTxtRDVis}"
+									valueState="{/EsaInfoMstrAgrVS}" select="onPressRdEsa">
+									<buttons>
+										<RadioButton id="idMasAgrDefRd" text="Option 1" visible="false"/>
+										<RadioButton id="idMasAgrYRd" text="{i18n>S2PSRSDAYES}"/>
+										<RadioButton id="idMasAgrNRd" text="{i18n>S2PSRSDANO}"/>
+									</buttons>
+								</RadioButtonGroup>
+							</HBox>
+							<core:Title text="{i18n>S2GINFOSFTTIT}"/>
+							<Label text="{i18n>S2ESAIDSINFOORDNOLBLTXT}"/>
+							<Text text="{/EsaInfoOdrNoTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFOEQUIPTYPELBLTXT}"/>
+							<Text text="{/EsaInfoEqipTypTxt}"/>
+							<Label text="{i18n>S2ESAIDSINFOFCTSHIPDATLBLTXT}"/>                                                                                                                 <!-- PCR028711++ -->
+							<Text text="{path:'/EsaInfoFcstshipDtTxt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+							<Label text="{i18n>S2ESAIDSINFOSHIP2ADDLBLTXT}"/>
+							<Text text="{/EsaInfoShipAddTxt}"/>
+							<Label text="{i18n>S2PSRSDAWAFER}"/>
+							<Text text="{/EsaInfoWeferSzeMmTxt}"/>
+							<Label id="IdS2EsaCTAVPALbl" text="{i18n>S2ESAIDSINFOVPASVLDLBLTXT}" visible="{/EsaInfoCTAVPAVis}"/>
+							<HBox>
+								<Text id="IdS2EsaCTAVPATxt" text="{/EsaInfoCTAVPATxt}" visible="{/EsaInfoCTAVPATxtVis}"/>
+								<RadioButtonGroup id="idS2ESA_CTAVPARbg" width="120%" columns="3" selectedIndex="{/EsaInfoCTAVPAIndex}" visible="{/EsaInfoCTAVPARDVis}"
+									valueState="{/EsaInfoCTAVPAVS}" select="onPressRdEsa">
+									<buttons>
+										<RadioButton id="idCTAVPADefRd" text="Option 1" visible="false"/>
+										<RadioButton id="idCTAVPAYRd" text="{i18n>S2PSRSDAYES}"/>
+										<RadioButton id="idCTAVPANRd" text="{i18n>S2PSRSDANO}"/>
+									</buttons>
+								</RadioButtonGroup>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+				</VBox>
+			</Panel>
+			<Panel expandable="true" expanded="{/EsaWFConPnlExpd}" visible="{/EsaWFConPnlVis}" headerText="{i18n>S2ESAWFCNCTPANLHEADERTXT}"
+				id="idEsaWFContactInfoPnl" width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<VBox>
+					<f:SimpleForm id="idEsaWFSimForm" editable="false" layout="ResponsiveGridLayout" class="classPSRContactInfoDtailForm" labelSpanXL="4"
+						labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+						columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false">
+						<f:content>
+							<core:Title text="{i18n>S2PSRSDAACCCON}"/>
+							<VBox>
+								<HBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist1" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_ROM/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader1" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOROMTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaROMAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate1">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist2" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_SLS/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader2" class="listheaderclass sapUiSmallMargin" text="{i18n>S2PSRSDASALESPERSON}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaSalesAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate2">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+								<HBox class="classBWHB">
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist3" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_AGM/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader3" class="listheaderclass sapUiSmallMargin" text="{i18n>S2ESAIDSACCGMTITTXT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaAcGMAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate3">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist8" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_BUGM/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader8" class="listheaderclass sapUiSmallMargin" text="{i18n>S2ESAIDSCONINFOBUGMTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaBUGMAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate8">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+							</VBox>
+							<core:Title text="{i18n>S2GINFOPANLCONTACTBUTITLE}"/>
+							<VBox>
+								<HBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="EsaList4" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_POM/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="IdEsaPOMHeader4" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOPOMTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="IdEsaPOMBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="IdEsaPOMlstTemp4">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist5" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_BMO/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader5" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOBMOTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaBMOAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate5">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+								<HBox class="classBWHB">
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist6" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_BMHEAD/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader6" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOBMHEADTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaBMHadAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate6">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist7" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_CON/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader7" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOCONTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaConAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate7">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+							</VBox>
+							<core:Title/>
+							<VBox>
+								<HBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist9" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5" mode="{/EsaConDelMod}"
+											delete="onDelete" items="{ path: '/NAV_SCFO/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader9" class="listheaderclass sapUiSmallMargin" text="{i18n>S2ESAIDSCONINFOSCFOTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaSCFOAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate9">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist10" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="{/EsaConDelMod}" delete="onDelete" items="{ path: '/NAV_GC/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader10" class="listheaderclass sapUiSmallMargin" text="{i18n>S2ESAIDSCONINFOGCCTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaGCCAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate10">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+								<HBox class="classBWHB">
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist11" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="{/EsaConDelMod}" delete="onDelete" items="{ path: '/NAV_RM/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader11" class="listheaderclass sapUiEsaSmallMargin" text="{i18n>S2ESAIDSCONINFORSKMGTTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaRskMgntAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate11">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="Esalist12" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="{/EsaConDelMod}" delete="onDelete" items="{ path: '/NAV_ORCA/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="Esaheader12" class="listheaderclass sapUiSmallMargin" text="{i18n>S2ESAIDSCONINFOORCATIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idEsaORCAAddBtn" icon="{i18n>S2ADDCONTACTICON}" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized" press="onPressAddContact"
+														enabled="{/EsaAddBtnEnbl}"/>																								  <!-- PCR028711++; modify icon -->
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="EsalistTemplate12">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+							</VBox>
+						</f:content>
+					</f:SimpleForm>
+				</VBox>
+			</Panel>
+			<!-- *****************Start Of PCR028711 Q2C Enhancements for Q2-20************************************ -->
+			<Panel id="idEsaCbnCpyPnl" width="auto" expandable="true" class="sapMQ2CPnl sapUiSizeCompact" visible="{/EsaCbnCpyPnlVis}"
+			    expanded="{/EsaCbnCpyPnlExpd}">
+				<headerToolbar>
+					<Toolbar height="3rem">
+						<Title class="SapMTLTFnt" text="{i18n>S2ESAMULTIPLE}"/>
+						<ToolbarSpacer class="sapMCCTolSpace"/>
+						<Label class="sapMCCText" id="idS2_Esa_LB_CbnCpyText" text="{/EsaCCLbTxt}"/>
+					</Toolbar>
+				</headerToolbar>
+				<VBox class="sapUiSmallMargin">
+					<f:SimpleForm class="classMCcForm" editable="true" layout="ResponsiveGridLayout">
+						<Label text="{i18n>S2ESACCSELLBL}"/>
+						<HBox id="idS2_Esa_IP_CbnCpyBox">
+							<Input id="idS2_Esa_IP_CbnCpy" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S2CBCSELOPPLINK}" enabled="{/EsaCCIPEbl}"
+								width="100%" editable="true" showValueHelp="true" valueHelpRequest="handleValueHelpEsaCbnCpyRew" liveChange="onEsaCbnCpyChange"/>
+						</HBox>
+						<HBox id="idS2_Esa_LB_CbnCpyBox" visible="false">
+							<Label class="classOppWdline" text="{FileName}"/>
+						</HBox>
+						<HBox id="idS2_Esa_BT_CbnCpyBox" visible="{/EsaDLnkVis}">
+							<Button text="{i18n>S2ALLPROSCCDLINKBTNTEXT}" class="navBtnClass" type="Reject" icon="{i18n>S2BROKENLINKBTNICON}" press="onPressEsaDeLink"/>
+						</HBox>
+					</f:SimpleForm>
+					<VBox visible="{/EsaCbnCpyTblVis}">
+					  <Table id="idEsaCbnCpyTable" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{path: '/NAV_ESA_CC/results'}">
+						  <columns>
+							 <Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CBCOPP}"/>
+							 </Column>
+							 <Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2GENINFOOPPDESFLDTXT}"/>
+							 </Column>
+							 <Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2PSRSDALINENO}"/>
+							 </Column>
+						  </columns>
+						  <items>
+							 <ColumnListItem id="idEsaCbnCpyTemplate">
+								<cells>
+									<Text text="{OppId}"/>
+									<Text text="{OppDesc}" />
+									<Text text="{ItemNo}"/>
+								</cells>
+							</ColumnListItem>
+						 </items>
+					   </Table>
+					</VBox>
+				</VBox>
+			</Panel>
+			<!--*****************End Of PCR028711 Q2C Enhancements for Q2-20**************************************  -->			
+			<Panel expandable="true" expanded="{/EsaDiscriptPnlExpd}" headerText="{i18n>S2ESADESPANLHEADERTXT}" visible="{/EsaDiscriptPnlVis}"
+				id="idEsaDiscriptPnl" width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<VBox>
+					<f:SimpleForm id="SimpleFormESAQus" width="auto" class="HeaderFormMandat" editable="false">
+						<f:content>
+							<VBox>
+								<HBox class="sapMAgrHB"><CheckBox id="idS2ESA_PreAgreeCkb" text="{/PrevAgrementTxt}" selected="{/PrevAgrementChk}" enabled="{/PrevAgrementChkEbl}"
+									select="onEsaCkbSelect"/>
+									<Input id="idS2ESA_PreAgreeIP" class="sapMEsaVB" type="Text" placeholder="{i18n>S2ESAIDSPREAGREEPLCHDRIPTXT}" enabled="{/PrevAgrementChkEbl}"
+										width="131%" editable="true" showValueHelp="false" value="{/PrevAgrementChkno}" liveChange="onHandleEsaInpLivChange"
+										tooltip="{/PrevAgrementChkno}"/>
+								</HBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSRONFTEVALTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<HBox class="sapMEsaVB sapEsaHB">
+									<RadioButtonGroup id="idEasRfeRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" select="onPressRdEsa" selectedIndex="{/ReasonForEvalSelIndex}"
+										valueState="{/ReasonForEvalSelVS}" class="classRadioGrp sapUiTpMargn" enabled="{/EsaRDEbl}">
+										<buttons>
+											<RadioButton id="idEasRfeRdBtnDaf" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+											<RadioButton id="idEasRfeRdBtnNp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSRONFTEVALNPRDLBLTXT}"/>
+											<RadioButton id="idEasRfeRdBtnDep" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSRONFTEVALDEPRDLBLTXT}"/>
+											<RadioButton id="idEasRfeRdBtnOth" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2OTHDOCDES}"/>
+										</buttons>
+									</RadioButtonGroup>
+									<Input id="idS2ESA_ResForEvalOthIP" class="sapMEsaIP" type="Text" placeholder="{i18n>S2ESAIDSRONFTEVALOTHCOMMPLCHDRIPTXT}"
+										enabled="{/PrevAgrementChkEbl}" width="114%" editable="true" showValueHelp="false" value="{/ReasonForEvalNote}"
+										liveChange="onHandleEsaInpLivChange" visible="{/ReasonForEvalNoteVis}" tooltip="{/ReasonForEvalNote}" valueState="{/ReasonForEvalNoteVS}"/>
+								</HBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESEQUIPTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB">
+									<HBox class="sapMAgrHB"><Label text="{/EqupDescTxt}" class="sapMEsaLbl asteriskCC classMandatFld"/>                                           <!--PCR028711++; modify css class-->
+										<Input id="idS2ESA_EqipAgreeIP" class="sapMEAIP" type="Text" placeholder="{i18n>S2ESAIDSDESEVALAGREEDESPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EqupDescTxtVal}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/EqupDescTxtVal}"  valueState="{/EqupDescTxtValVS}"/>                                  <!--PCR028711++; modify value state-->
+									</HBox>
+									<HBox>
+										<RadioButtonGroup id="idEasEquipTypeRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="5" select="onPressRdEsa"
+											selectedIndex="{/EqupLonTypeSelIndex}" valueState="{/EqupLonTypeSelVS}" class="classRadioGrp sapUiTpMargn" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEasEquipTypeRdDef" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEasEquipTypeRdSys" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSEQUIPTYPSYSRDLBLTXT}"/>
+												<RadioButton id="idEasEquipTypeRdCha" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSEQUIPTYPCBERRDLBLTXT}"/>
+												<RadioButton id="idEasEquipTypeRdSft" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSEQUIPTYPSOFTRDLBLTXT}"/>
+												<RadioButton id="idEasEquipTypeRdNso" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESANSODES}" visible="{/EsaQ2QFlag2021}"/> <!--PCR034716++ -->
+												<RadioButton id="idEasEquipTypeRdOth" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2OTHDOCDES}"/>
+											</buttons>
+										</RadioButtonGroup>
+									</HBox>
+									<HBox id="idEsa_EquipTypeIpBox" class="sapMAgrHB" visible="{/EqupOthnSwtrVis}"><Label text="{/EqupOthnSwtrTxt}"/>
+										<Input id="idS2ESA_EqipSoftOthSelIP" class="sapMSOIP" type="Text" placeholder="{i18n>S2ESAIDSDESEVALAGREEDESPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="113%" editable="true" showValueHelp="false" value="{/EqupOthnSwtrTxtVal}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/EqupOthnSwtrTxtVal}" valueState="{/EqupOthnSwtrVS}"/>
+									</HBox>
+									<HBox alignItems="Center">																												     <!-- PCR034716++; alignItem added -->
+										<HBox><Label text="{i18n>S2ESAIDSDESEQUIPSELONETIT}"/></HBox>
+										<HBox>
+											<RadioButtonGroup id="idEasEquipSel1RdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" select="onPressRdEsa"
+												selectedIndex="{/EqupSelOneSelIndex}" valueState="{/EqupSelOneSelVS}" class="classRadioGrp sapUiTpMargn" enabled="{/EsaRDEbl}">
+												<buttons>
+													<RadioButton id="idEasEquipSel1RdDef" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+													<RadioButton id="idEasEquipSel1RdEas" tooltip="{i18n>S2PSRSDAMAINTAINANS}" 
+														text="{=${/EsaQ2QFlag2021} ? ${i18n>S2ESAIDSEQUIPSELONE1RDLBLTXT2} : ${i18n>S2ESAIDSEQUIPSELONE1RDLBLTXT}}"/>		     <!-- PCR034716++; text condition modified -->
+													<!--*****************Start Of PCR034716++ Q2C ESA,PSR Enhancements************************************  -->
+													<RadioButton id="idEasEquipSel1RdUrs" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSEQUIPSELTWO2RDLBLTXT}"
+														visible="{/EquipSel1RdUrsVis}"/>
+													<!--*****************End Of PCR034716++ Q2C ESA,PSR Enhancements**************************************  -->
+													<RadioButton id="idEasEquipSel1RdPrs" tooltip="{i18n>S2PSRSDAMAINTAINANS}" 
+														text="{=${/EsaQ2QFlag2021} ? ${i18n>S2ESAIDSEQUIPSELONE2RDLBLTXT2} : ${i18n>S2ESAIDSEQUIPSELONE2RDLBLTXT}}"/>		     <!-- PCR034716++; text condition modified -->
+													<RadioButton id="idEasEquipSel1RdOthrs" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2OTHDOCDES}"
+														visible="{/EquipSel1RdUrsVis}"/>			 																		     <!-- PCR034716++ -->
+												</buttons>
+											</RadioButtonGroup>
+											<!--*****************Start Of PCR034716++ Q2C ESA,PSR Enhancements************************************  -->
+											<HBox class="classEasEquipSmartEval">
+												<CheckBox id="idEasEquipSelUrsCkb" text="{i18n>S2ESAIDSEQUIPURSCBTXT}" selected="{/EquipSmartEvalCkbSel}" 
+													select="onEsaCkbSelect" enabled="{/EsaRDEbl}" visible="{/EquipSmartEvalCkbVis}"/>
+											</HBox>
+											<!--*****************End Of PCR034716++ Q2C ESA,PSR Enhancements**************************************  -->
+											<Input id="idS2ESA_EqipSel1PRIP" class="sapMPrIP" type="Text" placeholder="{i18n>S2ESAIDSDESEVALAGREEDESPLCHDRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="126%" visible="{/EqupSelOnePRIPVis}" editable="true" showValueHelp="false"
+												value="{/EqupSelOnePRIPVal}" liveChange="onHandleEsaInpLivChange" tooltip="{/EqupSelOnePRIPVal}" valueState="{/EqupSelOnePRVS}"/>
+										</HBox>
+									</HBox>
+									<HBox class="sapMAgrHB"><CheckBox id="idS2ESA_EquipCkb" text="{i18n>S2ESAIDSEQUIPDEVARRCBTXT}" selected="{/EquipDevArrCkbSel}" enabled="{/PrevAgrementChkEbl}"
+										select="onEsaCkbSelect"/></HBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}" visible="{/EsaPreShipDateTxtVis}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESPEVALTSCHNDTILTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB" visible="{/EsaPreShipDateTxtVis}">
+									<HBox>
+										<Label class="sapMEsaLbl" text="{/EvalShipDateLbTxt}"/>
+										<Text class="classESDPad" text="{path:'/EvalPreShipDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaPreShipDateTxtVis}"/>
+									</HBox>
+									<HBox class="sapMTMgin">
+										<Label class="sapMEsaLbl" text="{/EvalStartDateLbTxt}"/>
+										<Text class="classESTDPad" text="{path:'/EvalPreStartDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaPreShipDateTxtVis}"/>
+									</HBox>
+									<HBox>
+										<Label class="sapMEsaLbl" text="{/EvalEndDateLbTxt}"/>
+										<Text class="classESDPad" text="{path:'/EvalPreEndDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaPreShipDateTxtVis}"/>
+									</HBox>
+									<Label class="sapMEsaTitTxt asteriskCC classMandatFld" text="{i18n>S2ESAIDSPETSNDDTNOTETXT}" required="true"/>
+									<HBox class="sapMAgrHB">
+										<Label class="sapMEsaEditModeMargin" text="{i18n>S2ESAIDSPETSNDACCAGREEQTXT}"/>
+										<RadioButtonGroup id="idEasPreASpecRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+											selectedIndex="{/EsaPreASpecSelIndex}" valueState="{valueState}" class="classRadioGrp sapUiTpMargn" enabled="{/EsaPreETSEble}">
+											<buttons>
+												<RadioButton id="idEsaPreASpecOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEsaPreASpecYRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDANO}"/>
+												<RadioButton id="idEsaPreASpecNRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDAYES}"/>
+											</buttons>
+										</RadioButtonGroup>
+										<Input id="idS2ESA_EvalPreTsNDACAgreeIP" class="sapMASAIP" type="Text" placeholder="{/PreAcepSpecnoNotePlcHoldr}"
+											enabled="{/EsaPreETSEble}" width="123%" editable="true" showValueHelp="false" value="{/PreAcepSpecnoNote}"
+											liveChange="onHandleEsaInpLivChange" visible="{/EsaPreACPosIPVis}" tooltip="{/AcepSpecnoNote}"/>
+										<Text class="sapMASTxtCls" text="{path:'/PreAcepSpecDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaPreACPosDPVis}"/>
+									</HBox>
+									<HBox class="sapMAgrHB">
+										<Label class="sapMEsaEditModeMargin asteriskCC classMandatFld" text="{i18n>S2ESAIDSDESSPETSNDAPPDATARIGHTTXT}"/>                        <!--PCR028711++; modify css class-->
+										<Input id="idS2ESA_EvalPreTsNDDatIP" class="sapMTA" type="Text" placeholder="{i18n>S2ESAIDSDESEVALAGREEDESPLCHDRIPTXT}"
+											enabled="{/EsaPreETSEble}" width="120%" editable="true" showValueHelp="false" value="{/PreDataSpecProvNote}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/DataSpecProvNote}"/>
+									</HBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESEVALTSCHNDTILTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB">
+									<HBox>
+										<Label class="sapMEsaLbl" text="{/EvalShipDateLbTxt}"/>
+										<Text class="classESDPad" text="{path:'/EvalShipDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaShipDateTxtVis}"/>
+										<DatePicker id="idS2ESA_EvalTsNDEstShipDtDP" displayFormat="dd-MMM-yyyy" editable="true" dateValue="{/EvalShipDate}" valueState="{/EsaShipDateDPVS}"
+											change="onHandleDatChange" class="classEsaSDatePickerPad disablekb" visible="{/EsaShipDateDPVis}" enabled="{/EsaPreEvalTNDEbl}"/>
+									</HBox>
+									<HBox class="sapMTMgin">
+										<Label text="{/EvalActShipDateLbTxt}"/>
+										<Text class="classEsaASDatePickerPad" text="{path:'/EsaActShipDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"/>
+									</HBox>
+									<HBox>
+										<Label class="sapMEsaLbl" text="{/EvalStartDateLbTxt}"/>
+										<Text class="classESTDPad" text="{path:'/EvalStartDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaShipSDateTxtVis}"/>
+										<DatePicker id="idS2ESA_EvalTsNDStartDtDP" displayFormat="dd-MMM-yyyy" editable="true" dateValue="{/EvalStartDate}" valueState="{/EsaShipSDateVS}"
+											change="onHandleDatChange" class="classEsaEDatePickerPad disablekb" visible="{/EsaShipSDateDPVis}" enabled="{/EsaPreEvalTNDEbl}"/>
+									</HBox>
+									<HBox>
+										<Label class="sapMEsaLbl" text="{/EvalEndDateLbTxt}"/>
+										<Text class="classESDPad" text="{path:'/EvalEndDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaShipEDateTxtVis}"/>
+										<DatePicker id="idS2ESA_EvalTsNDEndDtDP" displayFormat="dd-MMM-yyyy" editable="true" dateValue="{/EvalEndDate}" valueState="{/EsaShipEDateDPVS}"
+											change="onHandleDatChange" class="classEsaSDatePickerPad disablekb" visible="{/EsaShipEDateDPVis}" enabled="{/EsaPreEvalTNDEbl}"/>
+									</HBox>
+									<Label class="sapMEsaTitTxt asteriskCC classMandatFld" text="{i18n>S2ESAIDSPETSNDDTNOTETXT}" required="true"/>
+									<HBox class="sapMAgrHB">
+										<Label class="sapMEsaEditModeMargin" text="{i18n>S2ESAIDSPETSNDACCAGREEQTXT}"/>
+										<RadioButtonGroup id="idEasASpecRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+											selectedIndex="{/EsaASpecSelIndex}" valueState="{/EsaASpecSelVS}" class="classRadioGrp sapUiTpMargn" enabled="{/EsaPreEvalTNDEbl}">
+											<buttons>
+												<RadioButton id="idEsaASpecOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEsaASpecYRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDANO}"/>
+												<RadioButton id="idEsaASpecNRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDAYES}"/>
+											</buttons>
+										</RadioButtonGroup>
+										<Input id="idS2ESA_EvalTsNDACAgreeIP" class="sapMASAIP" type="Text" placeholder="{/AcepSpecnoNotePlcHoldr}" valueState="{/AcepSpecnoNoteVS}"
+											enabled="{/EsaPreEvalTNDEbl}" width="123%" editable="true" showValueHelp="false" value="{/AcepSpecnoNote}"
+											liveChange="onHandleEsaInpLivChange" visible="{/EsaACPosIPVis}" tooltip="{/AcepSpecnoNote}"/>
+										<Text class="sapMASTxtCls" text="{path:'/AcepSpecDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"
+											visible="{/EsaShipNDACAgreeTxtVis}"/>
+										<DatePicker id="idS2ESA_EvalTsNDACAgreeDP" displayFormat="dd-MMM-yyyy" editable="true" dateValue="{/AcepSpecDate}" valueState="{/AcepSpecDateVS}"
+											change="onHandleDatChange" class="classDatePickerPadding disablekb" enabled="{/EsaPreEvalTNDEbl}" visible="{/EsaACPosDPVis}"/>
+									</HBox>
+									<HBox class="sapMAgrHB">
+										<Label class="sapMEsaEditModeMargin asteriskCC classMandatFld" text="{i18n>S2ESAIDSDESSPETSNDAPPDATARIGHTTXT}"/>                                         <!--PCR028711++; modify css class-->
+										<Input id="idS2ESA_EvalTsNDDatIP" class="sapMTA" type="Text" placeholder="{i18n>S2ESAIDSDESEVALAGREEDESPLCHDRIPTXT}" valueState="{/DataSpecProvNoteVS}"
+											enabled="{/EsaPreEvalTNDEbl}" width="120%" editable="true" showValueHelp="false" value="{/DataSpecProvNote}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/DataSpecProvNote}"/>
+									</HBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESSECCEVALTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMCFTxt sapMEsaVB sapEsaHB">
+									<Label text="{/EsaSucEvalLblTxt}"/>
+									<RadioButtonGroup id="idEasSEvalRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" select="onPressRdEsa" selectedIndex="{/EsaSuccEvalCustIndex}"
+										valueState="{/EsaSuccEvalCustVS}" class="classRadioGrp" enabled="{/EsaRDEbl}">
+										<buttons>
+											<RadioButton id="idEasSEvalDRdBtn" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+											<RadioButton id="idEasSEval1RdBtn" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSCESSEVALP1RDLBLTXT}"/>
+											<RadioButton id="idEasSEval2RdBtn" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSCESSEVALP2RDLBLTXT}"/>
+										</buttons>
+									</RadioButtonGroup>
+									<HBox id="idEas_SEval2RdBox" visible="{/EsaSucEvalCustVis}">
+										<RadioButtonGroup id="idEasSEval2RdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="5" select="onPressRdEsa"
+											selectedIndex="{/EsaCustBuyPriceIndex}" valueState="{/EsaCustBuyPriceVS}" class="classRadioGrp sapMSEMargin" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEasSEval2OpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEasSEval21RD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSCESSEVALD1RDLBLTXT}"/>
+												<RadioButton id="idEasSEval22RD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSCESSEVALD2RDLBLTXT}"/>
+												<RadioButton id="idEasSEval23RD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSCESSEVALD3RDLBLTXT}"
+													visible="{/EsaQ2QFlag2021}"/>			 																				    <!-- -PCR034716++ -->
+											</buttons>
+										</RadioButtonGroup>
+									</HBox>
+									<!-- *****************Start Of PCR034716++ Q2C ESA,PSR Enhancements************************************ -->
+									<HBox class="sapMAgrHB">
+										<Input id="idEasSEval23RDDesIP" class="sapMeasSEval23RDDesIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESEVALAGREEDESPLCHDRIPTXT}"
+											enabled="{/EsaRDEbl}" visible ="{/EsaSEval23RDDesVis}" editable="true" showValueHelp="false" value="{/EsaSEval23RDDesVal}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/EsaSEval23RDDesVal}" valueState="{/EsaSEval23RDDesValVS}"/>
+									</HBox>
+									<!-- *****************End Of PCR034716++ Q2C ESA,PSR Enhancements************************************** -->
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESPRCETIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB">
+									<HBox class="sapMAgrHB">
+										<Label class="sapMTMgin sapMEsaEditModeMargin" text="{i18n>S2ESAIDSDESPRCCURRTIT}"/>
+										<RadioButtonGroup id="idEasPrCurrRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+											selectedIndex="{/EsaPriceCurrIndex}" valueState="{valueState}" class="classRadioGrp sapUiTpMargn sapUiEsaPrceClass" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEsaPriceOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEsaUSDRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSDESPRCCURRUSDTIT}"/>
+												<RadioButton id="idEsaYENRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSDESPRCCURRYENTIT}"/>
+											</buttons>
+										</RadioButtonGroup>
+									</HBox>
+									<!-- *****************Start Of PCR025717 Q2C Q4 2019 Enhancements************************************ -->
+									<HBox class="sapMAgrHB"><Text class="sapMTMgin sapMEsaPrcTxt" text="{i18n>S2ESAIDSDESPRCEVAVALTXT}"/>
+										<Input id="idS2ESA_PrcEVAIP" class="sapMprceIP sapMPrcEvaIp" type="Number" placeholder="{i18n>S2ESAIDSDESPRCEVAVALPLCHODRIPTXT}" 
+											enabled="{/PrevAgrementChkEbl}" width="114.5%" editable="true" showValueHelp="false" value="{/EvaNetDiffVal}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/EvaNetDiffVal}"/>
+									</HBox>
+									<HBox class="sapMAgrHB"><Text class="sapMTMgin sapMEsaPrcTxt" text="{i18n>S2ESAIDSDESPRCVPSVALTXT}"/> 
+										<Input id="idS2ESA_PrcVPSIP" class="sapMprceIP sapMPrcVpsIp" type="Number" placeholder="{i18n>S2ESAIDSDESPRCVPSVALPLCHODRIPTXT}" 
+										    enabled="{/PrevAgrementChkEbl}" width="114.5%" editable="true" showValueHelp="false" value="{/VpsNetPerTarget}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/VpsNetPerTarget}"/>
+									</HBox>
+									<!--*****************End Of PCR025717 Q2C Q4 2019 Enhancements**************************************  -->
+									<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCTARSALPRCTXT}"/>
+										<Input id="idS2ESA_PrcTSalPrcIP" class="sapMprceIP sapMTarSalPrce" type="Number" placeholder="{i18n>S2ESAIDSDESPRCTARSALPRCPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="114.5%" editable="true" showValueHelp="false" value="{/TargetSalesPrice}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/TargetSalesPrice}"/>
+									</HBox>
+									<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCBOTSALPRCTXT}"/>
+										<Input id="idS2ESA_PrcBSalPrcIP" class="sapMprceIP sapMBotSalPrce" type="Number" placeholder="{i18n>S2ESAIDSDESPRCBOTSALPRCPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="115%" editable="true" showValueHelp="false" value="{/BottomSalesPrice}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/BottomSalesPrice}"/>
+									</HBox>
+									<!-- <HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCCOMMBOTSALPRCTXT}"/>                                                   PCR025717~~  -->
+									<HBox class="sapMAgrHB"><Text class="sapMTMgin sapMEsaPrcTxt" text="{i18n>S2ESAIDSDESPRCCOMMBOTSALPRCTXT}"/>                                      <!-- PCR025717++ -->
+										<Input id="idS2ESA_PrcComBSalPrcIP" class="sapMprceIP sapMBSPComm" type="Text" placeholder="{i18n>S2ESAIDSDESSPRCCOMMBOTSALPRCPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/BottomCommNote}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/BottomCommNote}"/>
+									</HBox>
+									<VBox class="sapUiTpMargn">
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCGTARMARTXT}"/>
+											<Input id="idS2ESA_PrcGrsMarTarIP" class="sapMprceIP sapMGTMar" type="Number" placeholder="{i18n>S2ESAIDSDESPRCGTARMARPLCHDRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="117%" editable="true" showValueHelp="false" value="{/MarginPerTarget}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/MarginPerTarget}"/>
+										</HBox>
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCGBOTMARTXT}"/>
+											<Input id="idS2ESA_PrcGrsMarBotIP" class="sapMprceIP sapMGBmar" type="Number" placeholder="{i18n>S2ESAIDSDESPRCGBOTMARPLCHDRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="117.5%" editable="true" showValueHelp="false" value="{/MarginPerBottom}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/MarginPerBottom}"/>
+										</HBox>
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCJUSTTXT}"/>
+											<Input id="idS2ESA_PrcJustIP" class="sapMprceIP sapMJust" type="Text" placeholder="{i18n>S2ESAIDSDESPRCJUSTPLCHDRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="114.5%" editable="true" showValueHelp="false" value="{/PriceJustiNote}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/PriceJustiNote}" valueState="{/PriceJustiNoteVS}"/>
+										</HBox>
+									</VBox>
+									<!-- *****************Start Of PCR025717 Q2C Q4 2019 Enhancements************************************ -->
+									<HBox class="sapMAgrHB"><Text class="sapMTMgin sapMEsaPrcTxt sapMMaxWidth" text="{i18n>S2ESAIDSDESPRCEXSALPRCHVMTXT}"/>
+										<Input id="idS2ESA_PrcExSalPrcHVMIP" class="sapMprceIP sapMPrcExpSPIp" type="Number" placeholder="{i18n>S2ESAIDSDESPRCEXSALPRCHVMPLHDRTXT}" 
+											enabled="{/PrevAgrementChkEbl}" width="114.5%" editable="true" showValueHelp="false" value="{/ExpSlsPriceHvm}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/ExpSlsPriceHvm}"/>
+									</HBox>
+									<HBox class="sapMAgrHB">
+										<Text class="sapMTMgin sapMEsaEditModeMargin sapMPrcHvmSPTxtWd" text="{i18n>S2ESAIDSDESPRCHVMNEGRDTIT}"/> 
+										<RadioButtonGroup id="idEasPrHVMRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+											selectedIndex="{/HvmEvalValIndex}" valueState="{valueState}" class="classRadioGrp sapUiTpMargn sapMHvmRdMar" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEsaPriceHVMRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEsaHVMNRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="No"/>
+												<RadioButton id="idEsaHVMYRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="Yes"/>
+											</buttons>
+										</RadioButtonGroup>
+									</HBox>
+									<Label class="sapMEsaTitTxt asteriskCC classMandatFld" visible="true" text="{i18n>S2ESAIDSDESPRCHVMNEGRDPOSVALNOTETXT}" required="true"/>
+									<!--*****************End Of PCR025717 Q2C Q4 2019 Enhancements****************************************  -->
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESABL2UPGRTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB">
+									<HBox class="sapMAgrHB"><CheckBox id="idS2ESA_AbTUpgrCkb" text="{i18n>S2ESAIDSEABL2UPGRCBTXT}" selected="{/EsaAble2UpgrdeSelVal}" enabled="{/PrevAgrementChkEbl}"
+										select="onEsaCkbSelect"/></HBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESSHIPTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB">
+									<Table class="sapMEsaTab" items="{/results}">
+										<headerToolbar>
+											<Toolbar class="SapMShpTabTitClass">
+												<Title text="{i18n>S2ESAIDSDESSHIP2SHIPTRMTIT}"/>
+												<RadioButtonGroup id="idEasShpTrmRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+													selectedIndex="{/EsaShipSTermIndex}" valueState="{/EsaShipSTermVS}" class="classRadioGrp sapMshppad sapMShipCostClass" enabled="{/EsaRDEbl}">
+													<buttons>
+														<RadioButton id="idEsaShpTrmOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+														<RadioButton id="idEsaShpTrmSRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSSHIP2SHIPTRM1RDLBLTXT}"/>
+														<RadioButton id="idEsaShpTrmERD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSHIP2SHIPTRM2RDLBLTXT}"/>
+													</buttons>
+												</RadioButtonGroup>
+											</Toolbar>
+										</headerToolbar>
+										<columns>
+											<Column></Column>
+										</columns>
+										<items>
+											<ColumnListItem><cells/></ColumnListItem>
+										</items>
+									</Table>
+									<VBox id="idEsa_ShpTrmVBox" class="sapMEsaVB sapEsaHB" visible="{/EsaShipSTermFormVis}">
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESSHPTRMPROTRMTXT}"/>
+											<Input id="idS2ESA_ShpSTProTermIP" class="sapMPropTrmIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESSHPTRMPROTRMIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaShipSTermProTermVal}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/EsaShipSTermProTermVal}"/>
+										</HBox>
+										<Label text="{i18n>S2ESAIDSDESSHPTRMNOTETXT})"/>
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESSHPTRMDESTXT}"/>
+											<Input id="idS2ESA_ShpSTDesIP" class="sapMShiptrmDesIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESEVALAGREEDESPLCHDRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaShipSTermDesVal}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/EsaShipSTermDesVal}"/>
+										</HBox>
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCJUSTTXT}"/>
+											<Input id="idS2ESA_ShpSTJustIP" class="sapMShiptrmJustIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESPRCJUSTPLCHDRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaShipSTermJustVal}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/EsaShipSTermJustVal}" valueState="{/EsaShipSTermJustVS}"/>
+										</HBox>
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESSHPTRMPCOMMTXT}"/>
+											<Input id="idS2ESA_ShpSTComIP" class="sapMShipComIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESSHPTRMPCOMMIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaShipSTermCommVal}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/EsaShipSTermCommVal}"/>
+										</HBox>
+									</VBox>
+									<Table class="sapMEsaTab" items="{/results}">
+										<headerToolbar>
+											<Toolbar class="SapMShpTabTitClass">
+												<Title text="{i18n>S2ESAIDSDESSHIP2SSRCTIT}"/>
+												<RadioButtonGroup id="idEasSpShipConRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+													selectedIndex="{/EsaShipSShipIndex}" valueState="{/EsaShipSShipVS}" class="classRadioGrp sapMSSRCPad sapMShipCostClass" enabled="{/EsaRDEbl}">
+													<buttons>
+														<RadioButton id="idEsaSpShipConOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+														<RadioButton id="idEsaSpShipConSRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSPLITSHIP2SHIPTRM2RDLBLTXT}"/>
+														<RadioButton id="idEsaSpShipConERD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDAYES}"/>
+													</buttons>
+												</RadioButtonGroup>
+											</Toolbar>
+										</headerToolbar>
+										<columns>
+											<Column></Column>
+										</columns>
+										<items>
+											<ColumnListItem><cells/></ColumnListItem>
+										</items>
+									</Table>
+									<VBox id="idEsa_SpShipConVBox" class="sapMEsaVB sapEsaHB" visible="{/EsaShipSShipFormVis}">
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESSSRCLOCTXT}"/>
+											<Input id="idS2ESA_ShpSSRCLocIP" class="sapMSShiptrmLocIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESSSRCLOCPLCHODRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaShipSShipLocVal}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/EsaShipSShipLocVal}" valueState="{/EsaShipSShipLocVS}"/>
+										</HBox>
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCJUSTTXT}"/>
+											<Input id="idS2ESA_ShpSSRCJustIP" class="sapMShiptrmJustIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESPRCJUSTPLCHDRIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaShipSShipJustVal}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/EsaShipSShipJustVal}" valueState="{/EsaShipSShipJustVS}"/>
+										</HBox>
+										<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESSHPTRMPCOMMTXT}"/>
+											<Input id="idS2ESA_ShpSSRCCommIP" class="sapMShipComIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESSHPTRMPCOMMIPTXT}"
+												enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaShipSShipCommVal}"
+												liveChange="onHandleEsaInpLivChange" tooltip="{/EsaShipSShipCommVal}"/>
+										</HBox>
+									</VBox>
+									<Table class="sapMEsaTab sapMEsaShpTab" items="{/results}">
+										<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+											<Toolbar class="SapMShpTabTitClass"><Label text="{i18n>S2ESAIDSDESSHIP2OSCTTIT}"/></Toolbar>
+										</infoToolbar>
+										<columns>
+											<Column></Column>
+										</columns>
+										<items>
+											<ColumnListItem><cells/></ColumnListItem>
+										</items>
+									</Table>
+									<VBox class="sapMEsaVB sapEsaHB">
+										<RadioButtonGroup id="idEasOutbndShipCstRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" select="onPressRdEsa"
+											selectedIndex="{/EsaShipOutShipCostIndex}" valueState="{/EsaShipOutShipCostVS}" class="classRadioGrp" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEasOutbndShipCstOp" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEasOutbndShipCstFC" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSSSRCOSC1RDLBLTXT}"/>
+												<RadioButton id="idEasOutbndShipCstFP" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSSSSRCOSC2RDLBLTXT}"/>
+											</buttons>
+										</RadioButtonGroup>
+									</VBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar class="SapMShpTabTitClass" backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESEQUIPRTNTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB sapMCFTxt">
+									<Label text="{i18n>S2ESAIDSDESEQUIPRTNLBLTXT}"/>
+									<VBox class="sapMAgrHB">
+										<RadioButtonGroup id="idEasEqupRtnRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" select="onPressRdEsa" selectedIndex="{/EsaEqipRetnIndex}"
+											valueState="{/EsaEqipRetnVS}" class="classRadioGrp" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEasEqupRtnOp" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEasEqupRtnAppPay" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSEQUIPRTN1RDLBLTXT}"/>
+												<RadioButton id="idEasEqupRtnCustPay" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSEQUIPRTN2RDLBLTXT}"/>
+												<RadioButton id="idEasEqupRtnAppCustPay" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSEQUIPRTN3RDLBLTXT}"/>
+												<RadioButton id="idEasEqupRtnOth" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2OTHDOCDES}"/>
+											</buttons>
+										</RadioButtonGroup>
+										<Input id="idS2ESA_EquipRetnOthIP" class="sapMEqpRtnOthIPClass" type="Text" placeholder="{i18n>S2ESAIDSRONFTEVALOTHCOMMPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaEqipRetnIPVal}"
+											liveChange="onHandleEsaInpLivChange" visible="{/EsaEqipRetnOthValVis}" tooltip="{/EsaEqipRetnIPVal}" valueState="{/EsaEqipRetnIPVS}"/>
+									</VBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESSUPPRTTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB">
+									<HBox>
+										<CheckBox id="idS2ESA_suprtCkb" text="{=${/EsaQ2QFlag2021} ? ${i18n>S2ESAIDSDESSUPPCB1TXT2} : ${i18n>S2ESAIDSDESSUPPCB1TXT}}"
+										    selected="{/EsaSupportCKSelVal}" enabled="{/PrevAgrementChkEbl}" select="onEsaCkbSelect"/>								             <!-- PCR034716++; text condition updated-->
+										<Input id="idS2ESA_SupMonthValIP" class="sapMSOIP sapMMonWid" type="Number" placeholder="{i18n>S2ESAIDSDESSUPPMOTHPLCHDERTXT}"
+											enabled="{/SupportMthEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaSuppSupportRemMonths}"
+											liveChange="onHandleEsaInpLivChange"/>
+										<Label id="id_Esa_SuppLbl1" class="sapUiTpMargn"
+										    text="{=${/EsaQ2QFlag2021} ? ${i18n>S2ESAIDSDESSUPPCB2TXT2} : ${i18n>S2ESAIDSDESSUPPCB2TXT}}"/>                                      <!-- PCR034716++; text condition updated-->
+										<Input id="idS2ESA_SupExMonthValIP" class="sapMSOIP sapMMonWid" type="Number" placeholder="{i18n>S2ESAIDSDESSUPPMOTHPLCHDERTXT}"
+											enabled="{/SupportMthEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaSuppSupportExeMonths}"
+											liveChange="onHandleEsaInpLivChange"/>
+										<Label id="id_Esa_SuppLbl2" class="sapUiTpMargn sapMEsaLbl"
+										    text="{=${/EsaQ2QFlag2021} ? ${i18n>S2ESAIDSDESSUPPCB3TXT2} : ${i18n>S2ESAIDSDESSUPPCB3TXT}}"/>                                      <!-- PCR034716++; text condition updated-->
+									</HBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESPAYTRMTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB sapMTMgin sapUiCForm">
+									<Text class="sapMUnderClass sapMEsaTxt" text="{i18n>S2ESAIDSDESSHPTRMPROTRMTXT}"></Text>
+									<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDEPAYTRMDTXT}"></Text>
+									<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDEPAYTRMSTRMTITTXT}"></Text>
+									<HBox>																																				   <!-- PCR028711++; align items horizontally -->
+										<RadioButtonGroup id="idEasPTStndTermRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+											selectedIndex="{/EsaPayTermStdTermIndex}" valueState="{/EsaPayTermStdTermVS}" class="classRadioGrp sapMPayTrm" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEsaPTStndTermOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEsaPTStndTermYRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSDEPAYTRMSTRMR1RDTXT}"/>											
+												<RadioButton id="idEsaPTStndTermCTA" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2CTAMASTERAGREEMENT}"/>                             <!-- PCR028711++; include CTA Radio Button-->
+											</buttons>
+										</RadioButtonGroup>
+										<Input id="idS2ESA_PTStndTermIP" class="sapMSOIP" type="Text" placeholder="{i18n>S2ESAIDSRONFTEVALOTHCOMMPLCHDRIPTXT}" valueState="{/EsaStdPayTermCTAIPVS}"
+											liveChange="onHandleEsaInpLivChange" enabled="{/EsaRDEbl}" visible="{/EsaStdPayTermCTAIPVis}" value="{/EsaStdPayTermCTAIPVal}"/>               <!-- PCR028711++; include CTA Input -->
+									</HBox>																																				   <!-- PCR028711++; align items horizontally -->
+									<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDEPAYTRMETRMTITTXT}"></Text>
+									<HBox>
+										<RadioButtonGroup id="idEasPTExceptRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+											selectedIndex="{/EsaPayTermExptIndex}" valueState="{/EsaPayTermExptVS}" class="classRadioGrp sapMPayTrm" enabled="{/EsaRDEbl}">
+											<buttons>
+												<RadioButton id="idEsaExceptOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton id="idEsaExceptLOCRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSDEPAYTRMETRMR1RDTXT}"/>
+												<RadioButton id="idEsaExceptOP30RD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2ESAIDSDEPAYTRMETRMR2RDTXT}"/>
+												<RadioButton id="idEsaExceptOthRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2OTHDOCDES}"/>
+											</buttons>
+										</RadioButtonGroup>
+										<Input id="idS2ESA_PayTrmExOthIP" class="sapMSOIP" type="Text" placeholder="{i18n>S2ESAIDSRONFTEVALOTHCOMMPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaPayTermExptOthIPVal}"
+											liveChange="onHandleEsaInpLivChange" visible="{/EsaPayTermExptOthIPVis}" tooltip="{/EsaPayTermExptOthIPVal}" valueState="{/EsaPayTermExptOthIPVS}"/>
+									</HBox>
+									<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDEPAYTRMPATTRMCODEF4TXT}"/>
+										<Input id="idS2ESA_PayTrmPTCodeIP" class="sapMprceIP sapMPaIP" type="Text" placeholder="{i18n>S2ESAIDSDEPAYTRMPATTRMCODEPCHDRTXT}"
+											enabled="{/EsaPayTermSelPayTermBtnVis}" width="116.7%" valueState="{/EsaPayTermPayTrmCodeVS}" editable="true" showValueHelp="true"
+											value="{/EsaPayTermPayTrmCode}" valueHelpRequest="handleSelPayTermCode" liveChange="onHandleEsaInpLivChange"
+											tooltip="{/EsaPayTermPayTrmCode}"/>
+									</HBox>
+									<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDEPAYTRMPATTRMDESTXT}"/>
+										<Input id="idS2ESA_PayTrmPTDesIP" class="sapMprceIP sapMEsaVB" type="Text" enabled="false" width="126%"
+											valueState="{/EsaPayTermPayTrmCodeVS}" editable="true" showValueHelp="false" value="{/EsaPayTermPaytermDescNote}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/EsaPayTermPaytermDescNote}"/>
+									</HBox>
+									<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESPRCJUSTTXT}"/>
+										<Input id="idS2ESA_PayTrmJustIP" class="sapMShiptrmJustIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESPRCJUSTPLCHDRIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaPayTermPaytermJustiNote}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/EsaPayTermPaytermJustiNote}" valueState="{/EsaPayTermPaytermJustiNoteIPVS}"/>
+									</HBox>
+									<HBox class="sapMAgrHB"><Label class="sapMTMgin" text="{i18n>S2ESAIDSDESSHPTRMPCOMMTXT}"/>
+										<Input id="idS2ESA_PayTrmComIP" class="sapMShipComIPclass" type="Text" placeholder="{i18n>S2ESAIDSDESSHPTRMPCOMMIPTXT}"
+											enabled="{/PrevAgrementChkEbl}" width="120%" editable="true" showValueHelp="false" value="{/EsaPayTermPaytermCommNote}"
+											liveChange="onHandleEsaInpLivChange" tooltip="{/EsaPayTermPaytermCommNote}"/>
+									</HBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<headerToolbar>
+										<Toolbar id="idEsaTabChinTitle" class="sapMNYTBarClass">
+											<Title text="{i18n>S2ESAIDSDESCHINCONDTIT}"/>
+											<RadioButtonGroup id="idEasChinConRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+												selectedIndex="{/EsaChinaCondEvalIndex}" valueState="{/EsaChinaCondEvalVS}" class="classRadioGrp sapMprceIP sapMChinTitClass sapChinConRDClass"
+												enabled="{/EsaRDEbl}">
+												<buttons>
+													<RadioButton id="idEsaChinConOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+													<RadioButton id="idEsaChinConYRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDAYES}"/>
+													<RadioButton id="idEsaChinConNRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDANO}"/>
+												</buttons>
+											</RadioButtonGroup>
+										</Toolbar>
+									</headerToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<Table class="sapMEsaTab" items="{/results}">
+									<headerToolbar>
+										<Toolbar class="sapMNYTBarClass">
+											<Title id="idEsaTabROLTitle" text="{i18n>S2ESAIDSDESROLTIT}"/>
+											<RadioButtonGroup id="idEasROLRdBtnGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}" columns="3" select="onPressRdEsa"
+												selectedIndex="{/EsaCustRiskIndex}" valueState="{/EsaCustRiskVS}" class="classRadioGrp sapMprceIP sapMROLCPad sapChinConRDClass"
+												enabled="{/EsaRDEbl}">
+												<buttons>
+													<RadioButton id="idEsaROLOpRD" text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+													<RadioButton id="idEsaROLYRD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDAYES}"/>
+													<RadioButton id="idEsaROLNERD" tooltip="{i18n>S2PSRSDAMAINTAINANS}" text="{i18n>S2PSRSDANO}"/>
+												</buttons>
+											</RadioButtonGroup>
+										</Toolbar>
+									</headerToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<f:SimpleForm class="sapUiCForm" editable="true" layout="ResponsiveGridLayout">
+									<VBox>
+										<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESROL1TXT}"></Text>
+										<VBox class="sapMEsaVB sapEsaHB">
+											<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESROL2TXT}"></Text>
+											<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESROL3TXT}"></Text>
+										</VBox>
+										<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESROL4TXT}"></Text>
+									</VBox>
+								</f:SimpleForm>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESBUCONCTTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<VBox class="sapMEsaVB sapEsaHB sapMTMgin">
+									<HBox>
+										<Label text="{i18n>S2ESAIDSDESBUCONCTREQNAME}"></Label>
+										<Text class="sapMEsaTitLbl sapMLMar" text="{/ReqName}"></Text>
+									</HBox>
+								</VBox>
+								<Table class="sapMEsaTab" items="{/results}">
+									<infoToolbar backgroundDesign="sap.m.BackgroundDesign.Transparent">
+										<Toolbar><Label class="sapMCCText" text="{i18n>S2ESAIDSDESPOLREFERTIT}"/></Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem><cells/></ColumnListItem>
+									</items>
+								</Table>
+								<f:SimpleForm class="sapUiCForm" editable="true" layout="ResponsiveGridLayout">
+									<VBox class="sapMEsaVB sapEsaHB">
+										<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESPOLREFERQES1}"></Text>
+										<VBox class="sapMEsaVB sapEsaHB">
+											<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESPOLREFERQES1A}"></Text>
+											<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESPOLREFERQES1B}"></Text>
+											<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESPOLREFERQES1C}"></Text>
+											<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESPOLREFERQES1D}"></Text>
+										</VBox>
+										<Text class="sapMEsaTxt" text="{i18n>S2ESAIDSDESPOLREFERQES2}"></Text>
+									</VBox>
+								</f:SimpleForm>
+							</VBox>
+						</f:content>
+					</f:SimpleForm>
+				</VBox>
+			</Panel>
+			<Panel expandable="true" expanded="{/EsaAttachPnlExpd}" visible="{/EsaAttachPnlVis}" headerText="{i18n>S2GINFOPANLHEADERTXT}"
+				id="idEsaAttachPnl" width="auto" expand="onRPSRExpand" class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idEsaAttachTable" noDataText="{i18n>S2TABNODATATEXT}" class="sapMattTab sapMQ2Clbl classSWOpportunityTable" items="{/ItemSet}">
+					<columns>
+						<Column width="8em" minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>S2ATABLECOLUMN1TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>S2ATABLECOLUMN3TXT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>S2ATABLECOLUMN5TXT}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem id="idAttachTemplate">
+							<cells>
+								<Text text="{DocDesc}"/>
+								<Link tooltip="{OriginalFname}" text="{filename}" enabled="{EnableDisflag}" class="linkFontSize" press="handleLinkPress"/>
+								<Input tooltip="{note}" liveChange="handleNoteLiveChange" value="{note}" type="Text" class="sapUiSmallMarginBottom" editable="{editable}"
+									placeholder="{i18n>S2ANOTEPLACEHOLDER}"/>
+								<HBox>
+									<HBox visible="{bgVisible}">
+										<Button enabled="{Enabledelflag}" icon="{i18n>S2PSRSDAEDITICON}" press="handleEditPress" class="buttonSpacing">								  <!-- PCR028711++; modify icon -->
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button enabled="{Enabledelflag}" icon="{i18n>S2PSRSDADELETEICON}" press="CheckEsaDelete" class="buttonSpacing">							  <!-- PCR028711++; modify icon -->
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+										<Button icon="{i18n>S2ADDCONTACTICON}" press="handleAddPress" class="buttonSpacing" enabled="{Enableflag}" visible="{addupVisible}">		  <!-- PCR028711++; modify icon -->
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Button>
+									</HBox>
+									<VBox visible="{uBvisible}">
+										<u:FileUploader sameFilenameAllowed="true" buttonOnly="true" enabled="{Enableflag}" width="10rem" multiple="false" useMultipart="false"
+											tooltip="{i18n>S2PSRATTDCBCUPLODTEXT}" change="onEsaUploadComplete" uploadComplete="onEsaComplete" uploadOnChange="false"
+											uploadUrl="{i18n>UPLOADURL}" sendXHR="true" visible="{addupVisible}"/>
+									</VBox>
+								</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<Panel expandable="true" expanded="{/EsaAppvalPnlExpd}" visible="{/EsaAppvalPnlVis}" headerText="{i18n>S2ESAIDSAPPVLSTIT}"
+				id="idEsaAppvalPnl" width="auto" expand="onRPSRExpand" class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idEsaAprList" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/oEsaAprvHis/results}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CBCAPPROVER}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CBCASSTO}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CARMTABLECOLUMN3}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CBCAPPBY}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CBCAPPON}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOSFTTIT}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem id="idEsaAprListTemplate">
+							<cells>
+								<Text text="{AprvDesc}"/>
+								<Text text="{NameAssigned}"/>
+								<Text text="{Comments}"/>
+								<Text text="{NameApprover}"/>
+								<Text text="{path:'ActDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								<ObjectStatus text="{Status}" state="{path:'Status',formatter:'com.amat.crm.opportunity.util.formatter.state'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<Panel expandable="true" expanded="{/EsaMCommentPnlExpd}" visible="{/EsaMCommentPnlVis}" headerText="{i18n>S2CARMMAINCOMMENT}"
+				expand="onExpandEsaMainCom" id="idEsaMCommentPnl" width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<f:SimpleForm class="classMComment" editable="true" layout="ResponsiveGridLayout">
+					<Label text="{i18n>S2CARMCOMLABELTXT}"/>
+					<TextArea class="sapMCommTBox" id="idEsaMainComtTxtArea" height="8rem" liveChange="OnEsaMainCommLvchng" maxLength="255"
+						placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="100%" enabled="{/EsaMainComtTxtenabled}"/>
+					<Button class="sapMainComSavBtnClass" id="idS2EsaMainComSaveBtn" text="{i18n>S1PERDLOG_SAVE}" type="Emphasized" icon="{i18n>S2PSRSDASAVEICON}"
+						enabled="{/EsaMainComSavBtnenabled}" press="onSaveEsaMainCom"></Button>																						  <!-- PCR028711++; modify icon -->
+				</f:SimpleForm>
+				<Table id="idEsaMainCommTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/oEsaManComm/results}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{Comment}"/>
+								<Text text="{CreatedName}"/>
+								<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<Panel expandable="true" expanded="{/id_Esa_Chng_HistExpd}" visible="{/id_Esa_Chng_HistVis}" headerText="{i18n>S2CHANGEHISTORY}"
+				id="id_Esa_Chng_Hist" width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idEsaCmtHist" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/oEsaChngHis/results}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CMTSTS}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CMTREQ}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CMTREQBY}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2ESACMTAPPDT}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2ESACMTAPPBY}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{Status}"/>
+								<Text text="{path:'ReqDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								<Text text="{ReqName}"/>
+								<Text text="{path:'AprvDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								<Text text="{AprvName}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

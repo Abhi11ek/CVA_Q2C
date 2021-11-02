@@ -1,0 +1,501 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.general
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V02    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                          	                      *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 18/12/2018      Abhishek        PCR021481         Q2C Q1/Q2 enhancements       *
+ *                 Pant                                                           *
+ * 05/02/2019      Abhishek        PCR022138         Enable new created SPG re-org*
+ *                 Pant                              divisions DC & DD            *
+ * 25/02/2019      Abhishek        PCR022669         Q2C Q2 UI Changes            *
+ *                 Pant                                                           *
+***********************************************************************************
+ */
+ -->
+ <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	controllerName="com.amat.crm.opportunity.controller.general" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox>
+		<ScrollContainer class="classGInfoScrlCn" height="40rem" width="100%" horizontal="false" vertical="true">
+			<Panel expandable="true" expanded="true" id="idS2_GenDataPnl" width="auto" class="classDefault sapMQ2CPnl sapUiSizeCompact">
+				<Carousel class="sapUiPSRCarClass sapUiContentPadding">
+					<pages>
+						<VBox class="HearderInfo sapUiSmallMargin">
+							<f:SimpleForm id="idS2_GenDataPnl_SF" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl classPSRInfoDtailForm"
+								labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="5" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="1"
+								emptySpanS="0" columnsXL="4" columnsL="4" columnsM="4" singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{i18n>S2GINFOSFFTIT}"/>
+									<Label text="{i18n>S2GINFOSFSTRGNLBTXT}"/>
+									<Text text="{/Region}"/>
+									<Label text="{i18n>S2GINFOSFCUSTSTLBTXT}"/>
+									<Text text="{/CustName}"/>
+									<Label text="{i18n>S2GINFOSFCUSTSPTLBTXT}"/>
+									<Text text="{/ShipToCustNm}"/>
+									<Label text="{i18n>S2GINFOSFCUSTBTLBTXT}"/>
+									<Text text="{/BillToCustNm}"/>									
+									<Label text="{i18n>S2GENINFOCUSTSHORTNAME}"/>                                                                      <!-- PCR021481++ -->
+									<Text text="{/CustSortName}"/>                                                                                     <!-- PCR021481++ -->									
+									<Label text="{i18n>S2GINFOSFFABNLBTXT}"/>
+									<Text text="{/FabName}"/>
+									<Label text="{i18n>S2GINFOSFGLBACCLBTXT}"/>
+									<Text text="{/GlobalAccount}"/>
+									<Label text="{i18n>S2GINFOSFREGACCLBTXT}"/>
+									<Text text="{/SubAccount}"/>
+									<Label text="{i18n>S2GINFOSFBULBTXT}"/>
+									<Text text="{/Bu}"/>
+									<Label text="{i18n>S2GINFOSFDIVNLBTXT}"/>
+									<Text text="{/Division}"/>
+									<Label text="{i18n>S2GINFOSFPRODLINELBTXT}"/>
+									<Text text="{/ProductLine}"/>
+									<Label text="{i18n>S2GINFOSFPRODNAMELBTXT}"/>
+									<Text text="{/ProdFamily}"/>
+									<core:Title text="{i18n>S2GINFOSFSTIT}"/>
+									<Label text="{i18n>S2GINFOSFOPPSALESTAGELBTXT}"/>
+									<Text text="{/SalesStage}"/>
+									<Label text="{i18n>S2GINFOSFOPPSTATLBTXT}"/>
+									<Text text="{/S5FcastBSt}"/>
+									<Label text="{i18n>S2GINFOSFITMCATLBTXT}"/>
+									<Text text="{/ItmDesc}"/>
+									<Label text="{i18n>S2GENINFOORDTYPFLDTXT}"/>                                                                       <!-- PCR021481++ -->
+									<Text text="{/OrderType}"/>                                                                                        <!-- PCR021481++ -->
+									<Label text="{i18n>S2GINFOSFSHIPCONLBTXT}"/>
+									<Text text="{/ShipCond}"/>
+									<Label text="{i18n>S2GINFOSFINCOTERM1LBTXT}"/>
+									<Text text="{/IncoTerms1}"/>
+									<Label text="{i18n>S2GINFOSFINCOTERM2LBTXT}"/>
+									<Text text="{/IncoTerms2}"/>
+									<Label text="{i18n>S2GINFOSFPAYTTERMLBTXT}"/>
+									<Text text="{/PayTerms}"/>
+									<Label text="{i18n>S2GINFOSFNETVALUELBTXT}"/>
+									<Text text="{path:'/NetValueMan',formatter:'com.amat.crm.opportunity.util.formatter.amountWDCommaSeprator'}"/>
+									<Label text="{i18n>S2GINFOSFCURNCYLBTXT}"/>
+									<Text text="{/Waers}"/>
+									<core:Title text="{i18n>S2GINFOSFTTIT}"/>
+									<Label text="{i18n>S2GINFOSFQUOTNOLBTXT}"/>
+									<Text text="{/QuoteNumber}"/>
+									<Label text="{i18n>S2GINFOSFAMATQUOTNOLBTXT}"/>
+									<Text text="{/AmatQuoteId}"/>
+									<Label text="{i18n>S2GINFOSFQUOTELNENOLBTXT}"/>
+									<Text text="{/QuoteItemNo}"/>
+									<Label text="{i18n>S2GINFOSFSLOTIDLBTXT}"/>
+									<Text text="{/SlotId}"/>
+									<Label text="{i18n>S2GINFOSFPOCONNOLBTXT}"/>
+									<Text text="{/PoNumber}"/>
+									<Label text="{i18n>S2GINFOSFSALEODRNOLBTXT}"/>
+									<Text text="{/SoNumber}"/>
+									<Label text="{i18n>S2GINFOSFLOWLBTXT}"/>
+									<Text text="{/LowDesc}"/>
+									<Label text="{i18n>S2GINFOSFMEANAMELBTXT}"/>
+									<Text text="{/MeaValueDesc}"/>                                                                                    <!-- PCR022669++ -->
+									<!-- <Label text="{i18n>S2GINFOSFMEANOLBTXT}"/>
+									<Text text="{Country}"/>                                                                                                PCR022669~~ -->
+									<Label text="{i18n>S2GENINFOOPPDESFLDTXT}"/>                                                                       <!-- PCR021481++ -->
+									<Text text="{/OppDesc}"/>                                                                                          <!-- PCR021481++ -->
+									<core:Title text="{i18n>S2GINFOSFFTIT}"/>
+									<Label text="{i18n>S2GINFOSFFBOOKDATELBTXT}"/>
+									<Text text="{path:'/FcstBookDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+									<Label text="{i18n>S2GINFOSFACTBOOKDATELBTXT}"/>
+									<Text text="{path:'/ActBookDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+									<Label text="{i18n>S2GINFOSFACTSHIPDATELBTXT}"/>                                                                   <!-- PCR022669++ -->       
+									<Text text="{path:'/ActShipDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>               <!-- PCR022669++ -->
+									<Label text="{i18n>S2GINFOSFCURRCUSTREQSHIPDATELBTXT}"/>
+									<Text text="{path:'/CurrcustReqDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+									<Label text="{i18n>S2GINFOSFCUSTCMTSDATEPRILBTXT}"/>
+									<Text text="{path:'/CustCoDtPri',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+									<!-- <Label text="{i18n>S2GINFOSFACTSHIPDATEPRILBTXT}"/>
+									<Text/>                                                                                                                 PCR022138~~-->
+									<Label text="{i18n>S2GINFOSFCUSTCMTSHIPDATESECLBTXT}"/>
+									<Text text="{path:'/CustCoDtSec',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+									<!-- <Label text="{i18n>S2GINFOSFACTSHIPDATESECLBTXT}"/>
+									<Text/>                                                                                                                 PCR022138~~-->
+									<Label text="{i18n>S2GINFOSFAPPSDALVLLBTXT}"/>
+									<Text text="{/AprvSdaLevl}"/>
+									<Label text="{i18n>S2GENINFOECCSORRALVLFLDTXT}"/>                                                                  <!-- PCR021481++ -->
+									<Text text="{/EccRraLevel}"/>                                                                                      <!-- PCR021481++ -->
+									<Label text="{i18n>S2GINFOSFFCSTREVDATELBTXT}"/>
+									<Text text="{path:'/FcstRevDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+									<Label text="{i18n>S2GINFOSFPODFLAGLBTXT}"/>
+									<Text text="{/Pod}"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<VBox class="HearderInfo sapUiSmallMargin"></VBox>
+					</pages>
+				</Carousel>
+			</Panel>
+			<VBox class="sapUiSizeCompact">
+				<f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+					<Label text="{i18n>S2GINFOPANLQOTREVNOTIT}"/>
+					<HBox>
+						<Select id="idS2_Gen_QuoteRevNumberCommBox" class="sapUiSizeCompact" items="{path: '/ItemSet'}" enabled="true"
+							change="onQuoteComboSelectionChange">
+							<core:Item key="{Quote}" text="{Quote}"/>
+						</Select>
+						<HBox></HBox>
+						<Button id="idS2_Gen_QuoteRevNumberBtn" visible="false" class="sapUiSizeCompact" text="{i18n>S1PERDLOG_SAVE}" type="Emphasized"
+							icon="sap-icon://save" enabled="true" press="onQuoteSave"></Button>
+					</HBox>
+					<Label text="{i18n>S2PSRSDAEVIDENCE}" visible="false"/>
+					<Table id="idS2_Gen_QuoteRevNumberTbl" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/ItemSet}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>S2GINFOPANLQOTREVNTABREVNOCOLUMN}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>S2GINFOPANLQOTREVNTABCNGBYCOLUMN}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>S2GINFOPANLQOTREVNTABDNTCOLUMN}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{Quote}"/>
+									<Text text="{CreatedName}"/>
+									<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</f:SimpleForm>
+			</VBox>
+			<Panel expandable="true" expanded="true" headerText="{i18n>S2GINFOPANLCONINFOTIT}" id="idS2_GenInfo_ContactInfoPnl" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<VBox>
+					<f:SimpleForm id="SimpleFormDisplay489_Trial_generalInfo" editable="false" layout="ResponsiveGridLayout"
+						class="classPSRContactInfoDtailForm" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0"
+						emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false">
+						<f:content>
+							<core:Title text="{i18n>S2PSRSDAACCCON}"/>
+							<VBox>
+								<HBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_RomList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOROMTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_RomAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_RomListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_SalesList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header3" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOSALTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_SALSAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_SalesListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+								<HBox class="classBWHB">
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_ASMEHeadList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header6" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOACCSMETIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_ASMEHeadAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_ASMEHeadListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+								</HBox>
+							</VBox>
+							<core:Title text="{i18n>S2GINFOPANLCONTACTBUTITLE}"/>
+							<VBox>
+								<HBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_PomList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header1" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOPOMTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_PomAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_PomListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_BMOList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header4" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOBMOTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_BMOAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_BMOListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+								</HBox>
+								<HBox class="classBWHB">
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_BUSMEList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="idS2_Gen_ConInfo_BUSMEList_header" class="listheaderclass sapUiSmallMargin" text="{i18n>S2PSRSDABUSME}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_BUSMEAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_BUSMEListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_TPSList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="idS2_Gen_ConInfo_TPSList_header" class="listheaderclass sapUiSmallMargin" text="{i18n>S2PSRSDATPS}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_TPSKATAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_TPSListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+							</VBox>
+							<core:Title/>
+							<VBox>
+								<HBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_GPMList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="idS2_Gen_ConInfo_GPMList_header" class="listheaderclass sapUiSmallMargin" text="{i18n>S2PSRSDAGPM}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_GPMAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_GPMListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_BMHeadList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header2" class="listheaderclass sapUiSmallMargin" text="{i18n>FRAGLLBMHEAD}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_BMHeadAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_BMHeadListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+								</HBox>
+								<HBox class="classBWHB">
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_PLHeadList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header5" class="listheaderclass sapUiSmallMargin" text="{i18n>S2GINFOPANLCONINFOBLHEADTIT}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_PLHeadAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_PLHeadListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+									<VBox class="blankBox"></VBox>
+									<ScrollContainer class="classScrollCont" height="225px" width="170px" horizontal="false" vertical="true" focusable="false">
+										<List id="idS2_Gen_ConInfo_ConList" class="ROMListclass" headerText="{i18n>S2GINFOPANLHEADERTXT}" growing="true" growingThreshold="5"
+											mode="Delete" delete="onDelete" items="{ path: '/results' }">
+											<headerToolbar>
+												<Toolbar>
+													<Text id="header8" class="listheaderclass sapUiSmallMargin" text="{i18n>FRAGLLCONTR}"/>
+													<ToolbarSpacer/>
+													<Button id="idS2_Gen_ConInfo_ConAddBtn" icon="sap-icon://add" text="{i18n>S2GINFOPANLCONINFOADDTXT}" type="Emphasized"
+														press="onPressAddContact" enabled="false"/>
+												</Toolbar>
+											</headerToolbar>
+											<items>
+												<CustomListItem id="idS2_Gen_ConInfo_ConListTemplate">
+													<HBox>
+														<Text class="formTxtClass" text="{ContName}"/>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</ScrollContainer>
+								</HBox>
+							</VBox>
+						</f:content>
+					</f:SimpleForm>
+				</VBox>
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="{i18n>S2CARMMAINCOMMENT}" expand="OnExpandMainCom" id="idS2_Gen_MCommentPnl"
+				width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<f:SimpleForm class="classMComment" editable="true" layout="ResponsiveGridLayout">
+					<Label text="{i18n>S2CARMCOMLABELTXT}"/>
+					<TextArea class="sapMCommTBox" id="idS2_Gen_MainComtTxtArea" height="8rem" liveChange="OnMainCommLvchng" maxLength="255"
+						placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="100%" enabled="true"/>
+					<Button class="sapMainComSavBtnClass" id="idS2_Gen_MainComSaveBtn" text="{i18n>S1PERDLOG_SAVE}" type="Emphasized" icon="sap-icon://save"
+						enabled="false" press="onSaveMainCom"></Button>
+				</f:SimpleForm>
+				<Table id="idS2_Gen_MainCommTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{Comment}"/>
+								<Text text="{CreatedName}"/>
+								<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<!-- ************Start Of PCR021481~~: 4190 : Q2C Q1/Q2 enhancements **************
+			<Panel expandable="true" expanded="false" headerText="{i18n>S2GINFOPANLTRANSHISTIT}" id="idS2_Gen_TransHisPnl" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idS2_OppTransHisTable" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{path: '/results' }">
+					<columns >
+						<Column minScreenWidth="Tablet" demandPopin="true" class="classColumn">
+							<ObjectIdentifier title="{i18n>S2GINFOTRANID}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOTRANTYPE}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFODESCRIPTION}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOCREATEDON}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem id="idS2_OppTransHisTableTemplate">
+							<cells>
+								<Text text="{ObjectId}"/>
+								<Text text="{ProcessType}"/>
+								<Text text="{Description}"/>
+								<Text text="{path:'PostingDate',formatter:'com.amat.crm.opportunity.util.formatter.Date'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel> ************End Of PCR021481~~: 4190 : Q2C Q1/Q2 enhancements **************-->
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

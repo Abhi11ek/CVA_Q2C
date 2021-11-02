@@ -1,0 +1,83 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.S3
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                          	                      *
+ *  
+***********************************************************************************
+ */
+ --> 
+ <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified" xmlns="sap.m"
+	controllerName="com.amat.crm.opportunity.controller.S3" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>S3PAGETITTEXT}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<VBox class="classS2">
+				<Panel expandable="false" expanded="true" expand="onExpBookDoc" width="auto" class="sapUiSizeCompact">
+					<Table id="idOthersDocTable" class="sapMattTab" items="{/ItemSet}">
+						<columns>
+							<Column width="21rem">
+								<Text text="{i18n>S3TABLECOLUMN1}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN2TXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN3TXT}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>S2ATABLECOLUMN5TXT}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{DocDesc}"/>
+									<Link tooltip="{OriginalFname}" text="{filename}" class="linkFontSize" enabled="{EnableDisflag}"/>
+									<Input value="{note}" type="Text" class="sapUiSmallMarginBottom" placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" editable="{editable}"
+										liveChange="otherAction"/>
+									<HBox>
+										<HBox hAlign="Center" class="buttonGroupPad" visible="{bgVisible}">
+											<Button icon="sap-icon://edit" press="handleEditPress" class="buttonSpacing">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button icon="sap-icon://delete" press="CheckDelete" visible="{delVisible}" class="buttonSpacing">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+											<Button icon="sap-icon://add" press="handleAddPress" class="buttonSpacing" enabled="{Enableflag}" visible="{addupVisible}">
+												<layoutData>
+													<FlexItemData growFactor="1"/>
+												</layoutData>
+											</Button>
+										</HBox>
+										<VBox visible="{uBvisible}" class="browseButtonSpacingS3">
+											<u:FileUploader enabled="{Enableflag}" sameFilenameAllowed="true" buttonOnly="true" name="myFileUpload" width="10rem" useMultipart="false"
+												multiple="false" tooltip="{i18n>S2AUPLOADTOOLTIP}" change="handleFileUploadComplete" uploadOnChange="false" uploadComplete="onComplete"
+												uploadUrl="{i18n>UPLOADURL}" sendXHR="true" visible="{addupVisible}"/>
+										</VBox>
+									</HBox>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+			</VBox>
+		</content>
+		<footer></footer>
+	</Page>
+</core:View>

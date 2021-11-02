@@ -1,0 +1,276 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Arun Jacob
+  * @since 20 November 2019
+  * @extends 
+  * @name com.amat.crm.opportunity.view.psp
+  *
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * 20/11/2018     Arun            PCR026551          Pre-Shipment development     *
+ *                Jacob                                                           *
+ * 20/04/2020     Arun            PCR028711          Q2C Enhancements for Q2-20   *
+ *                Jacob                                                           *
+ * 13/06/2021     Abhishek Pant   PCR035760          Tech Upgrade issues solution *
+***********************************************************************************
+ */
+ -->
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:f="sap.ui.layout.form"
+	xmlns:ut="sap.ui.table" controllerName="com.amat.crm.opportunity.controller.psp" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox>
+		<HBox id="idPspDecisionBox" class="classPSRDecision" visible="true">
+			<f:SimpleForm id="SimpleFormDisplay500" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl HeaderFormMandat" labelSpanXL="9"
+				labelSpanL="9" labelSpanM="9" labelSpanS="9" adjustLabelSpan="false" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+				<f:content>
+					<HBox class="classMandatBox">
+						<HBox class="classMandatPSPTextBox">
+							<Label class="asteriskCC classMandatFld sapMgmTpClass" text="{i18n>S2PSPTABDETERQUESTETTEXT}" required="true"/>                           <!-- PCR035760++; sapMgmTpClass added-->
+						</HBox>
+						<RadioButtonGroup id="idPspRdBtnGrp" columns="3" select="onPressInitiateStdPsp" valueState="Error"
+							class="classRadioGrp sapUiMediumMarginBottom" tooltip="{i18n>S2PSRSDAMAINTAINANS}">
+							<buttons>
+								<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+								<RadioButton text="{i18n>S2CARMINITIATETXT}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>
+								<RadioButton text="{i18n>S2CBCSELNAPP}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>
+							</buttons>
+						</RadioButtonGroup>
+					</HBox>
+				</f:content>
+			</f:SimpleForm>
+		</HBox>
+		<Page class="classStatusBar classStatusBarInitiate" id="idPspStatusBar">
+			<headerContent>
+				<Bar>
+					<contentLeft>
+						<Text text="{i18n>S2PSPHEADERTXT}"></Text>
+					</contentLeft>
+					<contentMiddle>
+						<Text id="idPspStatusText" text="{i18n>S2PSPNFOSFFTIT}"></Text>
+					</contentMiddle>
+					<contentRight>
+						<Button id="idPspEditBtn" text="{i18n>S2CARMBTNEDIT}" icon="sap-icon://edit" press="onEditPsp"></Button>
+						<Button id="idPspSaveBtn" text="{i18n>S2PSRSDASAVEBTNTEXT}" icon="sap-icon://save" press="onSavePsp"></Button>
+						<Button id="idPspCancelBtn" text="{i18n>S2PSRSDASFCANINITXT}" icon="sap-icon://sys-cancel" press="onCancelPsp"></Button>
+						<Button id="idPspSFAppBtn" text="{i18n>S2PSRSDACBCSFASUBTYPEMSG}" icon="sap-icon://accept" enabled="false" press="onSubmitPsp"></Button>
+					</contentRight>
+				</Bar>
+			</headerContent>
+		</Page>
+		<ScrollContainer class="classPSRScrlCn" height="38rem" width="100%" horizontal="false" vertical="true">
+			<Panel expandable="true" expanded="true" id="idPSPGenDataPnl" width="auto" class="classDefault sapMQ2CPnl sapUiSizeCompact">
+				<Carousel class="classPSRInfo sapUiContentPadding">
+					<pages>
+						<VBox class="HearderInfo sapUiSmallMargin">
+							<f:SimpleForm id="SimpleFormDisplay583_Trial" editable="false" layout="ResponsiveGridLayout" class="sapMQ2Clbl classPSRInfoDtailForm"
+								labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+								emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{i18n>S2GINFOSFFTIT}"/>
+									<Label text="{i18n>S2GINFOSFSTRGNLBTXT}"/>
+									<Text text="{/Region}"/>
+									<Label text="{i18n>S2GINFOSFCUSTSTLBTXT}"/>
+									<Text text="{/CustName}"/>
+									<Label text="{i18n>S2GINFOSFCUSTSPTLBTXT}"/>
+									<Text text="{/ShipToCustNm}"/>
+									<Label text="{i18n>S2GINFOSFCUSTBTLBTXT}"/>
+									<Text text="{/BillToCustNm}"/>
+									<Label text="{i18n>S2GENINFOCUSTSHORTNAME}"/>
+									<Text text="{/CustSortName}"/>
+									<Label text="{i18n>S2GINFOSFFABNLBTXT}"/>
+									<Text text="{/FabName}"/>
+									<Label text="{i18n>S2GINFOSFBULBTXT}"/>
+									<Text text="{/Bu}"/>
+									<core:Title text="{i18n>S2GINFOSFFTIT}"/>
+									<Label text="{i18n>S2GINFOSFDIVNLBTXT}"/>
+									<Text text="{/Division}"/>
+									<Label text="{i18n>S2CBCOPP}"/>
+									<Text text="{/OppId}"/>
+									<Label text="{i18n>S2CBCOPPLN}"/>
+									<Text text="{/ItemNo}"/>
+									<Label text="{i18n>S2GINFOSFOPPSTATLBTXT}"/>
+									<Text text="{/S5FcastBSt}"/>
+									<Label text="{i18n>S2GENINFOOPPDESFLDTXT}"/>
+									<Text text="{/OppDesc}"/>
+									<Label text="{i18n>S2GENINFOORDTYPFLDTXT}"/>
+									<Text text="{/OrderType}"/>
+									<Label text="{i18n>S2GINFOSFQUOTNOLBTXT}"/>
+									<Text text="{/addOn/QuoteNumber}"/>
+									<core:Title text="{i18n>S2GINFOSFFTIT}"/>
+									<Label text="{i18n>S2GINFOSFAMATQUOTNOLBTXT}"/>
+									<Text text="{/addOn/AmatQuoteId}"/>
+									<Label text="{i18n>S2GINFOSFSLOTIDLBTXT}"/>
+									<Text text="{/addOn/SlotId}"/>
+									<Label text="{i18n>S2GINFOSFSALEODRNOLBTXT}"/>
+									<Text text="{/addOn/SoNumber}"/>
+									<Label text="{i18n>S2GINFOSFPOCONNOLBTXT}"/>
+									<Text text="{/addOn/PoNumber}"/>
+									<Label text="{i18n>S2GINFOSFFBOOKDATELBTXT}"/>
+									<Text text="{path:'/FcstBookDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+									<Label text="{i18n>S2GINFOSFCURRCUSTREQSHIPDATELBTXT}"/>
+									<Text text="{path:'/CurrcustReqDt',formatter:'com.amat.crm.opportunity.util.formatter.DateWdMonth'}"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+					</pages>
+				</Carousel>
+			</Panel>
+			<Panel expandable="true" expanded="false" id="idPspCbnCpyPnl" width="auto" class="sapMQ2CPnl sapUiSizeCompact">
+				<headerToolbar>
+					<Toolbar height="3rem">
+						<Title class="SapMTLTFnt" text="{i18n>S2PSPMULTIPLE}"/>
+						<ToolbarSpacer class="sapMCCTolSpace"/>
+						<Label class="sapMCCText" id="idS2_PSP_LB_CbnCpyText"/>
+					</Toolbar>
+				</headerToolbar>
+				<VBox class="sapUiSmallMargin">
+					<f:SimpleForm class="classMCcForm" editable="true" layout="ResponsiveGridLayout">
+						<Label text="{i18n>S2PSPCARBONCOPYTEXT}"/>
+						<HBox id="idS2_PSP_IP_CbnCpyBox">
+							<Input id="idS2_Psp_IP_CbnCpy" class="sapUiSmallMarginBottom" type="Text" placeholder="{i18n>S2CBCSELOPPLINK}" enabled="true" width="100%"
+								editable="true" showValueHelp="true" valueHelpRequest="handleValueHelpPspCbnCpyRew" liveChange="onPspCbnCpyChange"/>
+						</HBox>
+						<HBox id="idS2_Psp_LB_CbnCpyBox">
+							<Label class="classOppWdline" text="{FileName}"/>
+						</HBox>
+					</f:SimpleForm>
+					<Table id="idPspCbnCpyTable" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2CBCOPP}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<ObjectIdentifier title="{i18n>S2PSRSDALINENO}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem id="idPspCbnCpyTemplate">
+								<cells>
+									<Text text="{OppId}"/>
+									<Text text="{ItemNo}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+			</Panel>
+			<Panel expandable="true" expanded="true" headerText="{i18n>S2CBCQUSIRETABTIT}" expand="OnExpandPspQus" id="idPspQuesPnl" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<HBox id="idS2_Psp_QuesCont">
+					<ut:TreeTable id="IdS2_PSP_QuesTable" rows="{path:'/catalog/clothing', parameters: {arrayNames:['categories']}}" selectionMode="MultiToggle"
+						height="100%" visibleRowCountMode="sap.ui.table.VisibleRowCountMode.Fixed" visibleRowCount="53" enableSelectAll="false" class="sapUiCBCTab"
+						items="{/ItemSet/root}">
+						<ut:toolbar>
+							<Toolbar>
+								<Title id="IdS2_Psp_QuesTableHeader" text="{i18n>S2PSPTOOLBARSTDTITLE}" class="classPspQnTitle"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</ut:toolbar>
+						<ut:columns>
+							<ut:Column width="40rem">                                                                                                             <!-- PCR035760++; 40rem to 38rem change -->
+								<Label text="{i18n>S2CBCTASKDISC}"/>
+								<ut:template class="SapMQuesText">
+									<Text class="SapMQuesText" text="{path:'Node_Type',formatter:'com.amat.crm.opportunity.util.formatter.QusHderCssType'}"
+										tooltip="{Node_Type}"/>
+								</ut:template>
+							</ut:Column>
+							<ut:Column width="9rem">
+								<Label text="{i18n>S2PSPPOMANSWER}"/>
+								<ut:template class="{QuesClass}">
+									<HBox>
+										<RadioButtonGroup id="idPspSaleQusRdBtnGrp" visible="{SalVisible}" enabled="{SalEditable}" columns="5" select="onPressPspQues"
+											selectedIndex="{SelectionIndex}" valueState="{ValueState}" class="classRadioGrp" tooltip="{i18n>S2PSRSDAMAINTAINANS}">
+											<buttons>
+												<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton text="{i18n>S2F4HELPOPPOKBTN}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>
+												<RadioButton text="{i18n>S2CBCNA}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>
+											</buttons>
+										</RadioButtonGroup>
+										<!-- ****************Start Of PCR028711 : Q2C Enhancements for Q2-20 ************************-->
+										<RadioButtonGroup id="idPspQusHeadRdBtnGrp" visible="{HeadVisible}" enabled="{SalEditable}" columns="5" select="onPressPspQuesHead"
+											selectedIndex="{SelectionIndex}" valueState="{ValueState}" class="classRdBtnGrpQnHdr" tooltip="{i18n>S2PSRSDAMAINTAINANS}">
+											<buttons>      										
+												<RadioButton text="{i18n>S2CARMSELECTTXT}" visible="false"/>
+												<RadioButton text="{i18n>S2CBCNA}" tooltip="{i18n>S2PSRSDAMAINTAINANS}"/>
+											</buttons>
+										</RadioButtonGroup>
+										<!-- ****************End Of PCR028711 : Q2C Enhancements for Q2-20 **************************-->
+									</HBox>
+								</ut:template>
+							</ut:Column>
+							<ut:Column>
+								<Label text="{i18n>FRAGGDOCSELCOM}"/>
+								<ut:template class="{QuesClass}">
+									<TextArea value="{ComValue}" tooltip="{ComValue}" id="idPspQuesComtTxtArea" valueState="{ComValueState}" visible="{ComVisible}"
+										liveChange="onPspTxtAreaLivChg" maxLength="255" placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="2" width="100%"
+										enabled="{SalEditable}"/>
+								</ut:template>
+							</ut:Column>
+						</ut:columns>
+					</ut:TreeTable>
+				</HBox>
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="{i18n>S2CARMMAINCOMMENT}" expand="OnExpandMainCom" id="idPSPMCommentPnl" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<f:SimpleForm class="classMComment" editable="true" layout="ResponsiveGridLayout">
+					<Label text="{i18n>S2CARMCOMLABELTXT}"/>
+					<TextArea class="sapMCommTBox" id="idPspMainComtTxtArea" height="8rem" liveChange="OnMainCommLvchng" maxLength="255"
+						placeholder="{i18n>S2CONFFRGTXTAREAPLCHLDER}" growingMaxLines="5" width="100%" enabled="true"/>
+					<Button class="sapMainComSavBtnClass" id="idS2PspMainComSaveBtn" text="{i18n>S1PERDLOG_SAVE}" type="Emphasized" icon="sap-icon://save"
+						enabled="false" press="onSaveMainCom"></Button>
+				</f:SimpleForm>
+				<Table id="idPspMainCommTab" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{/results}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTECLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEBYCLM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2GINFOPANLMAINCOMMPNLTABNOTEONCLM}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{Comment}"/>
+								<Text text="{CreatedName}"/>
+								<Text text="{path:'CreatedDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="{i18n>S2CHANGEHISTORY}" id="id_Psp_Chng_Hist" width="auto"
+				class="sapMQ2CPnl sapUiSizeCompact">
+				<Table id="idPspCmtHist" noDataText="{i18n>S2TABNODATATEXT}" class="sapMQ2Clbl classSWOpportunityTable" items="{path : '/results',sorter : {path : 'ReqDate',descending:true}}">
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CMTSTS}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CMTREQ}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<ObjectIdentifier title="{i18n>S2CMTREQBY}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{Status}"/>
+								<Text text="{path:'ReqDate',formatter:'com.amat.crm.opportunity.util.formatter.DateWdTimeStamp'}"/>
+								<Text text="{ReqName}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

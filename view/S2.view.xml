@@ -1,0 +1,134 @@
+<!--  
+/**  
+  * @class
+  * @public
+  * @author Abhishek Pant
+  * @since 27 July 2017
+  * @extends 
+  * @name com.amat.crm.opportunity.view.S2
+  	*
+ * ********************************************************************************
+ * Modifications.                                                                 *
+ * ***************                                                                *
+ * Ver.No    Date        Author    PCR No.           Description of change        *
+ * ********************************************************************************
+ * V00    20/02/2018    Abhishek   PCR017480         Initial version              *
+ *                      Pant       
+ *                      (X089025)                          	                      *
+ *  Date           Author          PCR No.           Description of change        *
+ * ********************************************************************************
+ * 19/07/2018     Abhishek        PCR018375          PSR/CBC Workflow Rejection   *
+ *                Pant                               (restart) Capability         *
+ * 17/06/2019     Abhishek        PCR023905          Migrate ESA/IDS db from Lotus*
+ *                Pant                               Notes to SAP Fiori Q2C       *
+ *                                                   Application                  *
+ * 20/11/2018     Arun            PCR026551          Pre-shipment development     *
+ *                Jacob                                                           *
+ * 13/06/2021     Abhishek Pant   PCR035760          Tech Upgrade issues solution *
+ * 06/04/2021     Arun Jacob      PCR034716          Q2C ESA,PSR Enhancements     *
+***********************************************************************************
+ */
+ --> 
+ <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	controllerName="com.amat.crm.opportunity.controller.S2" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>S2TITLE}" class="pageTitleClass" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<VBox class="classS2">
+				<IconTabBar id="idS2_Icntab" select="onSelectedTab" expandable="false" expanded="{device>/isNoPhone}" stretchContentHeight="true"
+					class="classPSRSDA sapUiResponsiveContentPadding">
+					<items>
+						<IconTabFilter id="idS2_IcnF_Ginfo" text="{i18n>S2GINFOICONTABFTEXT}" key="Info" icon="sap-icon://hint" iconColor="Default">                    <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.general"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter id="idS2_IcnF_Attach" text="{i18n>S2ATCHNTICONTABFTEXT}" key="attach" icon="sap-icon://attachment" iconColor="Default">          <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.attachment"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter class="classPSRSDA" id="idS2_IcnF_PSR_SDA" text="{i18n>S2PSRSDAICONTABFTEXT}" key="PSR-SDA"
+							icon="sap-icon://customer-briefing" iconColor="Default" visible="false">                                                                    <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.psrsda"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabFilter id="idS2_IcnF_PDC_SDA" text="{i18n>S2PDCSDAICONTABFTEXT}" key="PDC-SDA" icon="sap-icon://customer-briefing"
+							iconColor="Default" visible="false">                                                                                                        <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.pdcsda"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter id="idS2_IcnF_CBC" text="{i18n>S2CBCTABTXT}" key="CBC" icon="sap-icon://add-activity-2" iconColor="Default">                     <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.cbc"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter id="idS2_IcnF_CARM" text="{i18n>S2CARMICNTABTXT}" key="CARM" icon="sap-icon://thumb-up" iconColor="Default">                     <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.carm"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator/>
+						<IconTabFilter id="idS2_IcnF_MLI" text="{i18n>S2TABMLITIT}" key="MLI" icon="sap-icon://inventory" iconColor="Default" visible="true">           <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.mli"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<!-- *************** Start Of PCR023905++: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App **************** -->
+						<IconTabSeparator/>
+						<IconTabFilter id="idS2_IcnF_ESA" text="{i18n>S1ESAIDSHDRBTNTXT}" key="ESA" icon="sap-icon://customer-order-entry" iconColor="Default" visible="true">
+							<content>                                                                                                                                   <!-- PCR035760++; iconColor changes from Neutral to Default -->
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.ESA"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<!-- *************** End Of PCR023905++: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App ****************** -->
+						<!-- *************** Start Of PCR026551++: Migrate Pre-Shipment to SAP Fiori Q2C App **************** -->
+						<IconTabSeparator/>
+						<IconTabFilter id="idS2_IcnF_PShip" text="{i18n>S1PSPIDSHDRBTNTXT}" key="PSP" icon="sap-icon://shipping-status" iconColor="Default" visible="true"> <!-- PCR035760++; iconColor changes from Neutral to Default -->
+							<content>
+								<mvc:XMLView viewName="com.amat.crm.opportunity.view.psp"></mvc:XMLView>
+							</content>
+						</IconTabFilter>
+						<!-- *************** End Of PCR026551++: Migrate Pre-Shipment to SAP Fiori Q2C App ****************** -->
+					</items>
+				</IconTabBar>
+			</VBox>
+		</content>
+		<footer>
+			<Toolbar>
+				<Button id="idS2_Ftr_btnAprMesgePOver" icon="sap-icon://message-popup" text="{/messagesLength}" type="Emphasized"
+					press="handleMessagePopoverPress"/>
+				<ToolbarSpacer/>
+				<Button id="idS2_Ftr_btnApprove" text="{i18n>S2FOOTER_APR}" press="onApprovePSRSDA" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}"/>
+				<Button id="idS2_Ftr_btnReject" text="{i18n>S2FOOTER_RJT}" press="onApprovePSRSDA" type="{i18n>S2FOOTER_RJT}"/>
+				<Button id="idS2_Ftr_btnSubmit" text="{i18n>FRAGGDOCSUBMITBTN}" press="onSubmitCBCToNxtApr" type="{i18n>S2CBCPSRCARMBTNTPYACCEPT}"
+					visible="false"/>
+				<Button id="idS2_Ftr_btnReset" text="{i18n>S2FOOTER_RESET}" icon="sap-icon://reset" press="onResetProcess" type="{i18n>S2FOOTER_RJT}"
+					visible="false"/>
+				<!-- *************** Start Of PCR018375++ - 3509 - PSR/CBC Workflow Rejection (restart) Capability ****************// -->
+                <Button id="idS2_Ftr_btnCBCReset" text="{i18n>S2FOOTER_CBCRESET}" icon="sap-icon://reset" press="onCBCResetProcess" type="{i18n>S2FOOTER_RJT}"   
+                    visible="false"/>
+                <!-- *************** End Of PCR018375++ - 3509 - PSR/CBC Workflow Rejection (restart) Capability ****************// -->
+                <!-- *************** Start Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App **************** -->
+                <Button id="idS2_Ftr_btnESACancel" text="{i18n>S2FOOTER_ESACANCEL}" icon="sap-icon://reset" press="onESACancelProcess" type="{i18n>S2FOOTER_RJT}"   
+                    visible="false"/>
+                <Button id="idS2_Ftr_btnESAReset" text="{i18n>S2FOOTER_ESARESET}" icon="sap-icon://reset" press="onESAResetProcess" type="{i18n>S2FOOTER_RJT}"   
+                    visible="false"/>
+                <!-- *************** End Of PCR023905: Migrate ESA/IDS db from Lotus Notes to SAP Fiori Q2C App ****************** -->
+                <!-- *************** Start Of PCR026551++ - Preshipment Check list related changes ****************// -->
+                <Button id="idS2_Ftr_btnPspReset" text="{i18n>S2FOOTER_PSPRESET}" icon="sap-icon://reset" press="onPspResetProcess" type="{i18n>S2FOOTER_RJT}"   
+                    visible="false"/>
+                <!-- *************** End Of PCR026551++ - Preshipment Check list related changes ****************// -->
+                <!-- *************** Start Of PCR034716++: Q2C ESA,PSR Enhancements **************** -->
+                <Button id="idS2_Ftr_btnPsrRraReset" text="{i18n>S2FOOTER_PSR_RRA_RESET}" icon="sap-icon://reset" press="onPsrRraResetProcess" type="{i18n>S2FOOTER_RJT}"   
+                    visible="false"/>
+                <!-- *************** End Of PCR034716++: Q2C ESA,PSR Enhancements **************** -->
+			</Toolbar>
+		</footer>
+	</Page>
+</core:View>
